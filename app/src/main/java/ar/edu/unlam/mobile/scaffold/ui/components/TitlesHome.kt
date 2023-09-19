@@ -19,16 +19,15 @@ import ar.edu.unlam.mobile.scaffold.ui.components.texts.ViewAllsOption
 @RequiresApi(Build.VERSION_CODES.Q)
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 4343453L)
 @Composable
-fun TitlesHome(modifier: Modifier = Modifier) {
+fun TitlesHome(title: String = "Mis listas", modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 12.dp),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        MyListsTitle()
+        MyListsTitle(title)
         Spacer(modifier = Modifier.width(50.dp))
         ViewAllsOption(modifier.padding(top = 16.5.dp))
-
     }
 }
