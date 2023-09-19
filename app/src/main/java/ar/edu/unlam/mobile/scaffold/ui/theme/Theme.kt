@@ -60,7 +60,8 @@ fun MyApplicationTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        //TODO: cambiar a colorScheme como estaba antes
+        colorScheme = LightColorScheme,
         typography = Typography,
         content = content,
     )

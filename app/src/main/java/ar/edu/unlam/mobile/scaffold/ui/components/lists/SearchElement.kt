@@ -50,6 +50,7 @@ fun SearchElement(song: Song = exampleSong, modifier: Modifier = Modifier) {
                 modifier = modifier
                     .padding(10.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
+                    .size(60.dp)
             )
             Column(modifier = modifier.padding(end = 10.dp)) {
                 Text(

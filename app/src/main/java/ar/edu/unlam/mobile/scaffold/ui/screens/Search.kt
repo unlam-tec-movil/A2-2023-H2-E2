@@ -34,23 +34,23 @@ import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.MyListsTitle
 
 val exampleSongs =
-    listOf<Song>(
-        Song("Revolution Radio", "Green Day", R.drawable.album_bubbles),
-        Song("Hoy Estoy Raro", "El Cuarteto De Nos", R.drawable.album_bubbles),
-        Song("Paradise", "Coldplay", R.drawable.album_bubbles),
-        Song("Paper Wings", "Rise Against", R.drawable.album_bubbles),
-        Song("By the Way", "Red Hot Chili Peppers", R.drawable.album_bubbles),
-        Song("Toxicity", "System Of A Down", R.drawable.album_bubbles),
-        Song("Radioactive", "Imagine Dragons", R.drawable.album_bubbles),
-        Song("Numb", "Linkin Park", R.drawable.album_bubbles),
-        Song("The Hell Song", "Sum 41", R.drawable.album_bubbles),
-        Song("Misery Business", "Paramore", R.drawable.album_bubbles),
+    listOf(
+        Song("Revolution Radio", "Green Day", R.drawable.greenday),
+        Song("Hoy Estoy Raro", "El Cuarteto De Nos", R.drawable.nos),
+        Song("Paradise", "Coldplay", R.drawable.coldplay),
+        Song("Paper Wings", "Rise Against", R.drawable.riseagainst),
+        Song("By the Way", "Red Hot Chili Peppers", R.drawable.rhcp),
+        Song("Toxicity", "System Of A Down", R.drawable.soad),
+        Song("Radioactive", "Imagine Dragons", R.drawable.imaginedragons),
+        Song("Numb", "Linkin Park", R.drawable.linkinpark),
+        Song("The Hell Song", "Sum 41", R.drawable.sum41),
+        Song("Misery Business", "Paramore", R.drawable.paramore),
     )
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
-private fun Body() {
+fun Search() {
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
             MyListsTitle("Explorar")
