@@ -10,8 +10,9 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun MyListsTitle(title: String = "Mis listas", modifier: Modifier = Modifier) {
+fun MyListsTitle(modifier: Modifier = Modifier,title: String = "Mis listas") {
     Text(
+        modifier = modifier,
         text = title,
         style = MaterialTheme.typography.displaySmall,
         fontWeight = FontWeight.Bold,

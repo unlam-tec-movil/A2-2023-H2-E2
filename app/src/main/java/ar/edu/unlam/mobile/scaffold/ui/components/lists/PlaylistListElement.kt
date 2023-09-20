@@ -16,7 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
-import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
+
 
 @Composable
 fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {

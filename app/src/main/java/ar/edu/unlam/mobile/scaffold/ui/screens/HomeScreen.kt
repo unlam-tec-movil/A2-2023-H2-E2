@@ -2,7 +2,6 @@ package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,16 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
-import ar.edu.unlam.mobile.scaffold.ui.components.texts.MyListsTitle
 
 
 val playlists = listOf(
@@ -79,7 +76,7 @@ fun HomeScreen(onSearchClick: () -> Unit, viewModel: HomeViewModel = hiltViewMod
 private fun Body(onSearchClick: () -> Unit = {}) {
     Box{
         Column(modifier = Modifier.padding(16.dp)) {
-            TitlesHome("Mis listas", onSearchClick, Modifier.align(Alignment.CenterHorizontally))
+            TitlesHome(modifier = Modifier.align(Alignment.CenterHorizontally), title = "Mis listas", onSearchClick =  onSearchClick)
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = Modifier

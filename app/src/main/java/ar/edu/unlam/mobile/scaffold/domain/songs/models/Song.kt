@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.domain.kitty.models
+package ar.edu.unlam.mobile.scaffold.domain.songs.models
 
 import androidx.annotation.DrawableRes
 
