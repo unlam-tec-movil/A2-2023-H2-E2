@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.ui.theme.Gray24
+import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -29,7 +29,7 @@ import ar.edu.unlam.mobile.scaffold.ui.theme.Gray24
 @Composable
 fun SearchBar(modifier: Modifier = Modifier) {
     var textFieldState by remember { mutableStateOf("") }
-    val backgroundColorTextField = Gray24
+    val backgroundColorTextField = Gray93
     val elementsColorValue = Color.White
 
     val localManager = LocalSoftwareKeyboardController.current

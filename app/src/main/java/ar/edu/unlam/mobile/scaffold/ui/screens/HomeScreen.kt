@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,8 +30,10 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
+import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
 
 val playlists = listOf(
@@ -52,31 +55,51 @@ fun NavigationView() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
-            HomeScreen(onSearchClick = {
-                navController.navigate(Routes.Search.name)
-            })
+            HomeScreen(
+                onSearchClick = {
+                    navController.navigate(Routes.Search.name)
+                },
+
+                onFabClick = {
+                    navController.navigate(Routes.CreatePlaylist.name)
+                }
+
+            )
         }
         composable(Routes.Search.name) {
             Search()
+        }
+
+        composable(Routes.CreatePlaylist.name){
+            CreatePlaylist()
         }
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun HomeScreen(onSearchClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    onSearchClick: () -> Unit, onFabClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()
+) {
 //    se utilizará más adelante
 //    val uiState by viewModel.uiState.collectAsState()
-    Body(onSearchClick)
+    Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
+
+        Body(onSearchClick = onSearchClick, modifier = Modifier.padding(paddingValues))
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
-private fun Body(onSearchClick: () -> Unit = {}) {
-    Box{
+private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) {
+    Box {
         Column(modifier = Modifier.padding(16.dp)) {
-            TitlesHome(modifier = Modifier.align(Alignment.CenterHorizontally), title = "Mis listas", onSearchClick =  onSearchClick)
+            TitlesHome(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                title = "Mis listas",
+                onSearchClick = onSearchClick
+            )
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = Modifier

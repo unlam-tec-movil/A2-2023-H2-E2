@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.ui.screens
+package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

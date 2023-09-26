@@ -22,7 +22,7 @@ import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SearchElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
-import ar.edu.unlam.mobile.scaffold.ui.components.texts.MyListsTitle
+import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 
 val exampleSongs =
     listOf(
@@ -44,7 +44,7 @@ val exampleSongs =
 fun Search() {
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
-            MyListsTitle(title = "Explorar")
+            Title(title = "Explorar")
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = Modifier
