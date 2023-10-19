@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -120,12 +121,14 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
                 color = Color.White,
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
             )
-            LazyHorizontalGrid(
+            LazyVerticalGrid(
                 GridCells.Fixed(2),
-                Modifier.height(270.dp)
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
             ) {
                 items(playlists) { playlist ->
-                    PlaylistListElement(playlist)
+                    PlaylistListElement(playlist, true, true)
                 }
             }
         }
