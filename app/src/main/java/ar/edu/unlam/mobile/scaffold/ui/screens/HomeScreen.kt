@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,13 +14,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,9 +39,10 @@ import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomescreenUiState
 
 
-val playlists = listOf(
+val fakePlaylist = listOf(
     Playlist(1, "Mi Playlist", R.drawable.ic_default_album1),
     Playlist(2, "Rock", R.drawable.album_guitar),
     Playlist(3, "Top Hits", R.drawable.album_disc),
@@ -59,18 +65,16 @@ fun NavigationView() {
                 onSearchClick = {
                     navController.navigate(Routes.Search.name)
                 },
-
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
                 }
-
             )
         }
         composable(Routes.Search.name) {
             Search()
         }
 
-        composable(Routes.CreatePlaylist.name){
+        composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
     }
@@ -81,11 +85,26 @@ fun NavigationView() {
 fun HomeScreen(
     onSearchClick: () -> Unit, onFabClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()
 ) {
-//    se utilizará más adelante
-//    val uiState by viewModel.uiState.collectAsState()
+
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
 
-        Body(onSearchClick = onSearchClick, modifier = Modifier.padding(paddingValues))
+        when (uiState.homescreenUiState) {
+            is HomescreenUiState.Loading -> CircularProgressIndicator()
+            is HomescreenUiState.Error -> {
+                Toast.makeText(
+                    LocalContext.current,
+                    "Ha Ocurrido un error",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            is HomescreenUiState.Success -> Body(
+                onSearchClick = onSearchClick,
+                modifier = Modifier.padding(paddingValues)
+            )
+        }
+
     }
 }
 
@@ -109,7 +128,7 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
             )
             Spacer(modifier = Modifier.height(30.dp))
             LazyRow {
-                items(playlists) { playlist ->
+                items(fakePlaylist) { playlist ->
                     PlaylistListElement(playlist)
                 }
             }
@@ -124,7 +143,7 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
                 GridCells.Fixed(2),
                 Modifier.height(270.dp)
             ) {
-                items(playlists) { playlist ->
+                items(fakePlaylist) { playlist ->
                     PlaylistListElement(playlist)
                 }
             }
