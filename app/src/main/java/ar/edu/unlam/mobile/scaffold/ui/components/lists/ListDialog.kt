@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,17 +25,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 
 var listaEjemlpo = Playlist(1, "Mi Playlist", R.drawable.ic_default_album1)
 @Composable
 @Preview
-fun ListDialog (playlist: Playlist = listaEjemlpo, modifier: Modifier = Modifier){
-    Box() {
+fun ListDialog (modifier: Modifier = Modifier, playlist: Playlist = listaEjemlpo, activeSong:Song, onClick: (visible:Boolean) -> Unit){
+    Box(
+        modifier = Modifier.then(Modifier.clickable { onClick(true) })
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .background(Color.Transparent)
                 .padding(8.dp)
         ) {
             Image(

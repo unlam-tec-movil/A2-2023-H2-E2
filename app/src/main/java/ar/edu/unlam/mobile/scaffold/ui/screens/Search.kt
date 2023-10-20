@@ -72,7 +72,15 @@ fun Search() {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val screenWidthDp = configuration.screenWidthDp
-    var isModalVisible by remember { mutableStateOf(true) }
+    var isModalVisible by remember { mutableStateOf(false) }
+    var activeSong by remember { mutableStateOf<Song>(exampleSongs[0]) }
+
+    fun mostrarDialog(visible:Boolean) {
+        isModalVisible = visible
+    }
+    fun addToPlaylist(song: Song){
+        isModalVisible = false
+    }
 
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -88,7 +96,9 @@ fun Search() {
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(exampleSongs) { song ->
-                    SearchElement(song = song)
+                    SearchElement(song = song){
+                        mostrarDialog(true)
+                    }
                 }
             }
         }
@@ -120,7 +130,9 @@ fun Search() {
                     )
                     LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                         items(examplePlaylists){ playlist ->
-                           ListDialog(playlist)
+                           ListDialog(playlist = playlist, activeSong = activeSong){
+                                   mostrarDialog(false)
+                           }
                         }
                     }
                 }

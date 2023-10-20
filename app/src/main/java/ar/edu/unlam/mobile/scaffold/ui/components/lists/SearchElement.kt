@@ -28,7 +28,7 @@ val exampleSong: Song = Song("Canción de ejemplo", "Artista de ejemplo", R.draw
 
 @Composable
 @Preview
-fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong) {
+fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong, onClick: (visible:Boolean) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -60,7 +60,7 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong) {
             }
         }
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = { onClick(true) },
             modifier = Modifier
                 .padding(end = 30.dp)
                 .clip(RoundedCornerShape(50.dp))
