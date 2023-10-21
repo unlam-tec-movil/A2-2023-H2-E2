@@ -25,8 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
-
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("token_api")
 
 @AndroidEntryPoint
@@ -38,7 +36,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     val viewModel: HomeViewModel by viewModels()
 
@@ -53,17 +52,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
-
-
 }
-
-
-
-
-
-
 
 /*@Composable
 fun MainScreen() {

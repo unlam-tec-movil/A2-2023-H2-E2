@@ -9,5 +9,5 @@ data class AlbumsApiModel(
     val offset: Int,
     val previous: String,
     val total: Int,
-    val items: List<Album>
+    val items: List<Album>,
 )
