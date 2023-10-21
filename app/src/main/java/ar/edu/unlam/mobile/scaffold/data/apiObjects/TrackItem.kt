@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.data.apiObjects
 
-
 import com.google.gson.annotations.SerializedName
 
 data class TrackItem(

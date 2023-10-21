@@ -41,13 +41,11 @@ import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.theme.Blue73
 
-
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
 @Composable
 fun CreatePlaylist() {
     Box(contentAlignment = Alignment.TopCenter) {
-
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -67,14 +65,15 @@ fun CreatePlaylist() {
                 modifier = Modifier
                     .height(270.dp)
                     .width(370.dp),
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.FillBounds
 
-                )
+            )
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp), horizontalAlignment = Alignment.End
+                    .padding(top = 8.dp),
+                horizontalAlignment = Alignment.End
             ) {
                 IconButton(
                     onClick = { /*TODO*/ },
@@ -91,7 +90,6 @@ fun CreatePlaylist() {
             }
 
             Spacer(modifier = Modifier.height(45.dp))
-
 
             val localManager = LocalSoftwareKeyboardController.current
             var textNameInput by remember { mutableStateOf("") }
@@ -117,7 +115,6 @@ fun CreatePlaylist() {
                 modifier = Modifier.fillMaxWidth()
             )
 
-
             Spacer(modifier = Modifier.height(35.dp))
             var textDescriptionInput by remember { mutableStateOf("") }
 
@@ -130,9 +127,9 @@ fun CreatePlaylist() {
                     focusedTextColor = textFieldColor,
                     unfocusedTextColor = textFieldColor,
                     disabledLabelColor = textFieldColor,
-                    focusedLabelColor = textFieldColor,
+                    focusedLabelColor = textFieldColor
 
-                    ),
+                ),
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
@@ -143,7 +140,6 @@ fun CreatePlaylist() {
             )
 
             Spacer(modifier = Modifier.height(35.dp))
-
 
             Button(
                 onClick = { },
@@ -161,9 +157,6 @@ fun CreatePlaylist() {
                     modifier = Modifier.size(33.dp)
                 )
             }
-
-
         }
     }
-
 }

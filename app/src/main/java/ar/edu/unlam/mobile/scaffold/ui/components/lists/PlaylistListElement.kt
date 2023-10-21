@@ -14,16 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-
 
 @Composable
 fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .padding(end = 10.dp, bottom = 10.dp)
-        .wrapContentHeight()) {
+    Column(
+        modifier = modifier
+            .padding(end = 10.dp, bottom = 10.dp)
+            .wrapContentHeight()
+    ) {
         Image(
             painter = painterResource(id = playlist.image),
             contentDescription = null,

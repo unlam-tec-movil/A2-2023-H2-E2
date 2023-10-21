@@ -6,22 +6,17 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.authorization.AuthorizationAPI
 import ar.edu.unlam.mobile.scaffold.data.authorization.AuthorizationResponse
 import ar.edu.unlam.mobile.scaffold.data.search.network.SearchApiModel
-
 import ar.edu.unlam.mobile.scaffold.domain.search.service.SearchGetter
 import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_CREDENTIALS
 import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_ID
 import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_SECRET
-
 import dagger.hilt.android.lifecycle.HiltViewModel
-
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-import javax.inject.Inject
-
 
 sealed interface HomescreenUiState {
     data class Success(val searchModel: SearchApiModel) : HomescreenUiState
@@ -30,9 +25,8 @@ sealed interface HomescreenUiState {
 }
 
 data class HomeUIState(
-    val homescreenUiState: HomescreenUiState = HomescreenUiState.Loading,
+    val homescreenUiState: HomescreenUiState = HomescreenUiState.Loading
 )
-
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(val searchGetter: SearchGetter) : ViewModel() {
@@ -42,24 +36,21 @@ class HomeViewModel @Inject constructor(val searchGetter: SearchGetter) : ViewMo
     // (https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
     // _Kitty State es el estado del componente "Kitty" inicializado como "Cargando"
 
-
     private val _searchUiState = MutableStateFlow(HomescreenUiState.Loading)
 
     // Ui State es el estado general del view model.
     private val _uiState = MutableStateFlow(
-        HomeUIState(_searchUiState.value),
+        HomeUIState(_searchUiState.value)
     )
 
     // UI expone el estado anterior como un Flujo de Estado de solo lectura.
     // Esto impide que se pueda modificar el estado desde fuera del ViewModel.
     val uiState = _uiState.asStateFlow()
 
-
     init {
-        //getAuthorization()
+        // getAuthorization()
         getSearchResults()
     }
-
 
     private fun getSearchResults() {
         viewModelScope.launch {
@@ -74,7 +65,6 @@ class HomeViewModel @Inject constructor(val searchGetter: SearchGetter) : ViewMo
             } else {
                 Log.i("Access Token", accessToken)
             }
-
         }
     }
 
@@ -90,14 +80,11 @@ class HomeViewModel @Inject constructor(val searchGetter: SearchGetter) : ViewMo
                     .create(AuthorizationAPI::class.java)
                     .getAuthorization(CLIENT_CREDENTIALS, CLIENT_ID, CLIENT_SECRET)
 
-
-
             bodyResponse = response.body()
 
             if (response.isSuccessful) {
                 Log.i("TOKEN de respuesta", "${bodyResponse?.accessToken}")
                 Log.i("Tipo de token de respuesta", "${bodyResponse?.tokenType}")
-
             } else {
                 Log.i("FALLA TOKEN API", "NO se obtuvo respuesta")
                 val codeError = response.code()

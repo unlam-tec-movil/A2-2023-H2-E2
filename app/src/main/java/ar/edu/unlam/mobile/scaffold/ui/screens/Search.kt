@@ -35,7 +35,7 @@ val exampleSongs =
         Song("Radioactive", "Imagine Dragons", R.drawable.imaginedragons),
         Song("Numb", "Linkin Park", R.drawable.linkinpark),
         Song("The Hell Song", "Sum 41", R.drawable.sum41),
-        Song("Misery Business", "Paramore", R.drawable.paramore),
+        Song("Misery Business", "Paramore", R.drawable.paramore)
     )
 
 @RequiresApi(Build.VERSION_CODES.Q)

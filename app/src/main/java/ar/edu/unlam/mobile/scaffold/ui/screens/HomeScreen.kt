@@ -41,7 +41,6 @@ import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomescreenUiState
 
-
 val fakePlaylist = listOf(
     Playlist(1, "Mi Playlist", R.drawable.ic_default_album1),
     Playlist(2, "Rock", R.drawable.album_guitar),
@@ -83,9 +82,10 @@ fun NavigationView() {
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun HomeScreen(
-    onSearchClick: () -> Unit, onFabClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()
+    onSearchClick: () -> Unit,
+    onFabClick: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
 
@@ -104,7 +104,6 @@ fun HomeScreen(
                 modifier = Modifier.padding(paddingValues)
             )
         }
-
     }
 }
 

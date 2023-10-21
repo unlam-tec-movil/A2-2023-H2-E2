@@ -18,5 +18,4 @@ abstract class SearchDataModule {
 
     @Binds
     abstract fun bindSearchNetworkRepository(searchNetworkRepositoryClient: SearchHTTPRepository): SearchNetworkRepository
-
 }

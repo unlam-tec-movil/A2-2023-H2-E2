@@ -15,9 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-
-)
+private val DarkColorScheme = darkColorScheme()
 
 private val LightColorScheme = lightColorScheme(
     background = Blue24,
@@ -39,7 +37,7 @@ fun MyApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -60,9 +58,9 @@ fun MyApplicationTheme(
     }
 
     MaterialTheme(
-        //TODO: cambiar a colorScheme como estaba antes
+        // TODO: cambiar a colorScheme como estaba antes
         colorScheme = LightColorScheme,
         typography = Typography,
-        content = content,
+        content = content
     )
 }

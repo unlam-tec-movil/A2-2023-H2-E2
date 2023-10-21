@@ -12,5 +12,4 @@ interface SearchAPI {
         @Query("type") type: List<String> = listOf("track, artist"),
         @Header("Authorization:") auth: String
     ): SearchApiModel
-
 }

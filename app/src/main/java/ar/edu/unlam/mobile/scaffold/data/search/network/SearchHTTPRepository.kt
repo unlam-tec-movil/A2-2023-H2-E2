@@ -1,8 +1,8 @@
 package ar.edu.unlam.mobile.scaffold.data.search.network
 
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
 class SearchHTTPRepository @Inject constructor(private val searchAPI: SearchAPI) : SearchNetworkRepository {
     override suspend fun getSearchValues(query: String, accessToken: String): Flow<SearchApiModel> {
@@ -10,6 +10,4 @@ class SearchHTTPRepository @Inject constructor(private val searchAPI: SearchAPI)
             emit(searchAPI.search(query = query, auth = accessToken))
         }
     }
-
-
 }

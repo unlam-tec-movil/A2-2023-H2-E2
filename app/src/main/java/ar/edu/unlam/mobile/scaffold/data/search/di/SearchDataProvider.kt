@@ -6,22 +6,20 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object SearchDataProvider {
     @Provides
     @Singleton
-    fun provideSearchAPI(gson: Gson): SearchAPI{
+    fun provideSearchAPI(gson: Gson): SearchAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl("https://api.spotify.com/v1/")
             .build()
             .create(SearchAPI::class.java)
     }
-
-
 }

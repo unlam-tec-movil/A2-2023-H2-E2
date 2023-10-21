@@ -22,5 +22,5 @@ data class Album(
     val restrictions: Restriction,
     val type: String,
     val uri: String,
-    val artists: List<ArtistApiModel>,
+    val artists: List<ArtistApiModel>
 )
