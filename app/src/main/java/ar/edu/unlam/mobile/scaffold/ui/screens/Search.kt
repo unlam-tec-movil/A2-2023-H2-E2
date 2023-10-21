@@ -35,6 +35,7 @@ import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.ListDialog
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SearchElement
+import ar.edu.unlam.mobile.scaffold.ui.components.others.MySnackBar
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 
@@ -50,6 +51,16 @@ val exampleSongs =
         Song("Numb", "Linkin Park", R.drawable.linkinpark),
         Song("The Hell Song", "Sum 41", R.drawable.sum41),
         Song("Misery Business", "Paramore", R.drawable.paramore),
+        Song("By the Way", "Red Hot Chili Peppers", R.drawable.rhcp),
+        Song("Toxicity", "System Of A Down", R.drawable.soad),
+        Song("Radioactive", "Imagine Dragons", R.drawable.imaginedragons),
+        Song("Numb", "Linkin Park", R.drawable.linkinpark),
+        Song("The Hell Song", "Sum 41", R.drawable.sum41),
+        Song("Hoy Estoy Raro", "El Cuarteto De Nos", R.drawable.nos),
+        Song("Paradise", "Coldplay", R.drawable.coldplay),
+        Song("Paper Wings", "Rise Against", R.drawable.riseagainst),
+        Song("By the Way", "Red Hot Chili Peppers", R.drawable.rhcp),
+        Song("Toxicity", "System Of A Down", R.drawable.soad),
     )
 val examplePlaylists = listOf(
     Playlist(1, "Mi Playlist", R.drawable.ic_default_album1),
@@ -136,6 +147,7 @@ fun Search() {
                         }
                     }
                 }
+            //MySnackBar()
         }
     }
 

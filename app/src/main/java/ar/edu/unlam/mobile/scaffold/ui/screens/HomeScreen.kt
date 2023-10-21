@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -62,11 +63,12 @@ fun NavigationView() {
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
             HomeScreen(
+                navController,
                 onSearchClick = {
                     navController.navigate(Routes.Search.name)
                 },
                 onFabClick = {
-                    navController.navigate(Routes.CreatePlaylist.name)
+                    navController.navigate(Routes.PlaylistScreen.name)
                 }
             )
         }
@@ -77,20 +79,28 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
+        composable(Routes.PlaylistScreen.name){
+            PlaylistScreen()
+        }
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun HomeScreen(
-    onSearchClick: () -> Unit, onFabClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()
+    navController: NavController,onSearchClick: () -> Unit, onFabClick: () -> Unit, viewModel: HomeViewModel = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
 
         when (uiState.homescreenUiState) {
-            is HomescreenUiState.Loading -> CircularProgressIndicator()
+            //is HomescreenUiState.Loading -> CircularProgressIndicator()
+            is HomescreenUiState.Loading -> Body(
+                navController = navController,
+                onSearchClick = onSearchClick,
+                modifier = Modifier.padding(paddingValues)
+            )
             is HomescreenUiState.Error -> {
                 Toast.makeText(
                     LocalContext.current,
@@ -100,6 +110,7 @@ fun HomeScreen(
             }
 
             is HomescreenUiState.Success -> Body(
+                navController = navController,
                 onSearchClick = onSearchClick,
                 modifier = Modifier.padding(paddingValues)
             )
@@ -111,7 +122,7 @@ fun HomeScreen(
 @RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
-private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) {
+private fun Body(modifier: Modifier = Modifier, navController: NavController, onSearchClick: () -> Unit) {
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
             TitlesHome(
@@ -129,7 +140,7 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
             Spacer(modifier = Modifier.height(30.dp))
             LazyRow {
                 items(fakePlaylist) { playlist ->
-                    PlaylistListElement(playlist)
+                    PlaylistListElement(playlist, navController = navController)
                 }
             }
             Text(
@@ -146,7 +157,7 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
                     .align(Alignment.CenterHorizontally)
             ) {
                 items(fakePlaylist) { playlist ->
-                    PlaylistListElement(playlist, true, true)
+                    PlaylistListElement(playlist, true, true, navController = navController)
                 }
             }
         }

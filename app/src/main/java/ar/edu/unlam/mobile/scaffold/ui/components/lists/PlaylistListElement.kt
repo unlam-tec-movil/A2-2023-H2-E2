@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,27 +20,41 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
+import ar.edu.unlam.mobile.scaffold.ui.screens.Routes
 
 var playlistTest = Playlist(1, "Mi Playlist", R.drawable.ic_default_album1)
 
 @Composable
 @Preview
-fun PlaylistListElement(playlist: Playlist = playlistTest, mostrarTitulo:Boolean = true, fullWidth: Boolean = false ,modifier: Modifier = Modifier) {
+fun PlaylistListElement(
+    playlist: Playlist = playlistTest,
+    mostrarTitulo:Boolean = true,
+    fullWidth: Boolean = false,
+    navController: NavController,
+    modifier: Modifier = Modifier) {
+
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
+    fun onPlaylistClick (){
+        navController.navigate(Routes.PlaylistScreen.name)
+    }
     Column(modifier = modifier
         .padding(end = 10.dp, bottom = 10.dp)
-        .wrapContentHeight()) {
+        .wrapContentHeight()
+        .then(modifier.clickable { onPlaylistClick() }))
+    {
         Image(
             painter = painterResource(id = playlist.image),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
                 .clip(RoundedCornerShape(5.dp))
-                .width( if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
+                .width(if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
                 .height(if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
                 .align(Alignment.CenterHorizontally)
         )
