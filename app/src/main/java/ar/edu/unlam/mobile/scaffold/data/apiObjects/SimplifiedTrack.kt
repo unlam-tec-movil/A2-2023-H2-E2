@@ -17,5 +17,5 @@ data class SimplifiedTrack(
     val track_number: Int,
     val type: String,
     val uri: String,
-    val is_local: Boolean
+    val is_local: Boolean,
 )
