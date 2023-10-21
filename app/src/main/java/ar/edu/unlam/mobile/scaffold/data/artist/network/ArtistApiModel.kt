@@ -15,5 +15,5 @@ data class ArtistApiModel(
     val name: String,
     val popularity: Int,
     val type: String,
-    val uri: String
+    val uri: String,
 )

@@ -40,13 +40,13 @@ fun SearchBar(modifier: Modifier = Modifier) {
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Search icon"
+                contentDescription = "Search icon",
             )
         },
         singleLine = true,
         maxLines = 1,
         keyboardActions = KeyboardActions(
-            onDone = { localManager?.hide() }
+            onDone = { localManager?.hide() },
         ),
         placeholder = { Text(stringResource(id = R.string.placeholder_search)) },
         colors = TextFieldDefaults.colors(
@@ -58,7 +58,7 @@ fun SearchBar(modifier: Modifier = Modifier) {
             focusedTextColor = elementsColorValue,
             unfocusedTextColor = elementsColorValue,
             focusedPlaceholderColor = elementsColorValue,
-            unfocusedPlaceholderColor = elementsColorValue
-        )
+            unfocusedPlaceholderColor = elementsColorValue,
+        ),
     )
 }

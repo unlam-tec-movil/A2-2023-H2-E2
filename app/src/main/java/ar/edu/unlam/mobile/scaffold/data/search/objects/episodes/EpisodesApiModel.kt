@@ -9,5 +9,5 @@ data class EpisodesApiModel(
     val offset: Int,
     val previous: String,
     val total: Int,
-    val items: List<EpisodeItem>
+    val items: List<EpisodeItem>,
 )

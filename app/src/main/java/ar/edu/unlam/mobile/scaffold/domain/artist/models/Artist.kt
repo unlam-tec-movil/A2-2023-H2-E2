@@ -5,7 +5,7 @@ data class Artist(
     val name: String,
     val popularity: Int,
     val followers: Int,
-    val genres: List<String>
+    val genres: List<String>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

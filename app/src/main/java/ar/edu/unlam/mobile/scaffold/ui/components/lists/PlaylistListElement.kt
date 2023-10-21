@@ -23,7 +23,7 @@ fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .padding(end = 10.dp, bottom = 10.dp)
-            .wrapContentHeight()
+            .wrapContentHeight(),
     ) {
         Image(
             painter = painterResource(id = playlist.image),
@@ -32,12 +32,12 @@ fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {
             modifier = modifier
                 .clip(RoundedCornerShape(5.dp))
                 .width(150.dp)
-                .height(150.dp)
+                .height(150.dp),
         )
         Text(
             text = playlist.title,
             style = MaterialTheme.typography.labelLarge,
-            color = Color.White
+            color = Color.White,
         )
     }
 }

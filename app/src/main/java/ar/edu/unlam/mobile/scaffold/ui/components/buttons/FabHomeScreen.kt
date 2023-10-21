@@ -11,7 +11,7 @@ fun FabScreen(onFabClick: () -> Unit = {}) {
     FloatingActionButton(onClick = { onFabClick() }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_icon_add),
-            contentDescription = "Crear playlist"
+            contentDescription = "Crear playlist",
         )
     }
 }

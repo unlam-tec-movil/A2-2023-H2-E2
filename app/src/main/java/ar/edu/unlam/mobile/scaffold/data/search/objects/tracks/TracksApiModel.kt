@@ -9,5 +9,5 @@ data class TracksApiModel(
     val offset: Int,
     val previous: String,
     val total: Int,
-    val items: List<TrackItem>
+    val items: List<TrackItem>,
 )

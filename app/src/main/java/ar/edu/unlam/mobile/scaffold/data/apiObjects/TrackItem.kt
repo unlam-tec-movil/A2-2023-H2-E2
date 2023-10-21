@@ -32,5 +32,5 @@ data class TrackItem(
     val type: String,
     val uri: String,
     @SerializedName("is_local")
-    val isLocal: Boolean
+    val isLocal: Boolean,
 )

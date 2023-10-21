@@ -11,12 +11,12 @@ import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_CREDENTIALS
 import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_ID
 import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_SECRET
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 sealed interface HomescreenUiState {
     data class Success(val searchModel: SearchApiModel) : HomescreenUiState
@@ -25,7 +25,7 @@ sealed interface HomescreenUiState {
 }
 
 data class HomeUIState(
-    val homescreenUiState: HomescreenUiState = HomescreenUiState.Loading
+    val homescreenUiState: HomescreenUiState = HomescreenUiState.Loading,
 )
 
 @HiltViewModel
@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(val searchGetter: SearchGetter) : ViewMo
 
     // Ui State es el estado general del view model.
     private val _uiState = MutableStateFlow(
-        HomeUIState(_searchUiState.value)
+        HomeUIState(_searchUiState.value),
     )
 
     // UI expone el estado anterior como un Flujo de Estado de solo lectura.

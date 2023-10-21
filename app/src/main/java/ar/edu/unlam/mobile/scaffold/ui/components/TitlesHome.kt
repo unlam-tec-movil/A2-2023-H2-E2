@@ -21,13 +21,13 @@ import ar.edu.unlam.mobile.scaffold.ui.components.texts.ViewAllsOption
 fun TitlesHome(
     modifier: Modifier = Modifier,
     title: String = "Mis listas",
-    onSearchClick: () -> Unit = {}
+    onSearchClick: () -> Unit = {},
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 12.dp),
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceAround,
     ) {
         Title(title = title)
         Spacer(modifier = Modifier.width(50.dp))

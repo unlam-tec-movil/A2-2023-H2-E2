@@ -31,5 +31,5 @@ data class EpisodeItem(
     val resumePoint: ResumePoint,
     val type: String,
     val uri: String,
-    val restrictions: Restriction
+    val restrictions: Restriction,
 )

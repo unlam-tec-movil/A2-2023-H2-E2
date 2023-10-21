@@ -50,11 +50,11 @@ fun CreatePlaylist() {
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Title(
                 modifier = Modifier.padding(top = 18.dp),
-                title = stringResource(id = R.string.create_list_title)
+                title = stringResource(id = R.string.create_list_title),
             )
 
             Spacer(modifier = Modifier.height(45.dp))
@@ -65,7 +65,7 @@ fun CreatePlaylist() {
                 modifier = Modifier
                     .height(270.dp)
                     .width(370.dp),
-                contentScale = ContentScale.FillBounds
+                contentScale = ContentScale.FillBounds,
 
             )
 
@@ -73,18 +73,18 @@ fun CreatePlaylist() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
             ) {
                 IconButton(
                     onClick = { /*TODO*/ },
                     colors = IconButtonDefaults.iconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_icon_add),
                         contentDescription = "Cargar imagen",
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
             }
@@ -104,15 +104,15 @@ fun CreatePlaylist() {
                     focusedTextColor = textFieldColor,
                     unfocusedTextColor = textFieldColor,
                     disabledLabelColor = textFieldColor,
-                    focusedLabelColor = textFieldColor
+                    focusedLabelColor = textFieldColor,
                 ),
                 label = { Text(text = "Nombre", color = textFieldColor) },
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
-                    onDone = { localManager?.hide() }
+                    onDone = { localManager?.hide() },
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(35.dp))
@@ -127,16 +127,16 @@ fun CreatePlaylist() {
                     focusedTextColor = textFieldColor,
                     unfocusedTextColor = textFieldColor,
                     disabledLabelColor = textFieldColor,
-                    focusedLabelColor = textFieldColor
+                    focusedLabelColor = textFieldColor,
 
                 ),
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
-                    onDone = { localManager?.hide() }
+                    onDone = { localManager?.hide() },
                 ),
                 label = { Text(text = "Descripción", color = textFieldColor) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(35.dp))
@@ -146,15 +146,15 @@ fun CreatePlaylist() {
                 shape = RoundedCornerShape(6.dp),
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = textFieldColor
-                )
+                    contentColor = textFieldColor,
+                ),
             ) {
                 Text(text = "Guardar", fontSize = 27.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_save),
                     contentDescription = "Guardar lista",
-                    modifier = Modifier.size(33.dp)
+                    modifier = Modifier.size(33.dp),
                 )
             }
         }

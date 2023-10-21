@@ -15,5 +15,5 @@ data class SearchApiModel(
     val playlistsApiModel: PlaylistsApiModel,
     val showsApiModel: ShowsApiModel,
     val episodesApiModel: EpisodesApiModel,
-    val audiobooks: Audiobooks
+    val audiobooks: Audiobooks,
 )

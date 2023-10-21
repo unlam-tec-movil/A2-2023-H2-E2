@@ -5,5 +5,5 @@ data class LinkedFrom(
     val href: String,
     val id: String,
     val type: String,
-    val uri: String
+    val uri: String,
 )

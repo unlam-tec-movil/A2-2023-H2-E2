@@ -11,5 +11,5 @@ data class Owner(
     val type: String,
     val uri: String,
     @SerializedName("display_name")
-    val displayName: String
+    val displayName: String,
 )

@@ -6,14 +6,14 @@ data class KittyAPIModel(
     val id: String,
     val url: String,
     val width: Int,
-    val height: Int
+    val height: Int,
 ) {
     fun toKitty(): Kitty {
         return Kitty(
             id = id,
             url = url,
             width = width,
-            height = height
+            height = height,
         )
     }
 }

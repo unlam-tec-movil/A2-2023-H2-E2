@@ -5,5 +5,5 @@ import androidx.annotation.DrawableRes
 data class Playlist(
     val id: Long,
     val title: String,
-    @DrawableRes val image: Int
+    @DrawableRes val image: Int,
 )

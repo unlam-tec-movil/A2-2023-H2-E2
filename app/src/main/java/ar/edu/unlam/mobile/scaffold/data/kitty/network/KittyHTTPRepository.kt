@@ -1,8 +1,8 @@
 package ar.edu.unlam.mobile.scaffold.data.kitty.network
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 class KittyHTTPRepository @Inject constructor(private val api: KittyAPI) : KittyNetworkRepository {
     override suspend fun getRandomKitty(): Flow<KittyAPIModel> {

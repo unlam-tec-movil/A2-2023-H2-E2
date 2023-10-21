@@ -16,6 +16,6 @@ fun Title(modifier: Modifier = Modifier, title: String = "Mis listas") {
         text = title,
         style = MaterialTheme.typography.displaySmall,
         fontWeight = FontWeight.Bold,
-        color = Color.White
+        color = Color.White,
     )
 }

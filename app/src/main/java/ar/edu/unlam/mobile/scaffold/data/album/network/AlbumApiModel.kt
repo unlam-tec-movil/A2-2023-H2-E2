@@ -29,5 +29,5 @@ data class AlbumApiModel(
     @SerializedName("external_ids") val externalIds: ExternalId,
     val genres: List<String>,
     val label: String,
-    val popularity: Int
+    val popularity: Int,
 )

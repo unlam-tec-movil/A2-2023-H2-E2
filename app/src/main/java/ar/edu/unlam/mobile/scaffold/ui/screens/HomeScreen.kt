@@ -51,7 +51,7 @@ val fakePlaylist = listOf(
     Playlist(7, "Trap", R.drawable.album_party),
     Playlist(8, "Para Programar", R.drawable.album_computer),
     Playlist(9, "Finde", R.drawable.album_beach),
-    Playlist(10, "ASMR", R.drawable.album_bubbles)
+    Playlist(10, "ASMR", R.drawable.album_bubbles),
 )
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -66,7 +66,7 @@ fun NavigationView() {
                 },
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
-                }
+                },
             )
         }
         composable(Routes.Search.name) {
@@ -84,7 +84,7 @@ fun NavigationView() {
 fun HomeScreen(
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
@@ -95,13 +95,13 @@ fun HomeScreen(
                 Toast.makeText(
                     LocalContext.current,
                     "Ha Ocurrido un error",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
             }
 
             is HomescreenUiState.Success -> Body(
                 onSearchClick = onSearchClick,
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             )
         }
     }
@@ -116,14 +116,14 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
             TitlesHome(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 title = "Mis listas",
-                onSearchClick = onSearchClick
+                onSearchClick = onSearchClick,
             )
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 8.dp),
             )
             Spacer(modifier = Modifier.height(30.dp))
             LazyRow {
@@ -136,11 +136,11 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
             )
             LazyHorizontalGrid(
                 GridCells.Fixed(2),
-                Modifier.height(270.dp)
+                Modifier.height(270.dp),
             ) {
                 items(fakePlaylist) { playlist ->
                     PlaylistListElement(playlist)

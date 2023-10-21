@@ -19,6 +19,6 @@ fun ViewAllsOption(onSearchClick: () -> Unit = {}, modifier: Modifier = Modifier
         fontSize = 20.sp,
         color = MaterialTheme.colorScheme.onPrimary,
         fontWeight = FontWeight.Bold,
-        modifier = modifier.clickable(onClick = onSearchClick)
+        modifier = modifier.clickable(onClick = onSearchClick),
     )
 }

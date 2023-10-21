@@ -10,6 +10,6 @@ interface SearchAPI {
     suspend fun search(
         @Query("q") query: String,
         @Query("type") type: List<String> = listOf("track, artist"),
-        @Header("Authorization:") auth: String
+        @Header("Authorization:") auth: String,
     ): SearchApiModel
 }
