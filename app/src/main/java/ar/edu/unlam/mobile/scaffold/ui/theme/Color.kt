@@ -2,10 +2,8 @@ package ar.edu.unlam.mobile.scaffold.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val Blue24 = Color(0xFF111124)
+val Blue73 = Color(0xFF27273A)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Purple74 = Color(0xEE6D68B9)
+val Gray93 = Color(0xFF39393F)
