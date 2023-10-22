@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.data.apiObjects
 
-
 import com.google.gson.annotations.SerializedName
 
 data class TrackItem(
@@ -33,5 +32,5 @@ data class TrackItem(
     val type: String,
     val uri: String,
     @SerializedName("is_local")
-    val isLocal: Boolean
+    val isLocal: Boolean,
 )

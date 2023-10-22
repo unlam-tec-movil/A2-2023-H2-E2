@@ -8,6 +8,6 @@ class KittyHTTPRepository @Inject constructor(private val api: KittyAPI) : Kitty
     override suspend fun getRandomKitty(): Flow<KittyAPIModel> {
         return flow {
             emit(api.getKitties()[0])
-        }   
+        }
     }
 }

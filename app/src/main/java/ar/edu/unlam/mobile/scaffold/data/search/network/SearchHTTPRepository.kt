@@ -10,6 +10,4 @@ class SearchHTTPRepository @Inject constructor(private val searchAPI: SearchAPI)
             emit(searchAPI.search(query = query, auth = accessToken))
         }
     }
-
-
 }

@@ -10,7 +10,7 @@ data class ArtistsApiModel(
     val offset: Int,
     val previous: String,
     val total: Int,
-    val items: List<ArtistApiModel>
+    val items: List<ArtistApiModel>,
 ) {
     fun toArtist(): Artist {
         return Artist(
@@ -18,7 +18,7 @@ data class ArtistsApiModel(
             followers = items[0].followers.total,
             genres = items[0].genres,
             name = items[0].name,
-            popularity = items[0].popularity
+            popularity = items[0].popularity,
         )
     }
 }

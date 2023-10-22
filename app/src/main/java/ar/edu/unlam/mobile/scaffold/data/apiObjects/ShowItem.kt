@@ -25,5 +25,5 @@ data class ShowItem(
     val type: String,
     val uri: String,
     @SerializedName("total_episodes")
-    val totalEpisodes: Int
+    val totalEpisodes: Int,
 )

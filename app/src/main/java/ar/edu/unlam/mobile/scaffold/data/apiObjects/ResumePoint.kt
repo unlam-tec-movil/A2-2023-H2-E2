@@ -6,5 +6,5 @@ data class ResumePoint(
     @SerializedName("fully_played")
     val fullyPlayed: Boolean,
     @SerializedName("resume_position_ms")
-    val resumePositionMs: Long
+    val resumePositionMs: Long,
 )

@@ -17,5 +17,5 @@ data class PlaylistItem(
     val snapshotId: String,
     val tracks: Tracks,
     val type: String,
-    val uri: String
+    val uri: String,
 )

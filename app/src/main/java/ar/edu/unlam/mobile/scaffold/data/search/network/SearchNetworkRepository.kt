@@ -5,5 +5,4 @@ import kotlinx.coroutines.flow.Flow
 interface SearchNetworkRepository {
 
     suspend fun getSearchValues(query: String, accessToken: String): Flow<SearchApiModel>
-
 }

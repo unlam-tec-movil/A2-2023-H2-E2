@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.data.album.network
 
-import com.google.gson.annotations.SerializedName
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.Copyright
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.ExternalId
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.ExternalUrls
@@ -8,6 +7,7 @@ import ar.edu.unlam.mobile.scaffold.data.apiObjects.Image
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.Restriction
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.SimplifiedArtist
 import ar.edu.unlam.mobile.scaffold.data.apiObjects.Tracks
+import com.google.gson.annotations.SerializedName
 
 data class AlbumApiModel(
     @SerializedName("album_type") val albumType: String,
@@ -29,8 +29,5 @@ data class AlbumApiModel(
     @SerializedName("external_ids") val externalIds: ExternalId,
     val genres: List<String>,
     val label: String,
-    val popularity: Int
+    val popularity: Int,
 )
-
-
-

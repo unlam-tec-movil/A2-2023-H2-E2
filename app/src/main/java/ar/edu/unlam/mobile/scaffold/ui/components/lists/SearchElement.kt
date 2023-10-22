@@ -35,7 +35,7 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong, onCli
         modifier = modifier
             .clip(shape = RoundedCornerShape(10.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
@@ -44,18 +44,18 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong, onCli
                 modifier = modifier
                     .padding(10.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .size(60.dp)
+                    .size(60.dp),
             )
             Column(modifier = modifier.padding(end = 10.dp)) {
                 Text(
                     text = song.title,
                     color = Color.White,
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.labelLarge,
                 )
                 Text(
                     text = song.artist,
                     color = Color(0XFFE1E1E1),
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
                 )
             }
         }
@@ -65,13 +65,13 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong, onCli
                 .padding(end = 30.dp)
                 .clip(RoundedCornerShape(50.dp))
                 .background(MaterialTheme.colorScheme.primary)
-                .size(35.dp)
+                .size(35.dp),
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_add_24),
                 contentDescription = null,
                 tint = Color.White,
-                modifier = modifier.size(25.dp)
+                modifier = modifier.size(25.dp),
             )
         }
     }

@@ -8,7 +8,6 @@ import ar.edu.unlam.mobile.scaffold.data.search.objects.playlists.PlaylistsApiMo
 import ar.edu.unlam.mobile.scaffold.data.search.objects.shows.ShowsApiModel
 import ar.edu.unlam.mobile.scaffold.data.search.objects.tracks.TracksApiModel
 
-
 data class SearchApiModel(
     val tracks: TracksApiModel,
     val artistsApiModel: ArtistsApiModel,
@@ -16,5 +15,5 @@ data class SearchApiModel(
     val playlistsApiModel: PlaylistsApiModel,
     val showsApiModel: ShowsApiModel,
     val episodesApiModel: EpisodesApiModel,
-    val audiobooks: Audiobooks
+    val audiobooks: Audiobooks,
 )

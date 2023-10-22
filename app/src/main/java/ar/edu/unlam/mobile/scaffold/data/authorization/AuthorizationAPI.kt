@@ -12,6 +12,6 @@ interface AuthorizationAPI {
     suspend fun getAuthorization(
         @Field("grant_type") grantType: String,
         @Field("client_id") clientId: String,
-        @Field("client_secret") clientSecret: String
+        @Field("client_secret") clientSecret: String,
     ): Response<AuthorizationResponse>
 }

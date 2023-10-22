@@ -26,5 +26,5 @@ data class AudiobookItem(
     val type: String,
     val uri: String,
     @SerializedName("total_chapters")
-    val totalChapters: Int
+    val totalChapters: Int,
 )

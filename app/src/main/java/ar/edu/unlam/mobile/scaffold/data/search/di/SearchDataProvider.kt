@@ -15,13 +15,11 @@ import javax.inject.Singleton
 object SearchDataProvider {
     @Provides
     @Singleton
-    fun provideSearchAPI(gson: Gson): SearchAPI{
+    fun provideSearchAPI(gson: Gson): SearchAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl("https://api.spotify.com/v1/")
             .build()
             .create(SearchAPI::class.java)
     }
-
-
 }

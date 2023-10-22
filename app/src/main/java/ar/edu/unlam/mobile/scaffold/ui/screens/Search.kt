@@ -101,7 +101,7 @@ fun Search() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
-                    .clip(shape = RoundedCornerShape(8.dp))
+                    .clip(shape = RoundedCornerShape(8.dp)),
 
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -114,7 +114,6 @@ fun Search() {
             }
         }
     }
-
     if(isModalVisible) {
         Dialog(
             onDismissRequest = {},
