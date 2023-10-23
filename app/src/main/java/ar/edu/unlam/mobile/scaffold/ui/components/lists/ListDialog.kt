@@ -30,9 +30,14 @@ import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 var listaEjemlpo = Playlist(1, "Mi Playlist", R.drawable.ic_default_album1)
 @Composable
 @Preview
-fun ListDialog (modifier: Modifier = Modifier, playlist: Playlist = listaEjemlpo, activeSong:Song, onClick: (visible:Boolean) -> Unit){
+fun ListDialog (
+    modifier: Modifier = Modifier,
+    playlist: Playlist = listaEjemlpo,
+    activeSong:Song,
+    onClick: (playlistId:Long) -> Unit)
+{
     Box(
-        modifier = Modifier.then(Modifier.clickable { onClick(true) })
+        modifier = Modifier.then(Modifier.clickable { onClick(playlist.id) })
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

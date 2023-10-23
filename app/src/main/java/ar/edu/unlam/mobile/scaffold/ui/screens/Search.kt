@@ -34,8 +34,8 @@ import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.ListDialog
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SearchElement
-import ar.edu.unlam.mobile.scaffold.ui.components.others.MySnackBar
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 
@@ -86,10 +86,11 @@ fun Search() {
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Song>(exampleSongs[0]) }
 
-    fun mostrarDialog(visible:Boolean) {
-        isModalVisible = visible
+    fun openModal(song:Song) {
+        isModalVisible = true
     }
-    fun addToPlaylist(song: Song){
+    fun addToPlaylist(playlistId: Long){
+        //Agregar cancion a la playlist
         isModalVisible = false
     }
 
@@ -107,8 +108,8 @@ fun Search() {
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(exampleSongs) { song ->
-                    SearchElement(song = song){
-                        mostrarDialog(true)
+                    SongElement(type = TypeSongElement.SEARCH,song = song){
+                        openModal(song)
                     }
                 }
             }
@@ -141,7 +142,7 @@ fun Search() {
                     LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                         items(examplePlaylists){ playlist ->
                            ListDialog(playlist = playlist, activeSong = activeSong){
-                                   mostrarDialog(false)
+                               addToPlaylist(playlistId = playlist.id)
                            }
                         }
                     }
