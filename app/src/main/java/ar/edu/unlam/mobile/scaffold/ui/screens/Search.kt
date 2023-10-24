@@ -1,7 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +36,6 @@ val exampleSongs =
         Song("Misery Business", "Paramore", R.drawable.paramore),
     )
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
 fun Search() {
