@@ -53,7 +53,7 @@ val fakePlaylist = listOf(
 )
 
 @Composable
-fun NavigationView() {
+fun NavigationView(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
