@@ -81,9 +81,10 @@ fun MainScreen() {
         NavHost(navController = controller, startDestination = "home") {
             composable("home") {
                 HomeScreen(
-                    onSearchClick = {/*TODO: cambiar por la implementación*/ },
-                    onFabClick = {/*TODO: cambiar por la implementación*/ },
-                    modifier = Modifier . padding (paddingValue))
+                    onSearchClick = { /*TODO: cambiar por la implementación*/ },
+                    onFabClick = { /*TODO: cambiar por la implementación*/ },
+                    modifier = Modifier.padding(paddingValue),
+                )
             }
             composable(
                 route = "segundo/{id}",
@@ -95,4 +96,3 @@ fun MainScreen() {
         }
     }
 }
-

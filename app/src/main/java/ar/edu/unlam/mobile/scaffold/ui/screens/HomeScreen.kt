@@ -53,7 +53,7 @@ val fakePlaylist = listOf(
 )
 
 @Composable
-fun NavigationView(){
+fun NavigationView() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
@@ -64,7 +64,7 @@ fun NavigationView(){
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
                 },
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
         composable(Routes.Search.name) {
@@ -82,7 +82,7 @@ fun HomeScreen(
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
