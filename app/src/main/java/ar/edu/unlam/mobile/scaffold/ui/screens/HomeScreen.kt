@@ -1,8 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -54,7 +52,6 @@ val fakePlaylist = listOf(
     Playlist(10, "ASMR", R.drawable.album_bubbles),
 )
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
@@ -67,6 +64,7 @@ fun NavigationView() {
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
                 },
+                modifier = Modifier
             )
         }
         composable(Routes.Search.name) {
@@ -79,12 +77,12 @@ fun NavigationView() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun HomeScreen(
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    modifier: Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
@@ -107,7 +105,6 @@ fun HomeScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
 private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) {

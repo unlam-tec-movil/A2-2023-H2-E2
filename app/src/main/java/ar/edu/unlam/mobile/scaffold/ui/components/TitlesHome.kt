@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.ViewAllsOption
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 4343453L)
 @Composable
 fun TitlesHome(

@@ -2,15 +2,20 @@ package ar.edu.unlam.mobile.scaffold
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -18,6 +23,12 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import ar.edu.unlam.mobile.scaffold.ui.screens.HomeScreen
 import ar.edu.unlam.mobile.scaffold.ui.screens.NavigationView
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
@@ -30,7 +41,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("t
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("CoroutineCreationDuringComposition")
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,37 +64,35 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/*@Composable
+@Composable
 fun MainScreen() {
     // Controller es el elemento que nos permite navegar entre pantallas. Tiene las acciones
-    // para navegar como naviegate y también la información de en dónde se "encuentra" el usuario
+    // para navegar como navigate y también la información de en dónde se "encuentra" el usuario
     // a través del back stack
     val controller = rememberNavController()
     Scaffold(
-        bottomBar = { BottomBar(controller = controller) },
+        /*bottomBar = { BottomBar(controller = controller) },*/
         floatingActionButton = {
             IconButton(onClick = { controller.navigate("home") }) {
                 Icon(Icons.Filled.Home, contentDescription = "Home")
             }
         },
     ) { paddingValue ->
-        // NavHost es el componente que funciona como contenedor de los otros componentes que
-        // podrán ser destinos de navegación.
         NavHost(navController = controller, startDestination = "home") {
-            // composable es el componente que se usa para definir un destino de navegación.
-            // Por parámetro recibe la ruta que se utilizará para navegar a dicho destino.
             composable("home") {
-                // Home es el componente en sí que es el destino de navegación.
-                HomeScreen(modifier = Modifier.padding(paddingValue))
+                HomeScreen(
+                    onSearchClick = {/*TODO: cambiar por la implementación*/ },
+                    onFabClick = {/*TODO: cambiar por la implementación*/ },
+                    modifier = Modifier . padding (paddingValue))
             }
             composable(
                 route = "segundo/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.IntType }),
             ) { navBackStackEntry ->
                 val id = navBackStackEntry.arguments?.getInt("id") ?: 1
-                SecondaryScreen(controller = controller, id = id)
+                /*SecondaryScreen(controller = controller, id = id)*/
             }
         }
     }
 }
-*/
+

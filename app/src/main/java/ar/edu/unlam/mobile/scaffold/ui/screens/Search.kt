@@ -38,7 +38,6 @@ val exampleSongs =
         Song("Misery Business", "Paramore", R.drawable.paramore),
     )
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
 fun Search() {
