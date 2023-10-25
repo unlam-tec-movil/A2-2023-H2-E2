@@ -1,9 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.domain.songs.models
 
-import androidx.annotation.DrawableRes
-
 data class Song(
     val title: String,
     val artist: String,
-    @DrawableRes val coverArt: Int,
+    val coverArt: String,
 )

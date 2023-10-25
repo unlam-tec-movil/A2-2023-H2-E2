@@ -8,5 +8,4 @@ data class Tracks(
     val previous: String,
     val total: Int,
     val items: List<SimplifiedTrack>,
-
 )
