@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SearchElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 
@@ -88,7 +88,7 @@ fun Search() {
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(exampleSongs) { song ->
-                    SearchElement(song = song)
+                    SongElement(song = song, onClick = {})
                 }
             }
         }
