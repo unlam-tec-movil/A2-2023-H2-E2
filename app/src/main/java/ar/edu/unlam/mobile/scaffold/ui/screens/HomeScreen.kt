@@ -37,10 +37,10 @@ import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
 val fakePlaylist = listOf(
-    Playlist(1, "Mi Playlist", "https://picsum.photos/200"),
-    Playlist(2, "Rock", "https://picsum.photos/201"),
-    Playlist(3, "Top Hits", "https://picsum.photos/202"),
-    Playlist(4, "Previa", "https://picsum.photos/203"),
+    Playlist(1, "Mi Playlist", "https://picsum.photos/200", songs = listOf()),
+    Playlist(2, "Rock", "https://picsum.photos/201", songs = listOf()),
+    Playlist(3, "Top Hits", "https://picsum.photos/202", songs = listOf()),
+    Playlist(4, "Previa", "https://picsum.photos/203", songs = listOf()),
 )
 
 val fakeSongs = listOf(
