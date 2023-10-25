@@ -34,7 +34,7 @@ import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 
-val fakePlaylist2 = Playlist(9, "Finde", R.drawable.album_beach)
+val fakePlaylist2 = Playlist(9, "Finde", "asd", listOf())
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
@@ -75,7 +75,8 @@ fun PlaylistScreen() {
         ) {
             item {
                 Image(
-                    painter = painterResource(fakePlaylist2.image),
+                    // TODO: cambiar el painterResource por el verdadero
+                    painter = painterResource(R.drawable.album_bubbles),
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(

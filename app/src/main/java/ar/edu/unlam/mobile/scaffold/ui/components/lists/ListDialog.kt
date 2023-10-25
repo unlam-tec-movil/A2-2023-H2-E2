@@ -17,16 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 
-var listaEjemlpo = Playlist(1, "Mi Playlist", R.drawable.ic_default_album1)
+var listaEjemlpo = Playlist(1, "Mi Playlist", "asd", listOf())
 
 @Composable
-@Preview
 fun ListDialog(
     modifier: Modifier = Modifier,
     playlist: Playlist = listaEjemlpo,
@@ -43,7 +41,8 @@ fun ListDialog(
                 .padding(8.dp),
         ) {
             Image(
-                painter = painterResource(id = playlist.image),
+                // TODO: cambiar el painterResource por el verdadero
+                painter = painterResource(id = R.drawable.album_beach),
                 contentDescription = null,
                 modifier = modifier
                     .clip(shape = RoundedCornerShape(10.dp))

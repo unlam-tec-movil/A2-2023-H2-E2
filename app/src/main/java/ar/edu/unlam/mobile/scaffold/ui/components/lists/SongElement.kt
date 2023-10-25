@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,19 +18,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import coil.compose.AsyncImage
 
-val exampleSong: Song = Song("Canción de ejemplo", "Artista de ejemplo", R.drawable.album_bubbles)
+val exampleSong: Song = Song(
+    "Canción de ejemplo",
+    "Artista de ejemplo",
+    "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+)
 
 enum class TypeSongElement {
     SEARCH, ADDED, OTHER
 }
 
 @Composable
-@Preview
 fun SongElement(
     modifier: Modifier = Modifier,
     type: TypeSongElement = TypeSongElement.OTHER,
@@ -47,9 +49,9 @@ fun SongElement(
             .fillMaxWidth(),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = song.coverArt),
-                contentDescription = null,
+            AsyncImage(
+                model = song.coverArt,
+                contentDescription = "Album cover",
                 modifier = modifier
                     .padding(10.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
