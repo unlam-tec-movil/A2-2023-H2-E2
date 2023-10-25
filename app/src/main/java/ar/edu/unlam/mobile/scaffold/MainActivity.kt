@@ -83,6 +83,7 @@ fun MainScreen() {
                 HomeScreen(
                     onSearchClick = { /*TODO: cambiar por la implementación*/ },
                     onFabClick = { /*TODO: cambiar por la implementación*/ },
+                    navController = controller,
                     modifier = Modifier.padding(paddingValue),
                 )
             }

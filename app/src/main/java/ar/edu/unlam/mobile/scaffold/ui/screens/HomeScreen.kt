@@ -9,10 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -58,6 +58,7 @@ fun NavigationView() {
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
             HomeScreen(
+                navController,
                 onSearchClick = {
                     navController.navigate(Routes.Search.name)
                 },
@@ -74,11 +75,15 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
+        composable(Routes.PlaylistScreen.name) {
+            PlaylistScreen()
+        }
     }
 }
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
@@ -88,7 +93,12 @@ fun HomeScreen(
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
 
         when (uiState.homescreenUiState) {
-            is HomescreenUiState.Loading -> CircularProgressIndicator()
+            // is HomescreenUiState.Loading -> CircularProgressIndicator()
+            is HomescreenUiState.Loading -> Body(
+                navController = navController,
+                onSearchClick = onSearchClick,
+                modifier = Modifier.padding(paddingValues),
+            )
             is HomescreenUiState.Error -> {
                 Toast.makeText(
                     LocalContext.current,
@@ -98,6 +108,7 @@ fun HomeScreen(
             }
 
             is HomescreenUiState.Success -> Body(
+                navController = navController,
                 onSearchClick = onSearchClick,
                 modifier = Modifier.padding(paddingValues),
             )
@@ -107,7 +118,7 @@ fun HomeScreen(
 
 @Preview
 @Composable
-private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) {
+private fun Body(modifier: Modifier = Modifier, navController: NavController, onSearchClick: () -> Unit) {
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
             TitlesHome(
@@ -125,7 +136,7 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
             Spacer(modifier = Modifier.height(30.dp))
             LazyRow {
                 items(fakePlaylist) { playlist ->
-                    PlaylistListElement(playlist)
+                    PlaylistListElement(playlist, navController = navController)
                 }
             }
             Text(
@@ -135,12 +146,14 @@ private fun Body(modifier: Modifier = Modifier, onSearchClick: () -> Unit = {}) 
                 color = Color.White,
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
             )
-            LazyHorizontalGrid(
+            LazyVerticalGrid(
                 GridCells.Fixed(2),
-                Modifier.height(270.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
             ) {
                 items(fakePlaylist) { playlist ->
-                    PlaylistListElement(playlist)
+                    PlaylistListElement(playlist, true, true, navController = navController)
                 }
             }
         }

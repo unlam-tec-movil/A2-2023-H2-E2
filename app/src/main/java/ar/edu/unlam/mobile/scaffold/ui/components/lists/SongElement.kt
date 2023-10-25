@@ -26,9 +26,18 @@ import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 
 val exampleSong: Song = Song("Canción de ejemplo", "Artista de ejemplo", R.drawable.album_bubbles)
 
+enum class TypeSongElement {
+    SEARCH, ADDED, OTHER
+}
+
 @Composable
 @Preview
-fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong) {
+fun SongElement(
+    modifier: Modifier = Modifier,
+    type: TypeSongElement = TypeSongElement.OTHER,
+    song: Song = exampleSong,
+    onClick: (song: Song) -> Unit,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -60,7 +69,7 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong) {
             }
         }
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = { onClick(song) },
             modifier = Modifier
                 .padding(end = 30.dp)
                 .clip(RoundedCornerShape(50.dp))
@@ -68,7 +77,10 @@ fun SearchElement(modifier: Modifier = Modifier, song: Song = exampleSong) {
                 .size(35.dp),
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.baseline_add_24),
+                painter = painterResource(
+                    id =
+                    if (type == TypeSongElement.ADDED) { R.drawable.baseline_more_horiz_24 } else if (type == TypeSongElement.SEARCH) { R.drawable.baseline_add_24 } else { R.drawable.baseline_add_24 },
+                ),
                 contentDescription = null,
                 tint = Color.White,
                 modifier = modifier.size(25.dp),
