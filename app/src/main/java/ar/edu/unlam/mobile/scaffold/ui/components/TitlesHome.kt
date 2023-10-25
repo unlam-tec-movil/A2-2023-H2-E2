@@ -1,7 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.ViewAllsOption
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview(showBackground = true, showSystemUi = true, backgroundColor = 4343453L)
 @Composable
 fun TitlesHome(

@@ -75,7 +75,6 @@ val examplePlaylists = listOf(
     Playlist(10, "ASMR", R.drawable.album_bubbles)
 )
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
 fun Search() {
