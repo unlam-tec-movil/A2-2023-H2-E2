@@ -1,7 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +15,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,24 +72,23 @@ val examplePlaylists = listOf(
     Playlist(7, "Trap", R.drawable.album_party),
     Playlist(8, "Para Programar", R.drawable.album_computer),
     Playlist(9, "Finde", R.drawable.album_beach),
-    Playlist(10, "ASMR", R.drawable.album_bubbles)
+    Playlist(10, "ASMR", R.drawable.album_bubbles),
 )
 
 @Preview
 @Composable
 fun Search() {
-
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val screenWidthDp = configuration.screenWidthDp
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Song>(exampleSongs[0]) }
 
-    fun openModal(song:Song) {
+    fun openModal(song: Song) {
         isModalVisible = true
     }
-    fun addToPlaylist(playlistId: Long){
-        //Agregar cancion a la playlist
+    fun addToPlaylist(playlistId: Long) {
+        // Agregar cancion a la playlist
         isModalVisible = false
     }
 
@@ -107,48 +106,45 @@ fun Search() {
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(exampleSongs) { song ->
-                    SongElement(type = TypeSongElement.SEARCH,song = song){
+                    SongElement(type = TypeSongElement.SEARCH, song = song) {
                         openModal(song)
                     }
                 }
             }
         }
     }
-    if(isModalVisible) {
+    if (isModalVisible) {
         Dialog(
             onDismissRequest = {},
             properties = DialogProperties(
-                usePlatformDefaultWidth = false
-            )
-        ){
-                Column (
+                usePlatformDefaultWidth = false,
+            ),
+        ) {
+            Column(
+                modifier = Modifier
+                    .background((MaterialTheme.colorScheme.onPrimaryContainer))
+                    .padding(16.dp)
+                    .clip(shape = RoundedCornerShape(16.dp))
+                    .height(((screenHeightDp * 0.8)).dp)
+                    .width((screenWidthDp * 0.8).dp),
+            ) {
+                Text(
+                    text = "Agregar a una lista",
+                    fontSize = 24.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .background((MaterialTheme.colorScheme.onPrimaryContainer))
-                        .padding(16.dp)
-                        .clip(shape = RoundedCornerShape(16.dp))
-                        .height(((screenHeightDp * 0.8)).dp)
-                        .width((screenWidthDp * 0.8).dp)
+                        .padding(vertical = 12.dp),
                 )
-                {
-                    Text(
-                        text = "Agregar a una lista",
-                        fontSize = 24.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.
-                        padding(vertical = 12.dp)
-                    )
-                    LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                        items(examplePlaylists){ playlist ->
-                           ListDialog(playlist = playlist, activeSong = activeSong){
-                               addToPlaylist(playlistId = playlist.id)
-                           }
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
+                    items(examplePlaylists) { playlist ->
+                        ListDialog(playlist = playlist, activeSong = activeSong) {
+                            addToPlaylist(playlistId = playlist.id)
                         }
                     }
                 }
-            //MySnackBar()
+            }
+            // MySnackBar()
         }
     }
-
-
 }

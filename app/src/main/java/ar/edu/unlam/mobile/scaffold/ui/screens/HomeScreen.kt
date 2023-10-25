@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -64,7 +63,6 @@ fun NavigationView() {
                     navController.navigate(Routes.Search.name)
                 },
                 onFabClick = {
-
                     navController.navigate(Routes.CreatePlaylist.name)
                 },
                 modifier = Modifier,
@@ -77,7 +75,7 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
-        composable(Routes.PlaylistScreen.name){
+        composable(Routes.PlaylistScreen.name) {
             PlaylistScreen()
         }
     }
@@ -95,11 +93,11 @@ fun HomeScreen(
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
 
         when (uiState.homescreenUiState) {
-            //is HomescreenUiState.Loading -> CircularProgressIndicator()
+            // is HomescreenUiState.Loading -> CircularProgressIndicator()
             is HomescreenUiState.Loading -> Body(
                 navController = navController,
                 onSearchClick = onSearchClick,
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             )
             is HomescreenUiState.Error -> {
                 Toast.makeText(
@@ -152,7 +150,7 @@ private fun Body(modifier: Modifier = Modifier, navController: NavController, on
                 GridCells.Fixed(2),
                 Modifier
                     .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
+                    .align(Alignment.CenterHorizontally),
             ) {
                 items(fakePlaylist) { playlist ->
                     PlaylistListElement(playlist, true, true, navController = navController)

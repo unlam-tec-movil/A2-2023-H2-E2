@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,9 +16,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.*
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -39,30 +39,28 @@ val fakePlaylist2 = Playlist(9, "Finde", R.drawable.album_beach)
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
 @Composable
-fun PlaylistScreen (){
-
-    var imagenPlegada = remember { mutableStateOf<Boolean>(false) };
+fun PlaylistScreen() {
+    var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Song?>(null) }
 
-    fun openModal (song:Song){
+    fun openModal(song: Song) {
         activeSong = song
         isModalVisible = true
     }
 
-    fun removeFromPlaylist(){
-        //eliminar cancion de la playlist
+    fun removeFromPlaylist() {
+        // eliminar cancion de la playlist
         isModalVisible = false
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
-
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
                 Log.i("Tag", "El scroll está en progreso")
                 imagenPlegada.value = true
-            }else{
+            } else {
                 imagenPlegada.value = false
             }
         }
@@ -73,45 +71,45 @@ fun PlaylistScreen (){
                 .padding(horizontal = 16.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(15.dp)
-        ){
-           item{
-               Image(
-                   painter = painterResource(fakePlaylist2.image),
-                   contentDescription = "Imagen de muestra",
-                   modifier = Modifier
-                       .height(
-                           if (imagenPlegada.value) {
-                               120.dp
-                           } else {
-                               270.dp
-                           }
-                       )
-                       .width(
-                           if (imagenPlegada.value) {
-                               120.dp
-                           } else {
-                               270.dp
-                           }
-                       )
-                       .padding(vertical = 20.dp, horizontal = 12.dp)
-                       //.animateContentSize { initialValue, targetValue ->  }
-                   ,contentScale = ContentScale.FillBounds,
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
+            item {
+                Image(
+                    painter = painterResource(fakePlaylist2.image),
+                    contentDescription = "Imagen de muestra",
+                    modifier = Modifier
+                        .height(
+                            if (imagenPlegada.value) {
+                                120.dp
+                            } else {
+                                270.dp
+                            },
+                        )
+                        .width(
+                            if (imagenPlegada.value) {
+                                120.dp
+                            } else {
+                                270.dp
+                            },
+                        )
+                        .padding(vertical = 20.dp, horizontal = 12.dp),
+                    // .animateContentSize { initialValue, targetValue ->  }
+                    contentScale = ContentScale.FillBounds,
 
-                   )
-           }
+                )
+            }
             items(exampleSongs) { song ->
-                SongElement(type = TypeSongElement.ADDED, song = song){
+                SongElement(type = TypeSongElement.ADDED, song = song) {
                     openModal(song)
                 }
             }
         }
     }
-    if(isModalVisible){
+    if (isModalVisible) {
         AlertDialog(
             onDismissRequest = {},
-            title = { Text(text = "Eliminar cancion")},
-            text = { Text(text = "Queres eliminar esta cancion de esta lista")},
+            title = { Text(text = "Eliminar cancion") },
+            text = { Text(text = "Queres eliminar esta cancion de esta lista") },
             confirmButton = {
                 Button(
                     onClick = {
@@ -119,7 +117,7 @@ fun PlaylistScreen (){
                     },
                     content = {
                         Text(text = "Aceptar", color = Color.White)
-                    }
+                    },
                 )
             },
             dismissButton = {
@@ -129,9 +127,9 @@ fun PlaylistScreen (){
                     },
                     content = {
                         Text(text = "Cancelar", color = Color.White)
-                    }
+                    },
                 )
-            }
+            },
         )
     }
 }

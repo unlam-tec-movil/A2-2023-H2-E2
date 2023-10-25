@@ -29,14 +29,15 @@ val exampleSong: Song = Song("Canción de ejemplo", "Artista de ejemplo", R.draw
 enum class TypeSongElement {
     SEARCH, ADDED, OTHER
 }
+
 @Composable
 @Preview
 fun SongElement(
     modifier: Modifier = Modifier,
     type: TypeSongElement = TypeSongElement.OTHER,
     song: Song = exampleSong,
-    onClick: (song:Song) -> Unit)
-{
+    onClick: (song: Song) -> Unit,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -76,10 +77,9 @@ fun SongElement(
                 .size(35.dp),
         ) {
             Icon(
-                painter = painterResource(id =
-                if(type == TypeSongElement.ADDED) { R.drawable.baseline_more_horiz_24 }
-                else if(type == TypeSongElement.SEARCH){ R.drawable.baseline_add_24 }
-                else{R.drawable.baseline_add_24}
+                painter = painterResource(
+                    id =
+                    if (type == TypeSongElement.ADDED) { R.drawable.baseline_more_horiz_24 } else if (type == TypeSongElement.SEARCH) { R.drawable.baseline_add_24 } else { R.drawable.baseline_add_24 },
                 ),
                 contentDescription = null,
                 tint = Color.White,

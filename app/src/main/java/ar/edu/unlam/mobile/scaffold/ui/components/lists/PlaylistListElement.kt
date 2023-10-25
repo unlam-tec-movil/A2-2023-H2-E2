@@ -17,9 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
@@ -31,22 +31,23 @@ var playlistTest = Playlist(1, "Mi Playlist", R.drawable.ic_default_album1)
 @Preview
 fun PlaylistListElement(
     playlist: Playlist = playlistTest,
-    mostrarTitulo:Boolean = true,
+    mostrarTitulo: Boolean = true,
     fullWidth: Boolean = false,
     navController: NavController,
-    modifier: Modifier = Modifier) {
-
+    modifier: Modifier = Modifier,
+) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
-    fun onPlaylistClick (){
+    fun onPlaylistClick() {
         navController.navigate(Routes.PlaylistScreen.name)
     }
-    Column(modifier = modifier
-        .padding(end = 10.dp, bottom = 10.dp)
-        .wrapContentHeight()
-        .then(modifier.clickable { onPlaylistClick() }))
-    {
+    Column(
+        modifier = modifier
+            .padding(end = 10.dp, bottom = 10.dp)
+            .wrapContentHeight()
+            .then(modifier.clickable { onPlaylistClick() }),
+    ) {
         Image(
             painter = painterResource(id = playlist.image),
             contentDescription = null,
@@ -55,13 +56,14 @@ fun PlaylistListElement(
                 .clip(RoundedCornerShape(5.dp))
                 .width(if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
                 .height(if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         )
-        if(mostrarTitulo) {
-            Text(text = playlist.title,
+        if (mostrarTitulo) {
+            Text(
+                text = playlist.title,
                 style = MaterialTheme.typography.labelLarge,
-                color = Color.White)
+                color = Color.White,
+            )
         }
-
     }
 }
