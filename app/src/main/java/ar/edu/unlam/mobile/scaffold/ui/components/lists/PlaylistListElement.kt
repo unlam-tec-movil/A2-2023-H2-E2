@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,19 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
+import coil.compose.AsyncImage
 
 @Composable
-fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {
+fun PlaylistListElement(title: String, image: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .padding(end = 10.dp, bottom = 10.dp)
             .wrapContentHeight(),
     ) {
-        Image(
-            painter = painterResource(id = playlist.image),
+        AsyncImage(
+            model = image,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
@@ -35,7 +33,7 @@ fun PlaylistListElement(playlist: Playlist, modifier: Modifier = Modifier) {
                 .height(150.dp),
         )
         Text(
-            text = playlist.title,
+            text = title,
             style = MaterialTheme.typography.labelLarge,
             color = Color.White,
         )

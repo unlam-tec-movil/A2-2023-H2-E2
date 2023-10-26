@@ -1,7 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,27 +16,61 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SearchElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 
 val exampleSongs =
     listOf(
-        Song("Revolution Radio", "Green Day", R.drawable.greenday),
-        Song("Hoy Estoy Raro", "El Cuarteto De Nos", R.drawable.nos),
-        Song("Paradise", "Coldplay", R.drawable.coldplay),
-        Song("Paper Wings", "Rise Against", R.drawable.riseagainst),
-        Song("By the Way", "Red Hot Chili Peppers", R.drawable.rhcp),
-        Song("Toxicity", "System Of A Down", R.drawable.soad),
-        Song("Radioactive", "Imagine Dragons", R.drawable.imaginedragons),
-        Song("Numb", "Linkin Park", R.drawable.linkinpark),
-        Song("The Hell Song", "Sum 41", R.drawable.sum41),
-        Song("Misery Business", "Paramore", R.drawable.paramore),
+        Song(
+            "Revolution Radio",
+            "Green Day",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "Hoy Estoy Raro",
+            "El Cuarteto De Nos",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song("Paradise", "Coldplay", "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg"),
+        Song(
+            "Paper Wings",
+            "Rise Against",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "By the Way",
+            "Red Hot Chili Peppers",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "Toxicity",
+            "System Of A Down",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "Radioactive",
+            "Imagine Dragons",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "Numb",
+            "Linkin Park",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "The Hell Song",
+            "Sum 41",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
+        Song(
+            "Misery Business",
+            "Paramore",
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+        ),
     )
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Preview
 @Composable
 fun Search() {
@@ -56,7 +88,7 @@ fun Search() {
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(exampleSongs) { song ->
-                    SearchElement(song = song)
+                    SongElement(song = song, onClick = {})
                 }
             }
         }
