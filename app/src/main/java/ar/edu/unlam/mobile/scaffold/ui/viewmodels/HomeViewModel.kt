@@ -36,7 +36,7 @@ data class SongsUIState(
 data class TrackUIState(
     val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
-    val error: String = ""
+    val error: String = "",
 )
 
 @HiltViewModel

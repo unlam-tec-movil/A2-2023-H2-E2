@@ -1,8 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.domain.track.services
 
-import ar.edu.unlam.mobile.scaffold.data.kitty.repository.KittyRepository
 import ar.edu.unlam.mobile.scaffold.data.track.repository.TrackRepository
-import ar.edu.unlam.mobile.scaffold.domain.kitty.models.Kitty
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
