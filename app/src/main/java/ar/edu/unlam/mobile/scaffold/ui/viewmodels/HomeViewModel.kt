@@ -9,9 +9,9 @@ import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.domain.songs.service.SearchGetter
 import ar.edu.unlam.mobile.scaffold.domain.songs.service.SongsGetter
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
-import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_CREDENTIALS
-import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_ID
-import ar.edu.unlam.mobile.scaffold.utils.constans.CLIENT_SECRET
+import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_CREDENTIALS
+import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_ID
+import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_SECRET
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
