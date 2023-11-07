@@ -3,13 +3,14 @@ package ar.edu.unlam.mobile.scaffold.db.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ar.edu.unlam.mobile.scaffold.db.entity.Track
 
 @Dao
 interface TrackDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playlist: Track)
 
     @Delete
