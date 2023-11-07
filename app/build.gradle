@@ -61,11 +61,10 @@ dependencies {
     def nav_version = "2.7.4"
     def hilt_version = "2.47"
     def retrofit_version = "2.9.0"
-
+    def room_version = "2.6.0"
 
     // Corrutinas
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-
 
     // Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
@@ -84,6 +83,10 @@ dependencies {
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
