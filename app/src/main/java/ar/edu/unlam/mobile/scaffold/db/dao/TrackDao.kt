@@ -19,7 +19,7 @@ interface TrackDao {
     @Update
     fun update(playlist: Track)
 
-    @Query("SELECT * FROM track WHERE id=:id")
+    @Query("SELECT * FROM track WHERE trackId=:id")
     fun get(id: Long): Track
 
     @Query("SELECT * FROM track")
