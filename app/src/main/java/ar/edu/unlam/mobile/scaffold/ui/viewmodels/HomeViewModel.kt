@@ -7,8 +7,8 @@ import ar.edu.unlam.mobile.scaffold.data.authorization.models.AuthorizationRespo
 import ar.edu.unlam.mobile.scaffold.data.authorization.network.AuthorizationAPI
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.domain.songs.service.SearchGetter
-import ar.edu.unlam.mobile.scaffold.domain.songs.service.SongsGetter
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.track.services.TrackGetter
 import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_CREDENTIALS
 import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_ID
 import ar.edu.unlam.mobile.scaffold.utils.constants.CLIENT_SECRET
@@ -27,14 +27,8 @@ data class PlaylistUIState(
     val error: String = "",
 )
 
-data class SongsUIState(
-    val songs: List<Song> = emptyList(),
-    val loading: Boolean = true,
-    val error: String = "",
-)
-
-data class TrackUIState(
-    val tracks: List<Track> = emptyList(),
+data class TrendsUIState(
+    val tracks: List<Track> = listOf(Track("", "", ""), Track("", "", "")),
     val loading: Boolean = true,
     val error: String = "",
 )
@@ -42,56 +36,29 @@ data class TrackUIState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val searchGetter: SearchGetter,
-    val songsGetter: SongsGetter,
+    val trackGetter: TrackGetter,
 ) : ViewModel() {
-
-    // Mutable State Flow contiene un objeto de estado mutable. Simplifica la operación de actualización de
-    // información y de manejo de estados de una aplicación: Cargando, Error, Éxito.
-    // (https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
-    // _Kitty State es el estado del componente "Kitty" inicializado como "Cargando"
-
-    private val _songUiState = MutableStateFlow(SongsUIState())
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
-
-    // UI expone el estado anterior como un Flujo de Estado de solo lectura.
-    // Esto impide que se pueda modificar el estado desde fuera del ViewModel.
+    private val _trendsUiState = MutableStateFlow(TrendsUIState())
     val playlistUiState = _playlistUiState.asStateFlow()
-
-    val songUIState = _songUiState.asStateFlow()
+    val trendsUiState = _trendsUiState.asStateFlow()
 
     init {
-        // getAuthorization()
-        getTrendingSongs()
+//        getAuthorization()
+        getTrendingTracks()
     }
 
-    private fun getTrendingSongs() {
+    private fun getTrendingTracks() {
         viewModelScope.launch {
-            songsGetter.getTrendingSongs()
+            trackGetter.getTrendingTracks()
                 .catch {
-                    _songUiState.value = _songUiState.value.copy(error = it.message ?: "Error")
+                    _trendsUiState.value = _trendsUiState.value.copy(error = it.message ?: "Error")
                 }
                 .collect {
-                    _songUiState.value = _songUiState.value.copy(songs = it, loading = false)
+                    _trendsUiState.value = _trendsUiState.value.copy(tracks = it, loading = false)
                 }
         }
     }
-
-    // Todo, borrar
-    //    private fun getSearchResults() {
-    //        viewModelScope.launch {
-    //            val accessToken = getAuthorization()
-    //
-    //            if (accessToken != "Error") {
-    //                searchGetter.getSearchResults("Nirvana", accessToken = "Bearer $accessToken")
-    //                    .collect {
-    //                        _uiState.value = HomeUIState(PlaylistUIState.Success(it))
-    //                        Log.i("Search API Model", it.toString())
-    //                    }
-    //            } else {
-    //                Log.i("Access Token", accessToken)
-    //            }
-    //        }
-    //    }
 
     fun getAuthorization(): String {
         var bodyResponse: AuthorizationResponse? = null

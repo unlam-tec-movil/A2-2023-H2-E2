@@ -1,15 +1,14 @@
-package ar.edu.unlam.mobile.scaffold.data.apiObjects
+package ar.edu.unlam.mobile.scaffold.data.apimodels
 
-import ar.edu.unlam.mobile.scaffold.data.artist.network.ArtistApiModel
 import com.google.gson.annotations.SerializedName
 
 data class Album(
     @SerializedName("album_type")
     val albumType: String,
-    @SerializedName("total_tracks")
-    val totalTracks: Int,
+    val artists: List<ArtistAPIModel>,
     @SerializedName("available_markets")
     val availableMarkets: List<String>,
+    @SerializedName("external_urls")
     val externalUrls: ExternalUrls,
     val href: String,
     val id: String,
@@ -19,8 +18,8 @@ data class Album(
     val releaseDate: String,
     @SerializedName("release_date_precision")
     val releaseDatePrecision: String,
-    val restrictions: Restriction,
+    @SerializedName("total_tracks")
+    val totalTracks: Long,
     val type: String,
     val uri: String,
-    val artists: List<ArtistApiModel>,
 )

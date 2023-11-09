@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.playlist.models
 
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.PlaylistItem
+import ar.edu.unlam.mobile.scaffold.data.apimodels.PlaylistItem
 
 data class PlaylistDTO(
     val href: String,

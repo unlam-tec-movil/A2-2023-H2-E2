@@ -8,18 +8,6 @@ import javax.inject.Singleton
 
 @Singleton
 class TrackMockService @Inject constructor() : TrackGetter {
-    override suspend fun getTrack(): Flow<Track> {
-        return flow {
-            emit(
-                Track(
-                    title = "Basket Case",
-                    artist = "Green Day",
-                    image = "https://upload.wikimedia.org/wikipedia/en/4/4b/Green_Day_-_Dookie_cover.jpg",
-                ),
-            )
-        }
-    }
-
     override suspend fun getTrackById(id: Int): Flow<Track> {
         return flow {
             emit(
@@ -27,6 +15,25 @@ class TrackMockService @Inject constructor() : TrackGetter {
                     title = "In Da Club",
                     artist = "50 Cent",
                     image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                ),
+            )
+        }
+    }
+
+    override suspend fun getTrendingTracks(): Flow<List<Track>> {
+        return flow {
+            emit(
+                listOf(
+                    Track(
+                        title = "In Da Club",
+                        artist = "50 Cent",
+                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                    ),
+                    Track(
+                        title = "In Da Club",
+                        artist = "50 Cent",
+                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                    ),
                 ),
             )
         }

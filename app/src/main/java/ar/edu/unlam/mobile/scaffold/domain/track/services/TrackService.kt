@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TrackService @Inject constructor(val repository: TrackRepository) : TrackGetter {
-    override suspend fun getTrack(): Flow<Track> {
-        return this.repository.getTrack()
-    }
-
     override suspend fun getTrackById(id: Int): Flow<Track> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrendingTracks(): Flow<List<Track>> {
+        return this.repository.getTrendingTracks()
     }
 }

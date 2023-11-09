@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,7 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
@@ -41,14 +40,6 @@ val fakePlaylist = listOf(
     Playlist(2, "Rock", "https://picsum.photos/201", songs = listOf()),
     Playlist(3, "Top Hits", "https://picsum.photos/202", songs = listOf()),
     Playlist(4, "Previa", "https://picsum.photos/203", songs = listOf()),
-)
-
-val fakeSongs = listOf(
-    Song(
-        "Canción de ejemplo",
-        "Artista de ejemplo",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
 )
 
 @Composable
@@ -83,18 +74,18 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier,
 ) {
-    val songsUIState by viewModel.songUIState.collectAsState()
+    val trendsUiState by viewModel.trendsUiState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
-        if (songsUIState.loading) {
-            CircularProgressIndicator()
-        } else {
-            Body(
-                playlist = fakePlaylist,
-                trendingSongs = songsUIState.songs,
-                onSearchClick = onSearchClick,
-                modifier = Modifier.padding(paddingValues),
-            )
-        }
+//        if (trackUiState.loading) {
+//            CircularProgressIndicator()
+//        } else {
+        Body(
+            playlist = fakePlaylist,
+            trendingTracks = trendsUiState.tracks,
+            onSearchClick = onSearchClick,
+            modifier = Modifier.padding(paddingValues),
+        )
+//        }
     }
 }
 
@@ -103,14 +94,14 @@ fun HomeScreen(
 private fun BodyPreview() {
     Body(
         playlist = fakePlaylist,
-        trendingSongs = fakeSongs,
+        trendingTracks = listOf(Track("", "", ""), Track("", "", "")),
     )
 }
 
 @Composable
 private fun Body(
     playlist: List<Playlist>,
-    trendingSongs: List<Song>,
+    trendingTracks: List<Track>,
     modifier: Modifier = Modifier,
     onSearchClick: () -> Unit = {},
 ) {
@@ -145,8 +136,8 @@ private fun Body(
                 GridCells.Fixed(2),
                 Modifier.height(270.dp),
             ) {
-                items(trendingSongs) { song ->
-                    PlaylistListElement(song.title, song.coverArt)
+                items(trendingTracks) { track ->
+                    PlaylistListElement(track.title, track.image)
                 }
             }
         }
