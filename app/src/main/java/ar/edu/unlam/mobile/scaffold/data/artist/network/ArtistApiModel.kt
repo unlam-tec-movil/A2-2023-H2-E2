@@ -1,8 +1,8 @@
 package ar.edu.unlam.mobile.scaffold.data.artist.network
 
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.ExternalUrls
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.Followers
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.Image
+import ar.edu.unlam.mobile.scaffold.data.apimodels.ExternalUrls
+import ar.edu.unlam.mobile.scaffold.data.apimodels.Followers
+import ar.edu.unlam.mobile.scaffold.data.apimodels.Image
 import com.google.gson.annotations.SerializedName
 
 data class ArtistApiModel(

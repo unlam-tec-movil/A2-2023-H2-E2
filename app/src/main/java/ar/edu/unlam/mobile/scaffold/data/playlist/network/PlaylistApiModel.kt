@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.playlist.network
 
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.PlaylistItem
+import ar.edu.unlam.mobile.scaffold.data.apimodels.PlaylistItem
 import ar.edu.unlam.mobile.scaffold.data.playlist.models.PlaylistDTO
 
 data class PlaylistApiModel(

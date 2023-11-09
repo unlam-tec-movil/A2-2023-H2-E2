@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TrackDefaultRepository @Inject constructor(val networkRepository: TrackNetworkRepository) :
     TrackRepository {
-    override suspend fun getTrack(): Flow<Track> {
-        return this.networkRepository.getRandomTrack().map { it.toTrack() }
+    override suspend fun getTrendingTracks(): Flow<List<Track>> {
+        return this.networkRepository.getTrendingTracks().map { it.tracks.items.map { it.track.toTrack() } }
     }
 }

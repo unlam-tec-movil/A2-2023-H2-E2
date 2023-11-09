@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.data.apiObjects
+package ar.edu.unlam.mobile.scaffold.data.apimodels
 
 data class SimplifiedArtist(
     val externalUrls: ExternalUrls,

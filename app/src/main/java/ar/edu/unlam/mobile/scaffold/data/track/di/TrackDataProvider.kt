@@ -18,7 +18,7 @@ object TrackDataProvider {
     fun provideTrackAPI(gson: Gson): TrackAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("https://api.spotify.com/v1")
+            .baseUrl("https://api.spotify.com/")
             .build()
             .create(TrackAPI::class.java)
     }
