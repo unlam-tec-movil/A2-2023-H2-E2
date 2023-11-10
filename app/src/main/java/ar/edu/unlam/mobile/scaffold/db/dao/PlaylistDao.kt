@@ -18,7 +18,7 @@ interface PlaylistDao {
 
     @Delete
     fun delete(playlist: Playlist)
-
+<
     @Update
     fun update(playlist: Playlist)
 
@@ -46,7 +46,7 @@ interface PlaylistDao {
     @Query("SELECT * FROM playlist LIMIT :limit")
     fun getAllPlaylistsWithTracks(limit: Int): List<PlaylistWithTracks>
 
-    @Transaction
-    @Query("DELETE FROM playlist WHERE spotifyId =:trackId")
-    fun removeTrack(trackId: String)
+    // @Transaction
+    // @Query("DELETE FROM playlist WHERE spotifyId =:trackId")
+    // fun removeTrack(trackId: String)
 }
