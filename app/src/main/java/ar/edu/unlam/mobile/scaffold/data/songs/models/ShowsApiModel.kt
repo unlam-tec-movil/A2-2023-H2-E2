@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.songs.models
 
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.ShowItem
+import ar.edu.unlam.mobile.scaffold.data.apimodels.ShowItem
 
 data class ShowsApiModel(
     val href: String,

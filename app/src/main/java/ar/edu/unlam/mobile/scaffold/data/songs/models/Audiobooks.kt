@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.songs.models
 
-import ar.edu.unlam.mobile.scaffold.data.apiObjects.AudiobookItem
+import ar.edu.unlam.mobile.scaffold.data.apimodels.AudiobookItem
 
 data class Audiobooks(
     val href: String,
