@@ -19,10 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,10 +30,6 @@ import ar.edu.unlam.mobile.scaffold.ui.screens.NavigationView
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("token_api")
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -51,12 +44,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val viewModel: HomeViewModel by viewModels()
 
-                    val authorizationToken = viewModel.getAuthorization()
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        dataStore.edit { preferences ->
-                            preferences[stringPreferencesKey("token_api")] = authorizationToken
-                        }
-                    }
+//                    val authorizationToken = viewModel.getAuthorization()
+//                    lifecycleScope.launch(Dispatchers.IO) {
+//                        dataStore.edit { preferences ->
+//                            preferences[stringPreferencesKey("token_api")] = authorizationToken
+//                        }
+//                    }
                     NavigationView()
                 }
             }
