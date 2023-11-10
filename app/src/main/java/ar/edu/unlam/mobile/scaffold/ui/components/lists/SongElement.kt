@@ -45,7 +45,7 @@ fun SongElement(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
-            //.clip(shape = RoundedCornerShape(5.dp))
+            // .clip(shape = RoundedCornerShape(5.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
             .fillMaxWidth(),
     ) {

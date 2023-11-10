@@ -94,7 +94,6 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
                     .clip(shape = RoundedCornerShape(8.dp)),
-
                 )
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
@@ -105,7 +104,9 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
                             artist = track.artist,
                             coverArt = track.image,
                             title = track.title
-                        ), onClick = {})
+                        ),
+                        onClick = {}
+                    )
                 }
             }
         }

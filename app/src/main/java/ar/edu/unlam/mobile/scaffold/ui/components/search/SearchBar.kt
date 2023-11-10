@@ -6,15 +6,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +26,6 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
-
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -34,11 +33,9 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
     var queryState by remember { mutableStateOf("") }
     var searchBarIsActive by remember { mutableStateOf(false) }
 
-
     val elementsColorValue = Color.White
 
     val localManager = LocalSoftwareKeyboardController.current
-
 
     SearchBar(
         query = queryState,

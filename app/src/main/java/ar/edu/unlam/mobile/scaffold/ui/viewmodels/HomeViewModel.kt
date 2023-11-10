@@ -28,7 +28,7 @@ data class PlaylistUIState(
 )
 
 data class TrendsUIState(
-    val tracks: List<Track> = listOf(Track("", "", ""), Track("", "", "")),
+    val tracks: List<Track> = listOf(Track("", "", "", ""), Track("", "", "", "")),
     val loading: Boolean = true,
     val error: String = "",
 )
@@ -39,7 +39,6 @@ data class TrackUiState(
     val error: String = ""
 )
 
-
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val searchGetter: SearchGetter,
@@ -48,7 +47,6 @@ class HomeViewModel @Inject constructor(
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
     private val _trackUiState = MutableStateFlow(TrackUiState())
-
 
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()

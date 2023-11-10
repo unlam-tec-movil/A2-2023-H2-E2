@@ -47,6 +47,6 @@ interface PlaylistDao {
     fun getAllPlaylistsWithTracks(limit: Int): List<PlaylistWithTracks>
 
     @Transaction
-    @Query("DELETE FROM playlist WHERE trackId =:trackId")
-    fun removeTrack(trackId: Long)
+    @Query("DELETE FROM playlist WHERE spotifyId =:trackId")
+    fun removeTrack(trackId: String)
 }
