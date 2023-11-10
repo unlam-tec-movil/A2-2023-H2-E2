@@ -53,8 +53,7 @@ class HomeViewModel @Inject constructor(
     val trackUiState = _trackUiState.asStateFlow()
 
     init {
-
-        //getAuthorization()
+        // getAuthorization()
         getTrendingTracks()
     }
 
@@ -102,7 +101,6 @@ class HomeViewModel @Inject constructor(
                 Log.i("Tipo de token de respuesta", "${bodyResponse?.tokenType}")
             } else {
                 Log.i("FALLA TOKEN API", "NO se obtuvo respuesta")
-
             }
         }
 
