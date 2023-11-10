@@ -27,6 +27,7 @@ val exampleSong: Song = Song(
     "Canción de ejemplo",
     "Artista de ejemplo",
     "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk"
 )
 
 enum class TypeSongElement {
@@ -44,7 +45,7 @@ fun SongElement(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
-            .clip(shape = RoundedCornerShape(10.dp))
+            //.clip(shape = RoundedCornerShape(5.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
             .fillMaxWidth(),
     ) {
@@ -81,7 +82,13 @@ fun SongElement(
             Icon(
                 painter = painterResource(
                     id =
-                    if (type == TypeSongElement.ADDED) { R.drawable.baseline_more_horiz_24 } else if (type == TypeSongElement.SEARCH) { R.drawable.baseline_add_24 } else { R.drawable.baseline_add_24 },
+                    if (type == TypeSongElement.ADDED) {
+                        R.drawable.baseline_more_horiz_24
+                    } else if (type == TypeSongElement.SEARCH) {
+                        R.drawable.baseline_add_24
+                    } else {
+                        R.drawable.baseline_add_24
+                    },
                 ),
                 contentDescription = null,
                 tint = Color.White,

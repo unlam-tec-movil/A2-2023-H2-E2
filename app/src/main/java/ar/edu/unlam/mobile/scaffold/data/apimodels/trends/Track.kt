@@ -11,7 +11,7 @@ data class Track(
         return Track(
             title = name,
             artist = artists[0].name,
-            image = album.images[0].url,
+            image = album.images[0].url
         )
     }
 }

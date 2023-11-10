@@ -4,4 +4,5 @@ data class Track(
     val title: String,
     val artist: String,
     val image: String,
+    val srcSpotify: String = "",
 )

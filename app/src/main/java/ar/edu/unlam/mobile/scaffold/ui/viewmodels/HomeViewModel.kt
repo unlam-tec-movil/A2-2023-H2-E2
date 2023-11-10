@@ -33,6 +33,13 @@ data class TrendsUIState(
     val error: String = "",
 )
 
+data class TrackUiState(
+    val tracks: List<Track> = emptyList(),
+    val loading: Boolean = true,
+    val error: String = ""
+)
+
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val searchGetter: SearchGetter,
@@ -40,12 +47,30 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
+    private val _trackUiState = MutableStateFlow(TrackUiState())
+
+
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()
+    val trackUiState = _trackUiState.asStateFlow()
 
     init {
-//        getAuthorization()
+
+        //getAuthorization()
         getTrendingTracks()
+    }
+
+    fun getTrackBySearchBar(query: String) {
+        viewModelScope.launch {
+            searchGetter.getSearchResults(query = query)
+                .catch {
+                    Log.i("Error en la llamada de api", "")
+                    _trackUiState.value = TrackUiState(error = it.message.orEmpty())
+                }
+                .collect { tracks ->
+                    _trackUiState.value = TrackUiState(tracks = tracks)
+                }
+        }
     }
 
     private fun getTrendingTracks() {
@@ -79,8 +104,7 @@ class HomeViewModel @Inject constructor(
                 Log.i("Tipo de token de respuesta", "${bodyResponse?.tokenType}")
             } else {
                 Log.i("FALLA TOKEN API", "NO se obtuvo respuesta")
-                val codeError = response.code()
-                Log.i("FALLA TOKEN API", "Código de error: $codeError")
+
             }
         }
 

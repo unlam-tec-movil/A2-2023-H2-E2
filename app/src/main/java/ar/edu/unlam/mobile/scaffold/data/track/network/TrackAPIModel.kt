@@ -39,6 +39,7 @@ data class TrackAPIModel(
             title = name,
             artist = artists[0].name,
             image = album.images[0].url,
+            srcSpotify = externalUrls.spotify,
         )
     }
 }
