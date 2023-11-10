@@ -18,7 +18,7 @@ interface PlaylistDao {
 
     @Delete
     fun delete(playlist: Playlist)
-<
+
     @Update
     fun update(playlist: Playlist)
 
