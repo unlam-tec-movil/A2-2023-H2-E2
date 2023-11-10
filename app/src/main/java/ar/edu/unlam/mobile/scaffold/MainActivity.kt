@@ -18,7 +18,6 @@ import ar.edu.unlam.mobile.scaffold.ui.screens.NavigationView
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("token_api")
 
 @AndroidEntryPoint

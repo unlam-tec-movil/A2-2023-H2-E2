@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.domain.songs.service
 
-
 import ar.edu.unlam.mobile.scaffold.data.songs.repository.SongsRepository
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +9,6 @@ class SearchService @Inject constructor(private val repository: SongsRepository)
     override suspend fun getSearchResults(
         query: String
     ): Flow<List<Track>> {
-        return this.repository.getSearchResults(query = query)//, accessToken = accessToken)
+        return this.repository.getSearchResults(query = query)
     }
 }

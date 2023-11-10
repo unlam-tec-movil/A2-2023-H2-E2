@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.data.playlist.network
 
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -8,7 +7,10 @@ import javax.inject.Inject
 class PlaylistHTTPRepository @Inject constructor(
     private val playlistAPI: PlaylistAPI
 ) : PlaylistNetworkRepository {
-    override suspend fun getSearchValues(query: String, accessToken: String): Flow<PlaylistApiModel> {
+    override suspend fun getSearchValues(
+        query: String,
+        accessToken: String
+    ): Flow<PlaylistApiModel> {
         TODO("Not yet implemented")
     }
 
