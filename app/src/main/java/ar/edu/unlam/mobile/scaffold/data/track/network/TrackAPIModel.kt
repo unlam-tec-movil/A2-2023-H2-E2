@@ -36,6 +36,7 @@ data class TrackAPIModel(
 ) {
     fun toTrack(): Track {
         return Track(
+            spotifyId = id,
             title = name,
             artist = artists[0].name,
             image = album.images[0].url,

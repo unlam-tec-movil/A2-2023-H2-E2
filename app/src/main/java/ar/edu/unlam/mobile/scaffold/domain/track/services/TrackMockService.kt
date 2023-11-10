@@ -14,7 +14,8 @@ class TrackMockService @Inject constructor() : TrackGetter {
                 Track(
                     title = "In Da Club",
                     artist = "50 Cent",
-                    image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG"
+                    image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                    spotifyId = ""
                 ),
             )
         }
@@ -27,12 +28,14 @@ class TrackMockService @Inject constructor() : TrackGetter {
                     Track(
                         title = "In Da Club",
                         artist = "50 Cent",
-                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG"
+                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                        spotifyId = ""
                     ),
                     Track(
                         title = "In Da Club",
                         artist = "50 Cent",
-                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG"
+                        image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                        spotifyId = ""
                     ),
                 ),
             )
