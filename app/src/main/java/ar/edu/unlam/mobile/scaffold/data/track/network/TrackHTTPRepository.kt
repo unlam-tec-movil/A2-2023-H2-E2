@@ -23,7 +23,12 @@ class TrackHTTPRepository @Inject constructor(private val api: TrackAPI) : Track
 
     override suspend fun getTrendingTracks(): Flow<Trend> {
         return flow {
-            emit(api.getTrendingTracks("AR", "tracks.items(track(name,artists.name,album.images))"))
+            emit(
+                api.getTrendingTracks(
+                    "AR",
+                    "tracks.items(track(id,name,artists.name,album.images))",
+                ),
+            )
         }
     }
 }

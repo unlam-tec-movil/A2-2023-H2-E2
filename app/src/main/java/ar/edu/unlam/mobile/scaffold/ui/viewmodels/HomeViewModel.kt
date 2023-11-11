@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
     val trackUiState = _trackUiState.asStateFlow()
 
     init {
-        // getAuthorization()
+        getAuthorization()
         getTrendingTracks()
         getRecommendations()
     }
