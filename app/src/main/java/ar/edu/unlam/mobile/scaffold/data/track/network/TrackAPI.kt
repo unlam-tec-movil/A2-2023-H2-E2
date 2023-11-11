@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffold.data.track.network
 
 import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Trend
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface TrackAPI {
