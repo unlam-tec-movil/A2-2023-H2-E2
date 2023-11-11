@@ -11,13 +11,12 @@ class AuthorizationMockService @Inject constructor() : AuthorizationGetter {
     override suspend fun getAuthorization(
         grantType: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): Flow<Authorization> {
         return flow {
             emit(
-                Authorization("", "", 3600L)
+                Authorization("", "", 3600L),
             )
         }
     }
-
 }

@@ -14,8 +14,8 @@ class AuthorizationHTTPRepository @Inject constructor(private val api: Authoriza
                 api.getAuthorization(
                     AuthorizationConstants.CLIENT_CREDENTIALS,
                     AuthorizationConstants.CLIENT_ID,
-                    AuthorizationConstants.CLIENT_SECRET
-                )
+                    AuthorizationConstants.CLIENT_SECRET,
+                ),
             )
         }
     }

@@ -15,7 +15,7 @@ data class AuthorizationAPIModel(
         return Authorization(
             accessToken = accessToken,
             tokenType = tokenType,
-            expiresIn = expiresIn
+            expiresIn = expiresIn,
         )
     }
 }

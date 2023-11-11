@@ -12,7 +12,7 @@ class BearerTokenInterceptor(authorizationGetter: AuthorizationGetter) : Interce
         authorizationGetter.getAuthorization(
             AuthorizationConstants.CLIENT_CREDENTIALS,
             AuthorizationConstants.CLIENT_ID,
-            AuthorizationConstants.CLIENT_SECRET
+            AuthorizationConstants.CLIENT_SECRET,
         )
     }
 

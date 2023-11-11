@@ -10,7 +10,7 @@ class AuthorizationService @Inject constructor(val repository: AuthorizationRepo
     override suspend fun getAuthorization(
         grantType: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): Flow<Authorization> {
         return this.repository.getAuthorization()
     }

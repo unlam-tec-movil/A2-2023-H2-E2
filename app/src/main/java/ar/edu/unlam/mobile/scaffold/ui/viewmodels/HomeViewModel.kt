@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
     val searchGetter: SearchGetter,
     val trackGetter: TrackGetter,
     val authorizationGetter: AuthorizationGetter,
-    private val preferenceRepository: TokenPreferenceRepository
+    private val preferenceRepository: TokenPreferenceRepository,
 ) : ViewModel() {
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(
         authorizationGetter.getAuthorization(
             AuthorizationConstants.CLIENT_CREDENTIALS,
             AuthorizationConstants.CLIENT_ID,
-            AuthorizationConstants.CLIENT_SECRET
+            AuthorizationConstants.CLIENT_SECRET,
         ).catch {
             Log.i("ERROR AL OBTENER EL TOKEN", it.toString())
         }.collect {

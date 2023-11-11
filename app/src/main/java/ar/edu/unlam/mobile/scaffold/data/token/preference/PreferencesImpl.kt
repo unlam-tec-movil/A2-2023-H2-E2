@@ -12,7 +12,7 @@ private const val APP_DATA_STORE = "appDataStore"
 private val Context.dataStore by preferencesDataStore(name = APP_DATA_STORE)
 
 class PreferencesImpl @Inject constructor(
-    private val context: Context
+    private val context: Context,
 ) : Preferences {
     override suspend fun setToken(key: String, value: String) {
         val preferenceKey = stringPreferencesKey(key)
@@ -29,5 +29,4 @@ class PreferencesImpl @Inject constructor(
             null
         }
     }
-
 }

@@ -7,6 +7,6 @@ interface AuthorizationGetter {
     suspend fun getAuthorization(
         grantType: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): Flow<Authorization>
 }
