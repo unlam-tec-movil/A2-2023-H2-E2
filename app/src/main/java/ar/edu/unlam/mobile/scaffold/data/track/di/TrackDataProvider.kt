@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class TrackDataProvider {
+object TrackDataProvider {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(BearerTokenInterceptor())
         .build()
