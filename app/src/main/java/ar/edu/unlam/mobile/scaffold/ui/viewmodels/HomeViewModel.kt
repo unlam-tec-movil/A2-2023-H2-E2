@@ -35,6 +35,12 @@ data class TrackUiState(
     val error: String = "",
 )
 
+data class RecommendationUiState(
+    val tracks: List<Track> = emptyList(),
+    val loading: Boolean = true,
+    val error: String = "",
+)
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val searchGetter: SearchGetter,
@@ -45,6 +51,7 @@ class HomeViewModel @Inject constructor(
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
     private val _trackUiState = MutableStateFlow(TrackUiState())
+    private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
 
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()
@@ -53,6 +60,7 @@ class HomeViewModel @Inject constructor(
     init {
         // getAuthorization()
         getTrendingTracks()
+        getRecommendations()
     }
 
     fun getTrackBySearchBar(query: String) {
@@ -80,15 +88,31 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getAuthorization() {
-        authorizationGetter.getAuthorization(
-            AuthorizationConstants.CLIENT_CREDENTIALS,
-            AuthorizationConstants.CLIENT_ID,
-            AuthorizationConstants.CLIENT_SECRET,
-        ).catch {
-            Log.i("ERROR AL OBTENER EL TOKEN", it.toString())
-        }.collect {
-            preferenceRepository.setToken("token", it.accessToken)
+    private fun getRecommendations() {
+        viewModelScope.launch {
+            trackGetter.getRecommendations()
+                .catch {
+                    _recommendationUiState.value =
+                        _recommendationUiState.value.copy(error = it.message ?: "Error")
+                }
+                .collect {
+                    _recommendationUiState.value =
+                        _recommendationUiState.value.copy(tracks = it, loading = false)
+                }
+        }
+    }
+
+    private fun getAuthorization() {
+        viewModelScope.launch {
+            authorizationGetter.getAuthorization(
+                AuthorizationConstants.CLIENT_CREDENTIALS,
+                AuthorizationConstants.CLIENT_ID,
+                AuthorizationConstants.CLIENT_SECRET,
+            ).catch {
+                Log.i("ERROR AL OBTENER EL TOKEN", it.toString())
+            }.collect {
+                preferenceRepository.setToken("token", it.accessToken)
+            }
         }
     }
 }
