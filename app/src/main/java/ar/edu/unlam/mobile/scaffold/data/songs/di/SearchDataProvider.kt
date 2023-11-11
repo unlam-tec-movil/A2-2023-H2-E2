@@ -18,7 +18,7 @@ object SearchDataProvider {
     fun provideSearchAPI(gson: Gson): SongsAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("https://api.spotify.com/v1/")
+            .baseUrl("https://api.spotify.com/")
             .build()
             .create(SongsAPI::class.java)
     }

@@ -10,7 +10,7 @@ interface TrackAPI {
     suspend fun getTrack(): TrackAPIModel
 
     /*TODO: cambiar por header dinamico que obtenga el token en tiempo real*/
-    @Headers("Authorization: Bearer BQAPuE9s7ualNimZQqb3QQdFy6vpbb2MJMPzmXr49kZ9RXcNJf-yIIT5wXn3RGTdWp9YWFkPNsXTwq3s2mlRkNCZ_838tC_l7WOdxHQILiW0khoZVX8")
+    @Headers("Authorization: Bearer BQBAWrrZHs1LSa5h2HborWrPVAB0vBhyh-J5HmiMFY4gWX2r5w3N6zRpNwmCDOIxLv8ApT9qy9ij6rLrhpustUxHaQva97oO7rIYgb8BfYH0HXPeY-I")
     @GET("/v1/playlists/37i9dQZEVXbMDoHDwVN2tF")
     suspend fun getTrendingTracks(
         @Query("market") market: String,
