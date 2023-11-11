@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.track.di
 
+import ar.edu.unlam.mobile.scaffold.data.interceptor.BearerTokenInterceptor
 import ar.edu.unlam.mobile.scaffold.data.track.network.TrackAPI
 import com.google.gson.Gson
 import dagger.Module
@@ -13,15 +14,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class TrackDataProvider() {
-
-    /*
+object TrackDataProvider {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(BearerTokenInterceptor())
-        .build()
-     */
-
-    private val okHttpClient = OkHttpClient.Builder()
         .build()
 
     @Provides

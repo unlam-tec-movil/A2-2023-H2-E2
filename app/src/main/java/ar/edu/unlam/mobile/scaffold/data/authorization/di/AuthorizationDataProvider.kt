@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthorizationDataProvider {
+class AuthorizationDataProvider {
     @Provides
     @Singleton
     fun provideAuthorizationAPI(gson: Gson): AuthorizationAPI {
