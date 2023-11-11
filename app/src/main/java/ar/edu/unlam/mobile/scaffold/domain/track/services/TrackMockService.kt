@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.domain.track.services
 
-import ar.edu.unlam.mobile.scaffold.domain.authorization.services.AuthorizationGetter
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,12 +15,13 @@ class TrackMockService @Inject constructor() : TrackGetter {
                     title = "In Da Club",
                     artist = "50 Cent",
                     image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                    spotifyId = "",
                 ),
             )
         }
     }
 
-    override suspend fun getTrendingTracks(authorizationGetter: AuthorizationGetter): Flow<List<Track>> {
+    override suspend fun getTrendingTracks(): Flow<List<Track>> {
         return flow {
             emit(
                 listOf(
@@ -29,11 +29,13 @@ class TrackMockService @Inject constructor() : TrackGetter {
                         title = "In Da Club",
                         artist = "50 Cent",
                         image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                        spotifyId = "",
                     ),
                     Track(
                         title = "In Da Club",
                         artist = "50 Cent",
                         image = "https://upload.wikimedia.org/wikipedia/en/9/9d/Get_Rich_Or_Die_Tryin%27.JPG",
+                        spotifyId = "",
                     ),
                 ),
             )

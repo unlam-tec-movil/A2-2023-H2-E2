@@ -94,7 +94,7 @@ fun HomeScreen(
 private fun BodyPreview() {
     Body(
         playlist = fakePlaylist,
-        trendingTracks = listOf(Track("", "", ""), Track("", "", "")),
+        trendingTracks = listOf(Track("", "", "", ""), Track("", "", "", "")),
     )
 }
 

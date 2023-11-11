@@ -1,12 +1,14 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.search
 
-import androidx.compose.foundation.text.KeyboardActions
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,48 +19,72 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import ar.edu.unlam.mobile.scaffold.R
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
-@Preview(showBackground = true, showSystemUi = true)
-@OptIn(ExperimentalComposeUiApi::class)
+@SuppressLint("StateFlowValueCalledInComposition")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SearchBar(modifier: Modifier = Modifier) {
-    var textFieldState by remember { mutableStateOf("") }
-    val backgroundColorTextField = Gray93
+fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hiltViewModel()) {
+    var queryState by remember { mutableStateOf("") }
+    var searchBarIsActive by remember { mutableStateOf(false) }
+
     val elementsColorValue = Color.White
 
     val localManager = LocalSoftwareKeyboardController.current
 
-    TextField(
-        modifier = modifier,
-        value = textFieldState,
-        onValueChange = { textFieldState = it },
-        shape = OutlinedTextFieldDefaults.shape,
-        leadingIcon = {
+    SearchBar(
+        query = queryState,
+        onQueryChange = { queryState = it },
+        onSearch = {
+            localManager?.hide()
+            searchBarIsActive = false
+        },
+        active = searchBarIsActive,
+        placeholder = { Text(text = "Busca canciones o artistas") },
+        onActiveChange = { searchBarIsActive = it },
+        trailingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Search icon",
+                contentDescription = "Busqueda",
+                tint = elementsColorValue
             )
         },
-        singleLine = true,
-        maxLines = 1,
-        keyboardActions = KeyboardActions(
-            onDone = { localManager?.hide() },
-        ),
-        placeholder = { Text(stringResource(id = R.string.placeholder_search)) },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = backgroundColorTextField,
-            unfocusedContainerColor = backgroundColorTextField,
-            disabledContainerColor = backgroundColorTextField,
-            focusedLeadingIconColor = elementsColorValue,
-            unfocusedLeadingIconColor = elementsColorValue,
-            focusedTextColor = elementsColorValue,
-            unfocusedTextColor = elementsColorValue,
-            focusedPlaceholderColor = elementsColorValue,
-            unfocusedPlaceholderColor = elementsColorValue,
-        ),
-    )
+        modifier = Modifier.padding(start = 5.dp, end = 10.dp),
+        colors = SearchBarDefaults.colors(
+            containerColor = Gray93,
+            dividerColor = Color.White,
+            inputFieldColors = TextFieldDefaults
+                .colors(
+                    focusedTextColor = elementsColorValue,
+                    unfocusedTextColor = elementsColorValue,
+                    unfocusedPlaceholderColor = elementsColorValue,
+                    focusedPlaceholderColor = elementsColorValue,
+                    disabledTrailingIconColor = elementsColorValue,
+                    focusedTrailingIconColor = elementsColorValue
+                )
+        )
+
+    ) {
+        if (queryState.isNotEmpty()) {
+            homeViewModel.getTrackBySearchBar(query = queryState)
+            homeViewModel.trackUiState.value.tracks.forEach { track ->
+                val song = Song(
+                    artist = track.artist,
+                    title = track.title,
+                    coverArt = track.image,
+                    srcSpotify = track.srcSpotify
+                )
+
+                SongElement(
+                    onClick = {},
+                    song = song
+                )
+            }
+        }
+    }
 }

@@ -24,7 +24,13 @@ data class PlaylistUIState(
 )
 
 data class TrendsUIState(
-    val tracks: List<Track> = listOf(Track("", "", ""), Track("", "", "")),
+    val tracks: List<Track> = listOf(Track("", "", "", ""), Track("", "", "", "")),
+    val loading: Boolean = true,
+    val error: String = "",
+)
+
+data class TrackUiState(
+    val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
     val error: String = "",
 )
@@ -38,21 +44,39 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
+    private val _trackUiState = MutableStateFlow(TrackUiState())
+
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()
+    val trackUiState = _trackUiState.asStateFlow()
 
     init {
+        // getAuthorization()
+        getTrendingTracks()
+    }
+
+    fun getTrackBySearchBar(query: String) {
         viewModelScope.launch {
-            getAuthorization()
-            getTrendingTracks(authorizationGetter)
+            searchGetter.getSearchResults(query = query)
+                .catch {
+                    Log.i("Error en la llamada de api", "")
+                    _trackUiState.value = TrackUiState(error = it.message.orEmpty())
+                }
+                .collect { tracks ->
+                    _trackUiState.value = TrackUiState(tracks = tracks)
+                }
         }
     }
 
-    private suspend fun getTrendingTracks(authorizationGetter: AuthorizationGetter) {
-        trackGetter.getTrendingTracks(authorizationGetter).catch {
-            _trendsUiState.value = _trendsUiState.value.copy(error = it.message ?: "Error")
-        }.collect {
-            _trendsUiState.value = _trendsUiState.value.copy(tracks = it, loading = false)
+    private fun getTrendingTracks() {
+        viewModelScope.launch {
+            trackGetter.getTrendingTracks()
+                .catch {
+                    _trendsUiState.value = _trendsUiState.value.copy(error = it.message ?: "Error")
+                }
+                .collect {
+                    _trendsUiState.value = _trendsUiState.value.copy(tracks = it, loading = false)
+                }
         }
     }
 
