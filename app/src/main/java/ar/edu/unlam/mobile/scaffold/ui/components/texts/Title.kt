@@ -10,7 +10,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 
-
 @Composable
 fun Title(modifier: Modifier = Modifier, title: String = "Spotilist") {
     Text(
@@ -21,7 +20,6 @@ fun Title(modifier: Modifier = Modifier, title: String = "Spotilist") {
         color = Color.White,
     )
 }
-
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable

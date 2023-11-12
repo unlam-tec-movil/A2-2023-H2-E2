@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
@@ -76,8 +75,7 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
         if (queryState.isNotEmpty()) {
             homeViewModel.getTrackBySearchBar(query = queryState)
 
-
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 items(homeViewModel.trackUiState.value.tracks) { track ->
                     SongElement(
                         onClick = {},
