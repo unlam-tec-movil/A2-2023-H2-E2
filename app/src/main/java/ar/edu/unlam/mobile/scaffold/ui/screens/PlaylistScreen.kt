@@ -2,7 +2,6 @@ package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,21 +21,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -106,9 +101,9 @@ val tracksList = listOf<Track>(
         "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
     ),
 )
+
 @Composable
 fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
-
     var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", listOf())) }
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
@@ -116,9 +111,9 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
 
-    fun getDataPlaylist(){
-        //todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L,"Playlist Ejemplo", "https://picsum.photos/201", tracksList)
+    fun getDataPlaylist() {
+        // todo: obtener informacion de la playlist
+        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracksList)
     }
 
     getDataPlaylist()
@@ -129,7 +124,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
     }
 
     fun removeFromPlaylist() {
-        //Todo: eliminar cancion de la playlist
+        // Todo: eliminar cancion de la playlist
         val text = activeSong?.title + " fue eliminada"
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         isModalVisible = false
@@ -179,7 +174,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
 
                 )
             }
-            item{
+            item {
                 Text(
                     text = playlist.value.title,
                     textAlign = TextAlign.Start,
@@ -187,7 +182,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 10.dp)
+                        .padding(top = 10.dp),
                 )
                 Text(
                     text = playlist.value.tracks.size.toString() + " canciones",
@@ -195,8 +190,8 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                     fontSize = 16.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.
-                    padding(top = 4.dp, bottom = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 4.dp, bottom = 8.dp),
                 )
                 Separator()
             }

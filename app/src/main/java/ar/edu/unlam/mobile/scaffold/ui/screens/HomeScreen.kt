@@ -48,7 +48,7 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 val playlistExamples = listOf<Playlist>(
     Playlist(1, "Mi Playlist 1", "https://picsum.photos/201", listOf()),
     Playlist(2, "Mi Playlist 2", "https://picsum.photos/201", listOf()),
-    Playlist(3, "Mi Playlist 3", "https://picsum.photos/201", listOf())
+    Playlist(3, "Mi Playlist 3", "https://picsum.photos/201", listOf()),
 )
 
 @Composable
@@ -74,7 +74,7 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
-        composable( Routes.PlaylistScreen.name + "/{item}") {
+        composable(Routes.PlaylistScreen.name + "/{item}") {
             val item = it.arguments?.getString("item")
             PlaylistScreen(item = item)
         }
@@ -104,6 +104,7 @@ fun HomeScreen(
 //        }
     }
 }
+
 /*
 @Preview
 @Composable
@@ -136,22 +137,26 @@ private fun Body(
                 title = "Mis listas",
                 onSearchClick = onSearchClick,
             )
-            if(playlist.size > 0){
+            if (playlist.size > 0) {
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyRow {
                     items(playlist) { playlist ->
-                        PlaylistListElement( playlist.id.toString() ,
-                            playlist.title, playlist.image, navController = navController)
+                        PlaylistListElement(
+                            playlist.id.toString(),
+                            playlist.title,
+                            playlist.image,
+                            navController = navController,
+                        )
                     }
                 }
-            }else{
+            } else {
                 Text(
                     text = "Todavia no tenes playlist creadas",
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 )
                 IconButton(
                     onClick = {},
@@ -159,7 +164,7 @@ private fun Body(
                         .padding(end = 30.dp)
                         .clip(RoundedCornerShape(50.dp))
                         .background(MaterialTheme.colorScheme.primary)
-                        .size(46.dp)
+                        .size(46.dp),
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_icon_add),
@@ -181,9 +186,8 @@ private fun Body(
                 GridCells.Fixed(2),
                 Modifier
                     .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
+                    .align(Alignment.CenterHorizontally),
             ) {
-
                 items(trendingTracks) { track ->
                     SongListElement(track.spotifyId, track.title, track.artist, track.image)
                 }

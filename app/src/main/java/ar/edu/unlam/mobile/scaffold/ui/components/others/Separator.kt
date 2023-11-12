@@ -11,14 +11,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Separator () {
+fun Separator() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(1.dp)
             .background(
-                color = Color.White.copy(alpha = 0.5f)
+                color = Color.White.copy(alpha = 0.5f),
             )
-            .padding(vertical = 4.dp, horizontal = 6.dp)
+            .padding(vertical = 4.dp, horizontal = 6.dp),
     )
 }

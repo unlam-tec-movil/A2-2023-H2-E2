@@ -31,18 +31,16 @@ fun SongListElement(
     title: String,
     artist: String,
     image: String,
-    mostrarTitulo:Boolean = true,
+    mostrarTitulo: Boolean = true,
     fullWidth: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val screenWidthDp = configuration.screenWidthDp
     var isModalVisible by remember { mutableStateOf(false) }
 
-
-    fun onCloseModal (){
+    fun onCloseModal() {
         isModalVisible = false
     }
 
@@ -50,7 +48,7 @@ fun SongListElement(
         modifier = modifier
             .padding(end = 10.dp, bottom = 10.dp)
             .wrapContentHeight()
-            .then(modifier.clickable { isModalVisible = true })
+            .then(modifier.clickable { isModalVisible = true }),
     ) {
         AsyncImage(
             model = image,
@@ -62,14 +60,16 @@ fun SongListElement(
                 .height(if (fullWidth) ((screenWidthDp.dp / 2) - 16.dp) else 150.dp)
                 .align(Alignment.CenterHorizontally),
         )
-        if(mostrarTitulo) {
-            Text(text = title,
+        if (mostrarTitulo) {
+            Text(
+                text = title,
                 style = MaterialTheme.typography.labelLarge,
-                color = Color.White)
+                color = Color.White,
+            )
         }
     }
 
-    if(isModalVisible){
-        ModalAddToList(track = Track(playlistId, title, artist, image), onClose = {onCloseModal()})
+    if (isModalVisible) {
+        ModalAddToList(track = Track(playlistId, title, artist, image), onClose = { onCloseModal() })
     }
 }

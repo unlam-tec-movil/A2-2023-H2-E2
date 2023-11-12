@@ -129,7 +129,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     private fun getTrendingTracks() {
         viewModelScope.launch {
             trackGetter.getTrendingTracks()

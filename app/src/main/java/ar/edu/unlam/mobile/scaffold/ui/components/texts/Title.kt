@@ -28,7 +28,7 @@ fun Title(modifier: Modifier = Modifier, title: String = "Spotilist") {
 private fun TitlePreview() {
     MyApplicationTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             Title()
         }

@@ -23,18 +23,18 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import coil.compose.AsyncImage
 @Composable
-fun ModalPlayListItem (
+fun ModalPlayListItem(
     playlist: Playlist = Playlist(1, "Mi Playlist Ejemplo", "https://picsum.photos/201", listOf()),
     trackId: String,
     trackTitle: String,
     onClick: () -> Unit,
-    modifier:Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
 
-    fun addToPlaylis (){
-        //TODO: Agregar a una playlist
-        val text = "${trackTitle} agregada a ${playlist.title}"
+    fun addToPlaylis() {
+        // TODO: Agregar a una playlist
+        val text = "$trackTitle agregada a ${playlist.title}"
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         onClick()
     }
@@ -45,11 +45,11 @@ fun ModalPlayListItem (
             // .clip(shape = RoundedCornerShape(5.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
             .fillMaxWidth()
-            .then(modifier.clickable { addToPlaylis() })
+            .then(modifier.clickable { addToPlaylis() }),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                model =  playlist.image,
+                model = playlist.image,
                 contentDescription = "Playlist image",
                 modifier = modifier
                     .padding(10.dp)

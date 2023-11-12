@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
-import android.os.Bundle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -19,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.navArgument
 import ar.edu.unlam.mobile.scaffold.ui.screens.Routes
 import coil.compose.AsyncImage
 
@@ -28,17 +26,17 @@ fun PlaylistListElement(
     playlistId: String,
     title: String,
     image: String,
-    mostrarTitulo:Boolean = true,
+    mostrarTitulo: Boolean = true,
     fullWidth: Boolean = false,
     navController: NavController,
-    modifier: Modifier = Modifier) {
-
+    modifier: Modifier = Modifier,
+) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
-    fun onPlaylistClick (){
+    fun onPlaylistClick() {
         navController.navigate(
-            route = Routes.PlaylistScreen.name + "/$playlistId"
+            route = Routes.PlaylistScreen.name + "/$playlistId",
         )
     }
 
@@ -46,7 +44,7 @@ fun PlaylistListElement(
         modifier = modifier
             .padding(end = 10.dp, bottom = 10.dp)
             .wrapContentHeight()
-            .then(modifier.clickable { onPlaylistClick() })
+            .then(modifier.clickable { onPlaylistClick() }),
     ) {
         AsyncImage(
             model = image,
@@ -58,10 +56,12 @@ fun PlaylistListElement(
                 .height(if (fullWidth) ((screenWidthDp / 2) - 16.dp) else 150.dp)
                 .align(Alignment.CenterHorizontally),
         )
-        if(mostrarTitulo) {
-            Text(text = title,
+        if (mostrarTitulo) {
+            Text(
+                text = title,
                 style = MaterialTheme.typography.labelLarge,
-                color = Color.White)
+                color = Color.White,
+            )
         }
     }
 }
