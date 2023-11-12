@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.apimodels
 
+import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Tracks
 import com.google.gson.annotations.SerializedName
 
 data class PlaylistItem(

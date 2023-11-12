@@ -6,7 +6,7 @@ import ar.edu.unlam.mobile.scaffold.data.apimodels.ExternalUrls
 import ar.edu.unlam.mobile.scaffold.data.apimodels.Image
 import ar.edu.unlam.mobile.scaffold.data.apimodels.Restriction
 import ar.edu.unlam.mobile.scaffold.data.apimodels.SimplifiedArtist
-import ar.edu.unlam.mobile.scaffold.data.apimodels.Tracks
+import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Tracks
 import com.google.gson.annotations.SerializedName
 
 data class AlbumApiModel(
