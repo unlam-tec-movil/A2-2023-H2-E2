@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.apimodels.recommendations
 
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import com.google.gson.annotations.SerializedName
 
 data class Track(

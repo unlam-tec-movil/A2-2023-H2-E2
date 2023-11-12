@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
@@ -41,7 +41,7 @@ val exampleSongs =
         Song(
             "Paradise",
             "Coldplay",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg"
+            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
         ),
         Song(
             "Paper Wings",
@@ -97,15 +97,14 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
             )
             Spacer(modifier = Modifier.height(30.dp))
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
-
                 items(trackUiState.tracks) { track ->
                     SongElement(
                         song = Song(
                             artist = track.artist,
                             coverArt = track.image,
-                            title = track.title
+                            title = track.title,
                         ),
-                        onClick = {}
+                        onClick = {},
                     )
                 }
             }

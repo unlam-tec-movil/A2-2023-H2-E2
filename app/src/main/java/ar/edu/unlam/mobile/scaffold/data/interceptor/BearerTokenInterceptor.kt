@@ -1,11 +1,11 @@
 package ar.edu.unlam.mobile.scaffold.data.interceptor
 
 import android.util.Log
-import ar.edu.unlam.mobile.scaffold.data.authorization.di.AuthorizationDataProvider
-import ar.edu.unlam.mobile.scaffold.data.authorization.network.AuthorizationHTTPRepository
-import ar.edu.unlam.mobile.scaffold.data.authorization.repository.AuthorizationDefaultRepository
-import ar.edu.unlam.mobile.scaffold.domain.authorization.services.AuthorizationGetter
-import ar.edu.unlam.mobile.scaffold.domain.authorization.services.AuthorizationService
+import ar.edu.unlam.mobile.scaffold.data.di.authorization.AuthorizationDataProvider
+import ar.edu.unlam.mobile.scaffold.data.network.authorization.AuthorizationHTTPRepository
+import ar.edu.unlam.mobile.scaffold.data.repository.authorization.AuthorizationDefaultRepository
+import ar.edu.unlam.mobile.scaffold.domain.services.authorization.AuthorizationGetter
+import ar.edu.unlam.mobile.scaffold.domain.services.authorization.AuthorizationService
 import ar.edu.unlam.mobile.scaffold.utils.constants.AuthorizationConstants
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson

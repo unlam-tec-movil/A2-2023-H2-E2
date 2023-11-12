@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.apimodels
 
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import com.google.gson.annotations.SerializedName
 
 data class TrackItem(
@@ -47,7 +47,7 @@ data class TrackItem(
             title = titleTrack,
             artist = nameArtist,
             image = imageSrc,
-            srcSpotify = srcSpotify
+            srcSpotify = srcSpotify,
         )
     }
 }
