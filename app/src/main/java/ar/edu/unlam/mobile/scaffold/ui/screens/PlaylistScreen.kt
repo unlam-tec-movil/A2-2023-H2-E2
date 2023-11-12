@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,25 +26,33 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
 val fakePlaylist2 = Playlist(9, "Finde", "asd", listOf())
 
 @OptIn(ExperimentalComposeUiApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
+//@Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
 @Composable
-fun PlaylistScreen() {
+fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
+
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Song?>(null) }
+
+    val context = LocalContext.current
+    Toast.makeText(context, item, Toast.LENGTH_LONG).show()
+
 
     fun openModal(song: Song) {
         activeSong = song
@@ -99,6 +108,7 @@ fun PlaylistScreen() {
 
                 )
             }
+
             items(exampleSongs) { song ->
                 SongElement(type = TypeSongElement.ADDED, song = song) {
                     openModal(song)
