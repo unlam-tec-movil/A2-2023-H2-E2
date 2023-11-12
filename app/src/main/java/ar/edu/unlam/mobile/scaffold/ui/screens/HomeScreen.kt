@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,8 +36,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
@@ -46,11 +45,11 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
-val fakePlaylistSka = listOf(
-    Playlist(1L, "Mi primer lista", "https://picsum.photos/201", listOf())
+val playlistExamples = listOf<Playlist>(
+    Playlist(1, "Mi Playlist 1", "https://picsum.photos/201", listOf()),
+    Playlist(2, "Mi Playlist 2", "https://picsum.photos/201", listOf()),
+    Playlist(3, "Mi Playlist 3", "https://picsum.photos/201", listOf())
 )
-
-//val fakePlaylistSka = listOf<Playlist>();
 
 @Composable
 fun NavigationView() {
@@ -97,7 +96,7 @@ fun HomeScreen(
 //        } else {
         Body(
             navController = navController,
-            playlist = fakePlaylistSka,
+            playlist = playlistExamples,
             trendingTracks = trendsUiState.tracks,
             onSearchClick = onSearchClick,
             modifier = Modifier.padding(paddingValues),
@@ -141,7 +140,6 @@ private fun Body(
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyRow {
                     items(playlist) { playlist ->
-                        //PlaylistListElement(playlist.id, playlist.title, playlist.image)
                         PlaylistListElement( playlist.id.toString() ,
                             playlist.title, playlist.image, navController = navController)
                     }
@@ -185,7 +183,6 @@ private fun Body(
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
-                // PlaylistListElement("8282qcw", true, true, navController = navController
 
                 items(trendingTracks) { track ->
                     SongListElement(track.spotifyId, track.title, track.artist, track.image)

@@ -32,14 +32,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    /*val viewModel: HomeViewModel by viewModels()
-
-                    val authorizationToken = viewModel.getAuthorization()
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        dataStore.edit { preferences ->
-                            preferences[stringPreferencesKey("token_api")] = authorizationToken
-                        }
-                    }*/
                     NavigationView()
                 }
             }

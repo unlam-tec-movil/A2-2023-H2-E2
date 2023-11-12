@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -27,19 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
+import ar.edu.unlam.mobile.scaffold.ui.screens.playlistExamples
 import coil.compose.AsyncImage
 
-val playlistExamples = listOf<Playlist>(
-    Playlist(1, "Mi Playlist 1", "https://picsum.photos/201", listOf()),
-    Playlist(2, "Mi Playlist 2", "https://picsum.photos/201", listOf()),
-    Playlist(3, "Mi Playlist 3", "https://picsum.photos/201", listOf())
-)
 @Composable
 fun ModalAddToList(
     track: Track,
@@ -111,9 +104,10 @@ fun ModalAddToList(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ){
 
-                items(playlistExamples) { item:Playlist ->
-                    ModalPlayListItem(playlist = item, trackId = track.spotifyId, trackTitle = track.title, onClick = { onClose() })
+                items(playlistExamples) { playlist ->
+                    ModalPlayListItem(trackId = track.spotifyId, trackTitle = track.title, onClick = { onClose })
                 }
+
                 item{
                     Column(
                         modifier = Modifier

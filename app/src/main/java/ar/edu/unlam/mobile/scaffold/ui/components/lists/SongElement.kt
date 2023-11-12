@@ -13,34 +13,59 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
+import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
 
-val exampleSong: Song = Song(
-    "Canción de ejemplo",
-    "Artista de ejemplo",
+val exampleSong: Track = Track(
+    "Canción de ejemplooooooooooooooooooooooooooooooooooo",
+    "Artista de ejemplopoooooooooooooooooo",
     "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk"
+    "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk",
 )
 
 enum class TypeSongElement {
     SEARCH, ADDED, OTHER
 }
 
+@Preview
+@Composable
+fun SongElementPreview() {
+    SongElement(onClick = {})
+}
+
 @Composable
 fun SongElement(
     modifier: Modifier = Modifier,
     type: TypeSongElement = TypeSongElement.OTHER,
-    song: Song = exampleSong,
-    onClick: (song: Song) -> Unit,
+    track: Track = exampleSong,
+    onClick: (track: Track) -> Unit,
 ) {
+
+    var isModalVisible by remember { mutableStateOf(false) }
+
+    fun onPressButton (){
+        if(type == TypeSongElement.SEARCH){
+            isModalVisible = true
+        }else if(type == TypeSongElement.ADDED){
+            onClick(track)
+        }
+    }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -51,7 +76,7 @@ fun SongElement(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                model = song.coverArt,
+                model = track.image,
                 contentDescription = "Album cover",
                 modifier = modifier
                     .padding(10.dp)
@@ -60,19 +85,25 @@ fun SongElement(
             )
             Column(modifier = modifier.padding(end = 10.dp)) {
                 Text(
-                    text = song.title,
+                    modifier = Modifier.size(width = 200.dp, height = 20.dp),
+                    text = track.title,
                     color = Color.White,
                     style = MaterialTheme.typography.labelLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                 )
                 Text(
-                    text = song.artist,
+                    modifier = Modifier.size(width = 200.dp, height = 20.dp),
+                    text = track.artist,
                     color = Color(0XFFE1E1E1),
                     style = MaterialTheme.typography.labelMedium,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
                 )
             }
         }
         IconButton(
-            onClick = { onClick(song) },
+            onClick = { onPressButton() },
             modifier = Modifier
                 .padding(end = 30.dp)
                 .clip(RoundedCornerShape(50.dp))
@@ -95,5 +126,9 @@ fun SongElement(
                 modifier = modifier.size(25.dp),
             )
         }
+    }
+
+    if(isModalVisible && type == TypeSongElement.SEARCH){
+        ModalAddToList(track = track, onClose = { isModalVisible = false })
     }
 }

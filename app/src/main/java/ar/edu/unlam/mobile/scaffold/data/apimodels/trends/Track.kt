@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.apimodels.trends
 
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 
 data class Track(
     val id: String,
@@ -13,7 +13,7 @@ data class Track(
             title = name,
             artist = artists[0].name,
             image = album.images[0].url,
-            spotifyId = id
+            spotifyId = id,
         )
     }
 }

@@ -19,9 +19,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import coil.compose.AsyncImage
 @Composable
 fun ModalPlayListItem (
@@ -65,7 +64,7 @@ fun ModalPlayListItem (
                     style = MaterialTheme.typography.labelLarge,
                 )
                 Text(
-                    text = playlist.songs.size.toString() + " canciones",
+                    text = playlist.tracks.size.toString() + " canciones",
                     fontWeight = FontWeight.Medium,
                     color = Color(0XFFE1E1E1),
                     style = MaterialTheme.typography.labelMedium,

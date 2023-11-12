@@ -28,18 +28,84 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
+import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import coil.compose.AsyncImage
 
-
+val tracksList = listOf<Track>(
+    Track(
+        "vw8vew82",
+        "Revolution Radio",
+        "Green Day",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Hoy Estoy Raro",
+        "El Cuarteto De Nos",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Paradise",
+        "Coldplay",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Paper Wings",
+        "Rise Against",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "By the Way",
+        "Red Hot Chili Peppers",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Toxicity",
+        "System Of A Down",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Radioactive",
+        "Imagine Dragons",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Numb",
+        "Linkin Park",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "The Hell Song",
+        "Sum 41",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+    Track(
+        "vw8vew82",
+        "Misery Business",
+        "Paramore",
+        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
+    ),
+)
 @Composable
 fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
 
@@ -47,18 +113,18 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
-    var activeSong by remember { mutableStateOf<Song?>(null) }
+    var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
 
     fun getDataPlaylist(){
         //todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L,"Playlist Ejemplo", "https://picsum.photos/201", exampleSongs)
+        playlist.value = Playlist(1L,"Playlist Ejemplo", "https://picsum.photos/201", tracksList)
     }
 
     getDataPlaylist()
 
-    fun openModal(song: Song) {
-        activeSong = song
+    fun openModal(track: Track) {
+        activeSong = track
         isModalVisible = true
     }
 
@@ -113,11 +179,29 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
 
                 )
             }
-
-            items(playlist.value.songs) { song ->
-                SongElement(type = TypeSongElement.ADDED, song = song) {
-                    openModal(song)
-                }
+            item{
+                Text(
+                    text = playlist.value.title,
+                    textAlign = TextAlign.Start,
+                    fontSize = 22.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                )
+                Text(
+                    text = playlist.value.tracks.size.toString() + " canciones",
+                    textAlign = TextAlign.Start,
+                    fontSize = 16.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.
+                    padding(top = 4.dp, bottom = 8.dp)
+                )
+                Separator()
+            }
+            items(playlist.value.tracks) { track ->
+                SongElement(type = TypeSongElement.ADDED, track = track, onClick = { openModal(track) })
             }
         }
     }

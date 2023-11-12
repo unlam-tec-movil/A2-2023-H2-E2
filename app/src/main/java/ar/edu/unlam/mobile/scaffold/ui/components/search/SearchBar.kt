@@ -1,7 +1,10 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.search
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,8 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
@@ -51,7 +55,7 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Busqueda",
-                tint = elementsColorValue
+                tint = elementsColorValue,
             )
         },
         modifier = Modifier.padding(start = 5.dp, end = 10.dp),
@@ -65,25 +69,21 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                     unfocusedPlaceholderColor = elementsColorValue,
                     focusedPlaceholderColor = elementsColorValue,
                     disabledTrailingIconColor = elementsColorValue,
-                    focusedTrailingIconColor = elementsColorValue
-                )
-        )
-
+                    focusedTrailingIconColor = elementsColorValue,
+                ),
+        ),
     ) {
         if (queryState.isNotEmpty()) {
             homeViewModel.getTrackBySearchBar(query = queryState)
-            homeViewModel.trackUiState.value.tracks.forEach { track ->
-                val song = Song(
-                    artist = track.artist,
-                    title = track.title,
-                    coverArt = track.image,
-                    srcSpotify = track.srcSpotify
-                )
 
-                SongElement(
-                    onClick = {},
-                    song = song
-                )
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                items(homeViewModel.trackUiState.value.tracks) { track ->
+                    SongElement(
+                        onClick = {},
+                        type = TypeSongElement.SEARCH,
+                        track = track,
+                    )
+                }
             }
         }
     }
