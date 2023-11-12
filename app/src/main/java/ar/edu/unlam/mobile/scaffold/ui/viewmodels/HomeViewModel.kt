@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffold.data.db.entity.Playlist
 import ar.edu.unlam.mobile.scaffold.data.token.repository.TokenPreferenceRepository
 import ar.edu.unlam.mobile.scaffold.domain.authorization.services.AuthorizationGetter
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
@@ -61,6 +62,49 @@ class HomeViewModel @Inject constructor(
         getAuthorization()
         getTrendingTracks()
         getRecommendations()
+        var tracks = listOf(
+            ar.edu.unlam.mobile.scaffold.data.db.entity.Track(
+                "3RiPr603aXAoi4GHyXx0uy",
+                "Hymn for the Weekend",
+                "Coldplay",
+                "https://i.scdn.co/image/ab67616d0000b2738ff7c3580d429c8212b9a3b6",
+            ),
+            ar.edu.unlam.mobile.scaffold.data.db.entity.Track(
+                "09mEdoA6zrmBPgTEN5qXmN",
+                "Call Out My Name",
+                "The Weeknd",
+                "https://i.scdn.co/image/ab67616d0000b273bb9b84cecfc41da3b8c7d74b",
+            ),
+            ar.edu.unlam.mobile.scaffold.data.db.entity.Track(
+                "1xsYj84j7hUDDnTTerGWlH",
+                "Dream On",
+                "Aerosmith",
+                "https://i.scdn.co/image/ab67616d0000b273b11078ee23dcd99e085ac33e",
+            ),
+            ar.edu.unlam.mobile.scaffold.data.db.entity.Track(
+                "6Qyc6fS4DsZjB2mRW9DsQs",
+                "Iris",
+                "The Goo Goo Dolls",
+                "https://i.scdn.co/image/ab67616d0000b273eda9478c39a21e1cdc6609ca",
+            ),
+            ar.edu.unlam.mobile.scaffold.data.db.entity.Track(
+                "4gbVRS8gloEluzf0GzDOFc",
+                "Maps",
+                "Maroon 5",
+                "https://i.scdn.co/image/ab67616d0000b2730f90927dac93624396fbfb96",
+            ),
+        )
+        var playlist = Playlist(
+            playlistId = 1,
+            image = "",
+            name = "TestDePlaylist",
+            description = "Playlist de prueba",
+        )
+//        playlistDao.insert(playlist)
+//        for (track in tracks) {
+//            var tablaIntermedia = PlaylistTrackCrossRef(1, track.spotifyId)
+//            playlistDao.insertPlaylistWithTracks(tablaIntermedia)
+//        }
     }
 
     fun getTrackBySearchBar(query: String) {

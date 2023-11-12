@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.db.dao
+package ar.edu.unlam.mobile.scaffold.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,9 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import ar.edu.unlam.mobile.scaffold.db.entity.Playlist
-import ar.edu.unlam.mobile.scaffold.db.entity.PlaylistTrackCrossRef
-import ar.edu.unlam.mobile.scaffold.db.entity.PlaylistWithTracks
+import ar.edu.unlam.mobile.scaffold.data.db.entity.Playlist
+import ar.edu.unlam.mobile.scaffold.data.db.entity.PlaylistTrackCrossRef
+import ar.edu.unlam.mobile.scaffold.data.db.entity.PlaylistWithTracks
 
 @Dao
 interface PlaylistDao {

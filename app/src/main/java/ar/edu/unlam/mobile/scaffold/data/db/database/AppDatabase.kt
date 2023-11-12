@@ -1,18 +1,18 @@
-package ar.edu.unlam.mobile.scaffold.db.database
+package ar.edu.unlam.mobile.scaffold.data.db.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ar.edu.unlam.mobile.scaffold.db.dao.PlaylistDao
-import ar.edu.unlam.mobile.scaffold.db.dao.TrackDao
-import ar.edu.unlam.mobile.scaffold.db.entity.Playlist
-import ar.edu.unlam.mobile.scaffold.db.entity.PlaylistTrackCrossRef
-import ar.edu.unlam.mobile.scaffold.db.entity.Track
+import ar.edu.unlam.mobile.scaffold.data.db.dao.PlaylistDao
+import ar.edu.unlam.mobile.scaffold.data.db.dao.TrackDao
+import ar.edu.unlam.mobile.scaffold.data.db.entity.Playlist
+import ar.edu.unlam.mobile.scaffold.data.db.entity.PlaylistTrackCrossRef
+import ar.edu.unlam.mobile.scaffold.data.db.entity.Track
 
 @Database(
     entities = [Playlist::class, Track::class, PlaylistTrackCrossRef::class],
-    version = 1,
+    version = 2,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val trackDao: TrackDao
@@ -27,7 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
                 return INSTANCE ?: Room.databaseBuilder(
                     context = context.applicationContext,
                     AppDatabase::class.java,
-                    "db",
+                    "listify",
                 ).build().also {
                     INSTANCE = it
                 }

@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffold.db.entity
+package ar.edu.unlam.mobile.scaffold.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
