@@ -1,17 +1,22 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,32 +25,32 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
-val fakePlaylist = listOf(
-    Playlist(1, "Mi Playlist", "https://picsum.photos/200", songs = listOf()),
-    Playlist(2, "Rock", "https://picsum.photos/201", songs = listOf()),
-    Playlist(3, "Top Hits", "https://picsum.photos/202", songs = listOf()),
-    Playlist(4, "Previa", "https://picsum.photos/203", songs = listOf()),
-)
 val fakePlaylistSka = listOf(
-    Track("rwbewb", "Mi cancion", "Nurbking", "https://picsum.photos/201", "https://picsum.photos/201")
+    Playlist(1L, "Mi primer lista", "https://picsum.photos/201", listOf())
 )
+
+//val fakePlaylistSka = listOf<Playlist>();
 
 @Composable
 fun NavigationView() {
@@ -55,7 +60,7 @@ fun NavigationView() {
             HomeScreen(
                 navController,
                 onSearchClick = {
-                    navController.navigate(Routes.Search.name)
+                    navController.navigate(Routes.CreatePlaylist.name)
                 },
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
@@ -113,13 +118,13 @@ private fun BodyPreview() {
 @Composable
 private fun Body(
     navController: NavController,
-    playlist: List<Track>,
+    playlist: List<Playlist>,
     trendingTracks: List<Track>,
     modifier: Modifier = Modifier,
     onSearchClick: () -> Unit = {},
 ) {
     Box {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(14.dp)) {
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = modifier
@@ -132,13 +137,41 @@ private fun Body(
                 title = "Mis listas",
                 onSearchClick = onSearchClick,
             )
-            Spacer(modifier = Modifier.height(30.dp))
-            LazyRow {
-                items(playlist) { playlist ->
-                    //PlaylistListElement(playlist.id, playlist.title, playlist.image)
-                    PlaylistListElement(playlist.spotifyId, playlist.title, playlist.image, navController = navController)
+            if(playlist.size > 0){
+                Spacer(modifier = Modifier.height(30.dp))
+                LazyRow {
+                    items(playlist) { playlist ->
+                        //PlaylistListElement(playlist.id, playlist.title, playlist.image)
+                        PlaylistListElement( playlist.id.toString() ,
+                            playlist.title, playlist.image, navController = navController)
+                    }
+                }
+            }else{
+                Text(
+                    text = "Todavia no tenes playlist creadas",
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                )
+                IconButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(end = 30.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(MaterialTheme.colorScheme.primary)
+                        .size(46.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_icon_add),
+                        contentDescription = "Crear playlist",
+                        tint = Color.White,
+                        modifier = modifier.size(28.dp),
+                    )
                 }
             }
+
             Text(
                 text = "Tendencias",
                 style = MaterialTheme.typography.headlineSmall,
@@ -155,8 +188,7 @@ private fun Body(
                 // PlaylistListElement("8282qcw", true, true, navController = navController
 
                 items(trendingTracks) { track ->
-                    PlaylistListElement(track.spotifyId, track.title, track.image,
-                        true, true, navController = navController)
+                    SongListElement(track.spotifyId, track.title, track.artist, track.image)
                 }
             }
         }

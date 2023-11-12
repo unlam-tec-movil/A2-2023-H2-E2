@@ -37,22 +37,25 @@ import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import coil.compose.AsyncImage
 
-val fakePlaylist2 = Playlist(9, "Finde", "asd", listOf())
 
-@OptIn(ExperimentalComposeUiApi::class)
-//@Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
 @Composable
 fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
 
+    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", listOf())) }
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Song?>(null) }
-
     val context = LocalContext.current
-    Toast.makeText(context, item, Toast.LENGTH_LONG).show()
 
+    fun getDataPlaylist(){
+        //todo: obtener informacion de la playlist
+        playlist.value = Playlist(1L,"Playlist Ejemplo", "https://picsum.photos/201", exampleSongs)
+    }
+
+    getDataPlaylist()
 
     fun openModal(song: Song) {
         activeSong = song
@@ -60,7 +63,9 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
     }
 
     fun removeFromPlaylist() {
-        // eliminar cancion de la playlist
+        //Todo: eliminar cancion de la playlist
+        val text = activeSong?.title + " fue eliminada"
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         isModalVisible = false
     }
 
@@ -83,9 +88,9 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
             verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             item {
-                Image(
+                AsyncImage(
                     // TODO: cambiar el painterResource por el verdadero
-                    painter = painterResource(R.drawable.album_bubbles),
+                    model = playlist.value.image,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(
@@ -109,7 +114,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                 )
             }
 
-            items(exampleSongs) { song ->
+            items(playlist.value.songs) { song ->
                 SongElement(type = TypeSongElement.ADDED, song = song) {
                     openModal(song)
                 }
@@ -120,7 +125,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
         AlertDialog(
             onDismissRequest = {},
             title = { Text(text = "Eliminar cancion") },
-            text = { Text(text = "Queres eliminar esta cancion de esta lista") },
+            text = { Text(text = "Queres eliminar " + activeSong?.title + " de esta lista") },
             confirmButton = {
                 Button(
                     onClick = {

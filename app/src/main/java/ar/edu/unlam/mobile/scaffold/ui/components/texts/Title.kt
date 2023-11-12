@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -14,6 +15,7 @@ fun Title(modifier: Modifier = Modifier, title: String = "Mis listas") {
     Text(
         modifier = modifier,
         text = title,
+        fontSize = 22.sp,
         style = MaterialTheme.typography.displaySmall,
         fontWeight = FontWeight.Bold,
         color = Color.White,
