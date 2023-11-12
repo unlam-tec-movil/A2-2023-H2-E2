@@ -16,4 +16,9 @@ class TrackDefaultRepository @Inject constructor(val networkRepository: TrackNet
         return this.networkRepository.getTrendingTracks()
             .map { it.tracks.items.map { it.track.toTrack() } }
     }
+
+    override suspend fun getSimpleTrack(trackId: String): Flow<Track> {
+        return this.networkRepository.getSimpleTrack(trackId)
+            .map {it.toTrack()}
+    }
 }

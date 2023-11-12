@@ -35,6 +35,11 @@ data class TrackUiState(
     val error: String = "",
 )
 
+data class SimpleTrackUiState(
+    val track: Track = Track("", "", "", ""),
+    val loading: Boolean = true,
+    val error: String = "",
+)
 data class RecommendationUiState(
     val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
@@ -52,6 +57,7 @@ class HomeViewModel @Inject constructor(
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
     private val _trackUiState = MutableStateFlow(TrackUiState())
     private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
+    private val _simpleTrackUiState = MutableStateFlow(SimpleTrackUiState())
 
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()
@@ -72,6 +78,18 @@ class HomeViewModel @Inject constructor(
                 }
                 .collect { tracks ->
                     _trackUiState.value = TrackUiState(tracks = tracks)
+                }
+        }
+    }
+
+    fun getTrackById(trackId: String){
+        viewModelScope.launch {
+            trackGetter.getTrackById(trackId)
+                .catch {
+                    _simpleTrackUiState.value = _simpleTrackUiState.value.copy(error = it.message ?: "Error")
+                }
+                .collect {
+                    _simpleTrackUiState.value = _simpleTrackUiState.value.copy(track = it, loading = false)
                 }
         }
     }

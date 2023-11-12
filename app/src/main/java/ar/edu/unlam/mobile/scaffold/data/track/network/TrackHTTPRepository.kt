@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.data.track.network
 
 import ar.edu.unlam.mobile.scaffold.data.apimodels.recommendations.Recommendation
+import ar.edu.unlam.mobile.scaffold.data.apimodels.track.Track
 import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Trend
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,6 +30,15 @@ class TrackHTTPRepository @Inject constructor(private val api: TrackAPI) : Track
                     "tracks.items(track(id,name,artists.name,album.images))",
                 ),
             )
+        }
+    }
+    override suspend fun getSimpleTrack( trackId: String ): Flow<Track> {
+        return flow {
+           emit(
+               api.getTrack(
+                   trackId
+               )
+           )
         }
     }
 }

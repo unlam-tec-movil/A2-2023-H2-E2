@@ -1,6 +1,8 @@
 package ar.edu.unlam.mobile.scaffold.data.apimodels
 
-data class Tracks(
+import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+
+data class Track(
     val href: String,
     val limit: Int,
     val next: String,
@@ -9,3 +11,5 @@ data class Tracks(
     val total: Int,
     val items: List<SimplifiedTrack>,
 )
+
+

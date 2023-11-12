@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface TrackGetter {
     suspend fun getRecommendations(): Flow<List<Track>>
-    suspend fun getTrackById(id: Int): Flow<Track>
+    suspend fun getTrackById(id: String): Flow<Track>
     suspend fun getTrendingTracks(): Flow<List<Track>>
 }

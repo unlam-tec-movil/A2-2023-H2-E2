@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,6 +43,9 @@ val fakePlaylist = listOf(
     Playlist(3, "Top Hits", "https://picsum.photos/202", songs = listOf()),
     Playlist(4, "Previa", "https://picsum.photos/203", songs = listOf()),
 )
+val fakePlaylistSka = listOf(
+    Track("rwbewb", "Mi cancion", "Nurbking", "https://picsum.photos/201", "https://picsum.photos/201")
+)
 
 @Composable
 fun NavigationView() {
@@ -48,6 +53,7 @@ fun NavigationView() {
     NavHost(navController = navController, startDestination = Routes.Home.name) {
         composable(Routes.Home.name) {
             HomeScreen(
+                navController,
                 onSearchClick = {
                     navController.navigate(Routes.Search.name)
                 },
@@ -64,11 +70,16 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
+        composable( Routes.PlaylistScreen.name + "/{item}") {
+            val item = it.arguments?.getString("item")
+            PlaylistScreen(item = item)
+        }
     }
 }
 
 @Composable
 fun HomeScreen(
+    navController: NavController,
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
@@ -80,7 +91,8 @@ fun HomeScreen(
 //            CircularProgressIndicator()
 //        } else {
         Body(
-            playlist = fakePlaylist,
+            navController = navController,
+            playlist = fakePlaylistSka,
             trendingTracks = trendsUiState.tracks,
             onSearchClick = onSearchClick,
             modifier = Modifier.padding(paddingValues),
@@ -88,7 +100,7 @@ fun HomeScreen(
 //        }
     }
 }
-
+/*
 @Preview
 @Composable
 private fun BodyPreview() {
@@ -97,21 +109,17 @@ private fun BodyPreview() {
         trendingTracks = listOf(Track("", "", "", ""), Track("", "", "", "")),
     )
 }
-
+*/
 @Composable
 private fun Body(
-    playlist: List<Playlist>,
+    navController: NavController,
+    playlist: List<Track>,
     trendingTracks: List<Track>,
     modifier: Modifier = Modifier,
     onSearchClick: () -> Unit = {},
 ) {
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
-            TitlesHome(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                title = "Mis listas",
-                onSearchClick = onSearchClick,
-            )
             Spacer(modifier = Modifier.height(10.dp))
             SearchBar(
                 modifier = modifier
@@ -119,10 +127,16 @@ private fun Body(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
             )
+            TitlesHome(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                title = "Mis listas",
+                onSearchClick = onSearchClick,
+            )
             Spacer(modifier = Modifier.height(30.dp))
             LazyRow {
                 items(playlist) { playlist ->
-                    PlaylistListElement(playlist.title, playlist.image)
+                    //PlaylistListElement(playlist.id, playlist.title, playlist.image)
+                    PlaylistListElement(playlist.spotifyId, playlist.title, playlist.image, navController = navController)
                 }
             }
             Text(
@@ -132,12 +146,17 @@ private fun Body(
                 color = Color.White,
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
             )
-            LazyHorizontalGrid(
+            LazyVerticalGrid(
                 GridCells.Fixed(2),
-                Modifier.height(270.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
             ) {
+                // PlaylistListElement("8282qcw", true, true, navController = navController
+
                 items(trendingTracks) { track ->
-                    PlaylistListElement(track.title, track.image)
+                    PlaylistListElement(track.spotifyId, track.title, track.image,
+                        true, true, navController = navController)
                 }
             }
         }

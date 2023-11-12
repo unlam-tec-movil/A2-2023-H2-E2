@@ -29,7 +29,7 @@ class TrackMockService @Inject constructor() : TrackGetter {
         }
     }
 
-    override suspend fun getTrackById(id: Int): Flow<Track> {
+    override suspend fun getTrackById(id: String): Flow<Track> {
         return flow {
             emit(
                 Track(

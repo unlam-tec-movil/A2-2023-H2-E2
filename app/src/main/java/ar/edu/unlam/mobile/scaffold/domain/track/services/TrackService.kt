@@ -10,8 +10,8 @@ class TrackService @Inject constructor(val repository: TrackRepository) : TrackG
         return this.repository.getRecommendations()
     }
 
-    override suspend fun getTrackById(id: Int): Flow<Track> {
-        TODO("Not yet implemented")
+    override suspend fun getTrackById(id: String): Flow<Track> {
+        return this.repository.getSimpleTrack()
     }
 
     override suspend fun getTrendingTracks(): Flow<List<Track>> {
