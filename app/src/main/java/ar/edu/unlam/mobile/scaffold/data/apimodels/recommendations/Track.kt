@@ -37,7 +37,7 @@ data class Track(
             spotifyId = id,
             title = name,
             artist = artists[0].name,
-            image = album.images[0].url,
+            image = album.images[2].url,
         )
     }
 }
