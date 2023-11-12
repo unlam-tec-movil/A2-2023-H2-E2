@@ -76,7 +76,7 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
             homeViewModel.getTrackBySearchBar(query = queryState)
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                items(homeViewModel.trackUiState.value.tracks) { track ->
+                items(homeViewModel.appUiState.trackState.value.tracks) { track ->
                     SongElement(
                         onClick = {},
                         type = TypeSongElement.SEARCH,

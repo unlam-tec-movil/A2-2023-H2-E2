@@ -10,6 +10,7 @@ import androidx.room.Update
 import ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist
 import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistWithTracks
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlaylistDao {
@@ -40,7 +41,7 @@ interface PlaylistDao {
 
     @Transaction
     @Query("SELECT * FROM playlist")
-    fun getAllPlaylistsWithTracks(): List<PlaylistWithTracks>
+    fun getAllPlaylistsWithTracks(): Flow<List<PlaylistWithTracks>>
 
     @Transaction
     @Query("SELECT * FROM playlist LIMIT :limit")

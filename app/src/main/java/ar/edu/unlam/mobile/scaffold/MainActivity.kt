@@ -38,37 +38,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-/*@Composable
-fun MainScreen() {
-    // Controller es el elemento que nos permite navegar entre pantallas. Tiene las acciones
-    // para navegar como navigate y también la información de en dónde se "encuentra" el usuario
-    // a través del back stack
-    val controller = rememberNavController()
-    Scaffold(
-        /*bottomBar = { BottomBar(controller = controller) },*/
-        floatingActionButton = {
-            IconButton(onClick = { controller.navigate("home") }) {
-                Icon(Icons.Filled.Home, contentDescription = "Home")
-            }
-        },
-    ) { paddingValue ->
-        NavHost(navController = controller, startDestination = "home") {
-            composable("home") {
-                HomeScreen(
-                    onSearchClick = { /*TODO: cambiar por la implementación*/ },
-                    onFabClick = { /*TODO: cambiar por la implementación*/ },
-                    modifier = Modifier.padding(paddingValue),
-                )
-            }
-            composable(
-                route = "segundo/{id}",
-                arguments = listOf(navArgument("id") { type = NavType.IntType }),
-            ) { navBackStackEntry ->
-                val id = navBackStackEntry.arguments?.getInt("id") ?: 1
-                SecondaryScreen(controller = controller, id = id)
-            }
-        }
-    }
-}
-*/

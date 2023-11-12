@@ -83,7 +83,7 @@ val exampleSongs =
 @Preview
 @Composable
 fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
-    val trackUiState: TrackUiState by homeViewModel.trackUiState.collectAsState()
+    val trackUiState: TrackUiState by homeViewModel.appUiState.trackState.collectAsState()
 
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
