@@ -1,7 +1,10 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.search
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,22 +71,21 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                     focusedTrailingIconColor = elementsColorValue
                 )
         )
-
     ) {
         if (queryState.isNotEmpty()) {
             homeViewModel.getTrackBySearchBar(query = queryState)
-            homeViewModel.trackUiState.value.tracks.forEach { track ->
-                val song = Song(
-                    artist = track.artist,
-                    title = track.title,
-                    coverArt = track.image,
-                    srcSpotify = track.srcSpotify
-                )
 
-                SongElement(
-                    onClick = {},
-                    song = song
-                )
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                items(homeViewModel.trackUiState.value.tracks) { track ->
+                    SongElement(
+                        onClick = {},
+                        song = Song(
+                            artist = track.artist,
+                            coverArt = track.image,
+                            title = track.title
+                        )
+                    )
+                }
             }
         }
     }
