@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
@@ -79,11 +79,8 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                 items(homeViewModel.trackUiState.value.tracks) { track ->
                     SongElement(
                         onClick = {},
-                        song = Song(
-                            artist = track.artist,
-                            coverArt = track.image,
-                            title = track.title,
-                        ),
+                        type = TypeSongElement.SEARCH,
+                        track = track,
                     )
                 }
             }

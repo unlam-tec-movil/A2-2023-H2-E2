@@ -37,6 +37,11 @@ data class TrackUiState(
     val error: String = "",
 )
 
+data class SimpleTrackUiState(
+    val track: Track = Track("", "", "", ""),
+    val loading: Boolean = true,
+    val error: String = "",
+)
 data class RecommendationUiState(
     val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
@@ -54,6 +59,7 @@ class HomeViewModel @Inject constructor(
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
     private val _trackUiState = MutableStateFlow(TrackUiState())
     private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
+    private val _simpleTrackUiState = MutableStateFlow(SimpleTrackUiState())
 
     val playlistUiState = _playlistUiState.asStateFlow()
     val trendsUiState = _trendsUiState.asStateFlow()

@@ -99,11 +99,7 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 items(trackUiState.tracks) { track ->
                     SongElement(
-                        song = Song(
-                            artist = track.artist,
-                            coverArt = track.image,
-                            title = track.title,
-                        ),
+                        track = track,
                         onClick = {},
                     )
                 }

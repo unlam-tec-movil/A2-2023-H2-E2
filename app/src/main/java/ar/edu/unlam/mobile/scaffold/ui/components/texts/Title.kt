@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import ar.edu.unlam.mobile.scaffold.ui.theme.MyApplicationTheme
 
 @Composable
@@ -15,6 +16,7 @@ fun Title(modifier: Modifier = Modifier, title: String = "Spotilist") {
     Text(
         modifier = modifier,
         text = title,
+        fontSize = 22.sp,
         style = MaterialTheme.typography.displaySmall,
         fontWeight = FontWeight.Bold,
         color = Color.White,
@@ -26,7 +28,7 @@ fun Title(modifier: Modifier = Modifier, title: String = "Spotilist") {
 private fun TitlePreview() {
     MyApplicationTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             Title()
         }

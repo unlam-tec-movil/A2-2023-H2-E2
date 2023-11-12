@@ -23,7 +23,7 @@ fun TitlesHome(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp, horizontal = 12.dp),
+            .padding(vertical = 10.dp, horizontal = 6.dp),
         horizontalArrangement = Arrangement.SpaceAround,
     ) {
         Title(title = title)
