@@ -18,20 +18,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
 import coil.compose.AsyncImage
 
 val exampleSong: Song = Song(
-    "Canción de ejemplo",
-    "Artista de ejemplo",
+    "Canción de ejemplooooooooooooooooooooooooooooooooooo",
+    "Artista de ejemplopoooooooooooooooooo",
     "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
     "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk"
 )
 
 enum class TypeSongElement {
     SEARCH, ADDED, OTHER
+}
+
+@Preview
+@Composable
+fun SongElementPreview() {
+    SongElement(onClick = {})
 }
 
 @Composable
@@ -60,14 +68,20 @@ fun SongElement(
             )
             Column(modifier = modifier.padding(end = 10.dp)) {
                 Text(
+                    modifier = Modifier.size(width = 200.dp, height = 20.dp),
                     text = song.title,
                     color = Color.White,
                     style = MaterialTheme.typography.labelLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
                 Text(
+                    modifier = Modifier.size(width = 200.dp, height = 20.dp),
                     text = song.artist,
                     color = Color(0XFFE1E1E1),
                     style = MaterialTheme.typography.labelMedium,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
             }
         }
