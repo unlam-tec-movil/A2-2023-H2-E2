@@ -37,7 +37,7 @@ data class TrackItem(
 ) {
     fun toTrack(): Track {
         val nameArtist: String = artists[0].name
-        val imageSrc: String = album.images[0].url
+        val imageSrc: String = album.images[2].url
         val titleTrack: String = name
         val srcSpotify: String = externalUrls.spotify
         val spotifyId: String = id
