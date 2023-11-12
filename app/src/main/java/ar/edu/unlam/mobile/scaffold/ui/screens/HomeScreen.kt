@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,19 +38,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
-
-val playlistExamples = listOf<Playlist>(
-    Playlist(1, "Mi Playlist 1", "https://picsum.photos/201", listOf()),
-    Playlist(2, "Mi Playlist 2", "https://picsum.photos/201", listOf()),
-    Playlist(3, "Mi Playlist 3", "https://picsum.photos/201", listOf()),
-)
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
 @Composable
 fun NavigationView() {
@@ -89,37 +84,24 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier,
 ) {
-    val trendsUiState by viewModel.trendsUiState.collectAsState()
+    val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
+    val playlistUIState by viewModel.appUiState.playlistState.collectAsState()
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
-//        if (trackUiState.loading) {
-//            CircularProgressIndicator()
-//        } else {
         Body(
             navController = navController,
-            playlist = playlistExamples,
-            trendingTracks = trendsUiState.tracks,
+            playlists = playlistUIState.playlists,
             onSearchClick = onSearchClick,
             modifier = Modifier.padding(paddingValues),
+            trendsUiState = trendsUiState,
         )
-//        }
     }
 }
 
-/*
-@Preview
 @Composable
-private fun BodyPreview() {
-    Body(
-        playlist = fakePlaylist,
-        trendingTracks = listOf(Track("", "", "", ""), Track("", "", "", "")),
-    )
-}
-*/
-@Composable
-private fun Body(
+fun Body(
     navController: NavController,
-    playlist: List<Playlist>,
-    trendingTracks: List<Track>,
+    playlists: List<Playlist>,
+    trendsUiState: TrendsUIState,
     modifier: Modifier = Modifier,
     onSearchClick: () -> Unit = {},
 ) {
@@ -137,10 +119,10 @@ private fun Body(
                 title = "Mis listas",
                 onSearchClick = onSearchClick,
             )
-            if (playlist.size > 0) {
+            if (playlists.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyRow {
-                    items(playlist) { playlist ->
+                    items(playlists) { playlist ->
                         PlaylistListElement(
                             playlist.id.toString(),
                             playlist.title,
@@ -151,7 +133,7 @@ private fun Body(
                 }
             } else {
                 Text(
-                    text = "Todavia no tenes playlist creadas",
+                    text = "Todavia no tenés playlists creadas",
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
@@ -182,14 +164,18 @@ private fun Body(
                 color = Color.White,
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
             )
-            LazyVerticalGrid(
-                GridCells.Fixed(2),
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-            ) {
-                items(trendingTracks) { track ->
-                    SongListElement(track.spotifyId, track.title, track.artist, track.image)
+            if (trendsUiState.loading) {
+                CircularProgressIndicator()
+            } else {
+                LazyVerticalGrid(
+                    GridCells.Fixed(2),
+                    Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                ) {
+                    items(trendsUiState.tracks) { track ->
+                        SongListElement(track.spotifyId, track.title, track.artist, track.image)
+                    }
                 }
             }
         }

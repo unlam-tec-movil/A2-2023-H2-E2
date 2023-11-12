@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
-import ar.edu.unlam.mobile.scaffold.ui.screens.playlistExamples
 import coil.compose.AsyncImage
 
 @Composable
@@ -97,8 +97,12 @@ fun ModalAddToList(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                items(playlistExamples) { playlist ->
-                    ModalPlayListItem(trackId = track.spotifyId, trackTitle = track.title, onClick = { onClose })
+                items(listOf<Playlist>()) { playlist ->
+                    ModalPlayListItem(
+                        trackId = track.spotifyId,
+                        trackTitle = track.title,
+                        onClick = { onClose },
+                    )
                 }
 
                 item {

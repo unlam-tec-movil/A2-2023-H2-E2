@@ -6,13 +6,14 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.database.dao.PlaylistDao
 import ar.edu.unlam.mobile.scaffold.data.database.dao.TrackDao
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
-import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.domain.services.search.SearchGetter
 import ar.edu.unlam.mobile.scaffold.domain.services.track.TrackGetter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -20,13 +21,13 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 data class PlaylistUIState(
-    val playlist: List<Song> = emptyList(),
+    val playlists: List<Playlist> = emptyList(),
     val loading: Boolean = true,
     val error: String = "",
 )
 
 data class TrendsUIState(
-    val tracks: List<Track> = listOf(Track("", "", "", ""), Track("", "", "", "")),
+    val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
     val error: String = "",
 )
@@ -42,10 +43,20 @@ data class SimpleTrackUiState(
     val loading: Boolean = true,
     val error: String = "",
 )
+
 data class RecommendationUiState(
     val tracks: List<Track> = emptyList(),
     val loading: Boolean = true,
     val error: String = "",
+)
+
+// Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
+data class AppUiState(
+    val playlistState: StateFlow<PlaylistUIState>,
+    val trendsState: StateFlow<TrendsUIState>,
+    val trackState: StateFlow<TrackUiState>,
+    val simpleTrackState: StateFlow<SimpleTrackUiState>,
+    val recommendationState: StateFlow<RecommendationUiState>,
 )
 
 @HiltViewModel
@@ -61,9 +72,13 @@ class HomeViewModel @Inject constructor(
     private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
     private val _simpleTrackUiState = MutableStateFlow(SimpleTrackUiState())
 
-    val playlistUiState = _playlistUiState.asStateFlow()
-    val trendsUiState = _trendsUiState.asStateFlow()
-    val trackUiState = _trackUiState.asStateFlow()
+    val appUiState = AppUiState(
+        playlistState = _playlistUiState.asStateFlow(),
+        trendsState = _trendsUiState.asStateFlow(),
+        trackState = _trackUiState.asStateFlow(),
+        simpleTrackState = _simpleTrackUiState.asStateFlow(),
+        recommendationState = _recommendationUiState.asStateFlow(),
+    )
 
     init {
         getPlaylists()
@@ -158,8 +173,15 @@ class HomeViewModel @Inject constructor(
     private fun getPlaylists() {
         viewModelScope.launch() {
             withContext(Dispatchers.IO) {
-                val playlists = PlaylistRepository(playlistDao = playlistDao).getAllPlaylists()
-                Log.i("PLAYLISTYS", playlists.toString())
+                PlaylistRepository(playlistDao = playlistDao).getAllPlaylists()
+                    .catch {
+                        _playlistUiState.value =
+                            _playlistUiState.value.copy(error = it.message ?: "Error")
+                    }
+                    .collect {
+                        _playlistUiState.value =
+                            _playlistUiState.value.copy(playlists = it, loading = false)
+                    }
             }
         }
     }
