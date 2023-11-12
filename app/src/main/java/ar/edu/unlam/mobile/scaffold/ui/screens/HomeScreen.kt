@@ -27,8 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ar.edu.unlam.mobile.scaffold.domain.playlist.models.Playlist
-import ar.edu.unlam.mobile.scaffold.domain.track.models.Track
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.TitlesHome
 import ar.edu.unlam.mobile.scaffold.ui.components.buttons.FabScreen
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
@@ -36,10 +36,10 @@ import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
 val fakePlaylist = listOf(
-    Playlist(1, "Mi Playlist", "https://picsum.photos/200", songs = listOf()),
-    Playlist(2, "Rock", "https://picsum.photos/201", songs = listOf()),
-    Playlist(3, "Top Hits", "https://picsum.photos/202", songs = listOf()),
-    Playlist(4, "Previa", "https://picsum.photos/203", songs = listOf()),
+    Playlist(1, "Mi Playlist", "https://picsum.photos/200", tracks = listOf()),
+    Playlist(2, "Rock", "https://picsum.photos/201", tracks = listOf()),
+    Playlist(3, "Top Hits", "https://picsum.photos/202", tracks = listOf()),
+    Playlist(4, "Previa", "https://picsum.photos/203", tracks = listOf()),
 )
 
 @Composable

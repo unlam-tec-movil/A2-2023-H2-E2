@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.songs.models.Song
+import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.theme.Gray93
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
@@ -54,7 +54,7 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Busqueda",
-                tint = elementsColorValue
+                tint = elementsColorValue,
             )
         },
         modifier = Modifier.padding(start = 5.dp, end = 10.dp),
@@ -68,9 +68,9 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                     unfocusedPlaceholderColor = elementsColorValue,
                     focusedPlaceholderColor = elementsColorValue,
                     disabledTrailingIconColor = elementsColorValue,
-                    focusedTrailingIconColor = elementsColorValue
-                )
-        )
+                    focusedTrailingIconColor = elementsColorValue,
+                ),
+        ),
     ) {
         if (queryState.isNotEmpty()) {
             homeViewModel.getTrackBySearchBar(query = queryState)
@@ -82,8 +82,8 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                         song = Song(
                             artist = track.artist,
                             coverArt = track.image,
-                            title = track.title
-                        )
+                            title = track.title,
+                        ),
                     )
                 }
             }
