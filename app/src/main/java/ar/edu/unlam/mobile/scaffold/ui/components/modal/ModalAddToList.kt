@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
@@ -33,7 +32,7 @@ fun ModalAddToList(
     // playlists: List<Playlist>,
     onClose: () -> Unit = {},
     modifier: Modifier = Modifier,
-    playlistViewModel: PlaylistViewModel = hiltViewModel()
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp

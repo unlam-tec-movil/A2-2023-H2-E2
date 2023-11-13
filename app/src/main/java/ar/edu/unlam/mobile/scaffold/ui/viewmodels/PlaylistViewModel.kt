@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
@@ -13,8 +12,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-data class PlaylistUiState(
 
 data class PlaylistUiState(
     val playlist: Playlist = Playlist(
@@ -31,7 +28,7 @@ data class PlaylistUiState(
 data class AllPlaylistUiState(
     val playlists: List<Playlist> = emptyList(),
     val isLoading: Boolean = true,
-    val error: String = ""
+    val error: String = "",
 )
 
 @HiltViewModel
@@ -52,7 +49,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
 
     fun loadPlaylist(idPlaylist: Long) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 playlistRepository.getPlaylistWithTracks(idPlaylist).catch {
                     _playlistUiState.value = PlaylistUiState(error = it.message.orEmpty())
                 }.collect {
@@ -61,11 +58,12 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
             }
         }
     }
+
     fun addPlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.insertPlaylist(
-                    playlist
+                    playlist,
                 )
             }
         }
@@ -79,7 +77,5 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
                 _allPlaylistUiState.value = AllPlaylistUiState(playlists = it, isLoading = false)
             }
         }
-      }
     }
 }
-

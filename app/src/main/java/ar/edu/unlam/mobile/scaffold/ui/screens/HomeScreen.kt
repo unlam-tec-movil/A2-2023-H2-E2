@@ -77,6 +77,7 @@ fun NavigationView() {
         }
     }
 }
+
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -89,9 +90,9 @@ fun HomeScreen(
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
     val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
 
-    if(trendsUiState.loading || playlistUIState.isLoading){
+    if (trendsUiState.loading || playlistUIState.isLoading) {
         CircularProgressIndicator(strokeCap = StrokeCap.Butt)
-    } else{
+    } else {
         Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
             Body(
                 navController = navController,
@@ -103,6 +104,7 @@ fun HomeScreen(
         }
     }
 }
+
 @Composable
 fun Body(
     navController: NavController,

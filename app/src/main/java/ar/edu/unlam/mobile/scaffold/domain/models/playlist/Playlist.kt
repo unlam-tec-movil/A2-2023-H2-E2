@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.domain.models.playlist
 
-import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistWithTracks
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 
@@ -15,7 +14,6 @@ data class Playlist(
         return ar.edu.unlam.mobile.scaffold.data.database.entity
             .Playlist(name = this.title, description = this.description, image = this.image)
     }
-
 }
 
 fun PlaylistWithTracks.toDomainPlaylist() =

@@ -7,7 +7,6 @@ import ar.edu.unlam.mobile.scaffold.data.database.dao.TrackDao
 import ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist
 import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.data.database.entity.Track
-import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
 
 @Database(
     entities = [Playlist::class, Track::class, PlaylistTrackCrossRef::class],

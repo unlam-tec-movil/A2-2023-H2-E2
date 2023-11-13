@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -47,7 +46,6 @@ import ar.edu.unlam.mobile.scaffold.ui.theme.Blue73
 import ar.edu.unlam.mobile.scaffold.ui.theme.DisableButtonColorPlaylist
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
-import org.jetbrains.annotations.Async
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
@@ -139,7 +137,7 @@ fun CreatePlaylist(playlistViewModel: PlaylistViewModel = hiltViewModel()) {
                     disabledLabelColor = textFieldColor,
                     focusedLabelColor = textFieldColor,
 
-                    ),
+                ),
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
@@ -162,8 +160,8 @@ fun CreatePlaylist(playlistViewModel: PlaylistViewModel = hiltViewModel()) {
                         Playlist(
                             title = textNameInput,
                             description = textDescriptionInput,
-                            image = srcImageDefault
-                        )
+                            image = srcImageDefault,
+                        ),
                     )
                     Toast.makeText(context, R.string.playlist_created, Toast.LENGTH_SHORT).show()
                 },
@@ -171,7 +169,7 @@ fun CreatePlaylist(playlistViewModel: PlaylistViewModel = hiltViewModel()) {
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = textFieldColor,
-                    disabledContainerColor = DisableButtonColorPlaylist
+                    disabledContainerColor = DisableButtonColorPlaylist,
                 ),
             ) {
                 Text(text = "Guardar", fontSize = 27.sp)

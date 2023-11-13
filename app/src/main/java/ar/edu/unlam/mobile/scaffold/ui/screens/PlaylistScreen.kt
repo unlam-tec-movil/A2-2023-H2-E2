@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +34,6 @@ import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
-import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
@@ -107,7 +104,7 @@ val tracksList = listOf<Track>(
 fun PlaylistScreen(
     navController: NavHostController? = null,
     item: String? = null,
-    playlistViewModel: PlaylistViewModel = hiltViewModel()
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
     val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
@@ -115,7 +112,6 @@ fun PlaylistScreen(
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
-
 
     fun getDataPlaylist() {
         playlist.value = playlistViewModel.playlistUiState.value.playlist
@@ -195,11 +191,13 @@ fun PlaylistScreen(
                 )
                 Separator()
             }
-            
+
             items(playlist.value.tracks) { track ->
-                SongElement(type = TypeSongElement.ADDED,
+                SongElement(
+                    type = TypeSongElement.ADDED,
                     track = track,
-                    onClick = { openModal(track) })
+                    onClick = { openModal(track) },
+                )
             }
         }
     }
