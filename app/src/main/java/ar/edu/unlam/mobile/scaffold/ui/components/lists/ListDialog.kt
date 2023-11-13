@@ -22,7 +22,7 @@ import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 
-var listaEjemlpo = Playlist(1, "Mi Playlist", "asd", listOf())
+var listaEjemlpo = Playlist(1, "Mi Playlist", "asd", tracks = listOf())
 
 @Composable
 fun ListDialog(

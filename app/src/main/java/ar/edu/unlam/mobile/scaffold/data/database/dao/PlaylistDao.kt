@@ -26,18 +26,9 @@ interface PlaylistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaylistWithTracks(playlist: PlaylistTrackCrossRef)
 
-    @Query("SELECT * FROM playlist WHERE playlistId=:id")
-    fun get(id: Long): Playlist
-
-    @Query("SELECT * FROM playlist")
-    fun getAll(): List<Playlist>
-
-    @Query("SELECT * FROM playlist LIMIT :limit")
-    fun getAll(limit: Int): List<Playlist>
-
     @Transaction
     @Query("SELECT * FROM playlist where playlistId=:id")
-    fun getPlaylistWithTracks(id: Long): PlaylistWithTracks
+    fun getPlaylistsWithTracks(id: Long): Flow<PlaylistWithTracks>
 
     @Transaction
     @Query("SELECT * FROM playlist")
@@ -45,9 +36,9 @@ interface PlaylistDao {
 
     @Transaction
     @Query("SELECT * FROM playlist LIMIT :limit")
-    fun getAllPlaylistsWithTracks(limit: Int): List<PlaylistWithTracks>
+    fun getAllPlaylistsWithTracks(limit: Int): Flow<List<PlaylistWithTracks>>
 
-    @Transaction
-    @Query("DELETE FROM playlisttrackcrossref WHERE spotifyId =:trackId")
-    fun removeTrack(trackId: String)
+    // @Transaction
+    // @Query("DELETE FROM playlist WHERE spotifyId =:trackId")
+    // fun removeTrack(trackId: String)
 }

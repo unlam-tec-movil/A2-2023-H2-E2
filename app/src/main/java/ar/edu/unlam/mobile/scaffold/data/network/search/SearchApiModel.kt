@@ -21,8 +21,8 @@ data class SearchApiModel(
     fun toTrackList(): List<Track> {
         val trackList: MutableList<Track> = mutableListOf()
 
-        tracks.items.forEach {
-            trackList.add(it.toTrack())
+        tracks.items.forEach { trackApiModel ->
+            trackList.add(trackApiModel.toTrack())
         }
 
         return trackList

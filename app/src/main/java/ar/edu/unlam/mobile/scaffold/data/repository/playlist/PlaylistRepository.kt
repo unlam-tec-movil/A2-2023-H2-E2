@@ -14,7 +14,23 @@ class PlaylistRepository @Inject constructor(
         return response.map { it.map { it.toDomainPlaylist() } }
     }
 
-    fun getPlaylistsWithTracks(id: Long): Playlist {
-        return playlistDao.getPlaylistWithTracks(id).toDomainPlaylist()
+    fun insertPlaylist(playlistToInsert: Playlist) {
+        playlistDao.insert(playlistToInsert.toPlaylistEntity())
+    }
+
+    fun delete(playlistToDelete: Playlist) {
+        playlistDao.delete(playlistToDelete.toPlaylistEntity())
+    }
+
+    fun update(playlistToUpdate: Playlist) {
+        playlistDao.update(playlistToUpdate.toPlaylistEntity())
+    }
+
+    fun getPlaylistWithTracks(idPlaylist: Long): Flow<Playlist> {
+        return playlistDao.getPlaylistsWithTracks(idPlaylist).map { it.toDomainPlaylist() }
+    }
+
+    fun getAllPlaylistWithTracks(limit: Int): Flow<List<Playlist>> {
+        return playlistDao.getAllPlaylistsWithTracks(limit).map { it.map { it.toDomainPlaylist() } }
     }
 }

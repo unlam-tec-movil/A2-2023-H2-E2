@@ -141,7 +141,7 @@ fun Body(
                     modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 )
                 IconButton(
-                    onClick = {},
+                    onClick = { navController.navigate(Routes.CreatePlaylist.name) },
                     modifier = Modifier
                         .padding(end = 30.dp)
                         .clip(RoundedCornerShape(50.dp))
