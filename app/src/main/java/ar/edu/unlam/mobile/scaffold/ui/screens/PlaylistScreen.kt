@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -103,21 +104,15 @@ val tracksList = listOf<Track>(
 @Composable
 fun PlaylistScreen(
     navController: NavHostController? = null,
-    item: String? = null,
+    playlistId: String,
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
-    val playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
+    val playlist = playlistViewModel.playlistUiState.collectAsState()
     val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
-
-    fun getDataPlaylist() {
-        playlist.value = playlistViewModel.playlistUiState.value.playlist
-    }
-
-    getDataPlaylist()
 
     fun openModal(track: Track) {
         activeSong = track
@@ -130,9 +125,6 @@ fun PlaylistScreen(
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
-        // TODO este método nos permite cargar el playlist que coincide con el item
-        // (id) que llega por parametro.
-        playlistViewModel.loadPlaylist(item.toString().toLong())
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
                 Log.i("Tag", "El scroll está en progreso")
@@ -192,7 +184,7 @@ fun PlaylistScreen(
                 Separator()
             }
 
-            items(playlist.value.tracks) { track ->
+            items(playlist.value.playlist.tracks) { track ->
                 SongElement(
                     type = TypeSongElement.ADDED,
                     track = track,

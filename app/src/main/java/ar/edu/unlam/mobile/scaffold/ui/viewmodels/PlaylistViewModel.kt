@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-data class PlaylistUiState(
+data class CurrentPlaylistUiState(
     val playlist: Playlist = Playlist(
         0,
         "",
@@ -35,8 +35,8 @@ data class AllPlaylistUiState(
 class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) :
     ViewModel() {
 
-    private val _playlistUiState: MutableStateFlow<PlaylistUiState> =
-        MutableStateFlow(PlaylistUiState())
+    private val _playlistUiState: MutableStateFlow<CurrentPlaylistUiState> =
+        MutableStateFlow(CurrentPlaylistUiState())
     val playlistUiState = _playlistUiState.asStateFlow()
 
     private val _allPlaylistUiState: MutableStateFlow<AllPlaylistUiState> =
@@ -50,11 +50,15 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
     fun loadPlaylist(idPlaylist: Long) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.getPlaylistWithTracks(idPlaylist).catch {
-                    _playlistUiState.value = PlaylistUiState(error = it.message.orEmpty())
-                }.collect {
-                    _playlistUiState.value = PlaylistUiState(playlist = it, isLoading = false)
-                }
+                playlistRepository.getPlaylistWithTracks(idPlaylist)
+                    .catch {
+                        _playlistUiState.value =
+                            _playlistUiState.value.copy(error = it.message.orEmpty())
+                    }
+                    .collect {
+                        _playlistUiState.value =
+                            _playlistUiState.value.copy(playlist = it, isLoading = false)
+                    }
             }
         }
     }
@@ -72,9 +76,11 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
     private fun loadAllPlaylists() {
         viewModelScope.launch {
             playlistRepository.getAllPlaylists().catch {
-                _allPlaylistUiState.value = AllPlaylistUiState(error = it.message.orEmpty())
+                _allPlaylistUiState.value =
+                    _allPlaylistUiState.value.copy(error = it.message.orEmpty())
             }.collect {
-                _allPlaylistUiState.value = AllPlaylistUiState(playlists = it, isLoading = false)
+                _allPlaylistUiState.value =
+                    _allPlaylistUiState.value.copy(playlists = it, isLoading = false)
             }
         }
     }
