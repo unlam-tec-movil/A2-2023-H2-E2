@@ -32,7 +32,7 @@ fun ListDialog(
     onClick: (playlistId: Long) -> Unit,
 ) {
     Box(
-        modifier = Modifier.then(Modifier.clickable { onClick(playlist.id) }),
+        modifier = Modifier.then(Modifier.clickable { onClick(playlist.id!!) }),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

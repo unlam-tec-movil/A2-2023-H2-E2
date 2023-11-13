@@ -37,6 +37,7 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
 val tracksList = listOf<Track>(
@@ -103,17 +104,20 @@ val tracksList = listOf<Track>(
 )
 
 @Composable
-fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
-    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
-    var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
+fun PlaylistScreen(
+    navController: NavHostController? = null,
+    item: String? = null,
+    playlistViewModel: PlaylistViewModel = hiltViewModel()
+) {
+    val playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
+    val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
 
     fun getDataPlaylist() {
-        // todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracks = tracksList)
+        playlist.value = playlistViewModel.playlistUiState.value.playlist
     }
 
     getDataPlaylist()
@@ -125,12 +129,13 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
 
     fun removeFromPlaylist() {
         // Todo: eliminar cancion de la playlist
-        val text = activeSong?.title + " fue eliminada"
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         isModalVisible = false
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
+        // TODO este método nos permite cargar el playlist que coincide con el item
+        // (id) que llega por parametro.
+        playlistViewModel.loadPlaylist(item.toString().toLong())
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
                 Log.i("Tag", "El scroll está en progreso")
@@ -171,18 +176,14 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                         .padding(vertical = 20.dp, horizontal = 12.dp),
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
-
                 )
-            }
-            item {
                 Text(
                     text = playlist.value.title,
                     textAlign = TextAlign.Start,
                     fontSize = 22.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(top = 10.dp),
+                    modifier = Modifier.padding(top = 10.dp),
                 )
                 Text(
                     text = playlist.value.tracks.size.toString() + " canciones",
@@ -190,13 +191,14 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                     fontSize = 16.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(top = 4.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
                 )
                 Separator()
             }
             items(playlist.value.tracks) { track ->
-                SongElement(type = TypeSongElement.ADDED, track = track, onClick = { openModal(track) })
+                SongElement(type = TypeSongElement.ADDED,
+                    track = track,
+                    onClick = { openModal(track) })
             }
         }
     }

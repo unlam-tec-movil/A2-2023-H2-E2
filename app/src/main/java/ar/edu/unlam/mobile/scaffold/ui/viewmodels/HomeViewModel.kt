@@ -52,7 +52,7 @@ data class RecommendationUiState(
 
 // Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
 data class AppUiState(
-    val playlistState: StateFlow<PlaylistUIState>,
+   // val playlistState: StateFlow<PlaylistUIState>,
     val trendsState: StateFlow<TrendsUIState>,
     val trackState: StateFlow<TrackUiState>,
     val simpleTrackState: StateFlow<SimpleTrackUiState>,
@@ -64,16 +64,16 @@ class HomeViewModel @Inject constructor(
     private val searchGetter: SearchGetter,
     private val trackGetter: TrackGetter,
     private val trackDao: TrackDao,
-    private val playlistDao: PlaylistDao,
+    //private val playlistDao: PlaylistDao,
 ) : ViewModel() {
-    private val _playlistUiState = MutableStateFlow(PlaylistUIState())
+    //private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
     private val _trackUiState = MutableStateFlow(TrackUiState())
     private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
     private val _simpleTrackUiState = MutableStateFlow(SimpleTrackUiState())
 
     val appUiState = AppUiState(
-        playlistState = _playlistUiState.asStateFlow(),
+        //playlistState = _playlistUiState.asStateFlow(),
         trendsState = _trendsUiState.asStateFlow(),
         trackState = _trackUiState.asStateFlow(),
         simpleTrackState = _simpleTrackUiState.asStateFlow(),
@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
     )
 
     init {
-        getPlaylists()
+        //getPlaylists()
         getTrendingTracks()
         getRecommendations()
         /*
@@ -135,7 +135,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             searchGetter.getSearchResults(query = query)
                 .catch {
-                    Log.i("Error en la llamada de api", "")
+                    Log.i("Error en la llamada de api", "${it.message}")
                     _trackUiState.value = TrackUiState(error = it.message.orEmpty())
                 }
                 .collect { tracks ->
@@ -169,9 +169,9 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
-
+/*
     private fun getPlaylists() {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 PlaylistRepository(playlistDao = playlistDao).getAllPlaylists()
                     .catch {
@@ -184,5 +184,5 @@ class HomeViewModel @Inject constructor(
                     }
             }
         }
-    }
+    }*/
 }

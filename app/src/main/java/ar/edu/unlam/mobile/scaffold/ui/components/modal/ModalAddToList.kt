@@ -26,9 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
 @Composable
@@ -36,6 +38,7 @@ fun ModalAddToList(
     track: Track,
     onClose: () -> Unit = {},
     modifier: Modifier = Modifier,
+    playlistViewModel: PlaylistViewModel = hiltViewModel()
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -97,8 +100,9 @@ fun ModalAddToList(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                items(listOf<Playlist>()) { playlist ->
+                items(playlistViewModel.allPlaylistUiState.value.playlists) { playlist ->
                     ModalPlayListItem(
+                        playlist = playlist,
                         trackId = track.spotifyId,
                         trackTitle = track.title,
                         onClick = { onClose },
