@@ -10,8 +10,28 @@ import javax.inject.Inject
 class PlaylistRepository @Inject constructor(
     private val playlistDao: PlaylistDao,
 ) {
-    suspend fun getAllPlaylists(): Flow<List<Playlist>> {
+    fun getAllPlaylists(): Flow<List<Playlist>> {
         val response = playlistDao.getAllPlaylistsWithTracks()
         return response.map { it.map { it.toDomainPlaylist() } }
+    }
+
+    fun insertPlaylist(playlistToInsert: Playlist) {
+        playlistDao.insert(playlistToInsert.toPlaylistEntity())
+    }
+
+    fun delete(playlistToDelete: Playlist) {
+        playlistDao.delete(playlistToDelete.toPlaylistEntity())
+    }
+
+    fun update(playlistToUpdate: Playlist) {
+        playlistDao.update(playlistToUpdate.toPlaylistEntity())
+    }
+
+    fun getPlaylistWithTracks(idPlaylist: Long): Flow<Playlist> {
+        return playlistDao.getPlaylistsWithTracks(idPlaylist).map { it.toDomainPlaylist() }
+    }
+
+    fun getAllPlaylistWithTracks(limit: Int): Flow<List<Playlist>> {
+        return playlistDao.getAllPlaylistsWithTracks(limit).map { it.map { it.toDomainPlaylist() } }
     }
 }
