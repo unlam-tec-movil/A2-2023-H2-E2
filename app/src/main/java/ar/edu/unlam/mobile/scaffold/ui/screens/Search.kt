@@ -102,7 +102,7 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
                 items(trackUiState.tracks) { track ->
                     SongElement(
                         track = track,
-                        playlists = playlistUIState.playlists,
+                        // playlists = playlistUIState.playlists,
                         onClick = {},
                     )
                 }

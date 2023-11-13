@@ -52,7 +52,8 @@ data class RecommendationUiState(
 
 // TODO: Borrar despues, hago esto xq franco no tiene lo suyo hecho todavia
 data class PlaylistState(
-    val playlist: Playlist = Playlist(0, "", "", listOf()),
+    val playlist: Playlist = Playlist(0, "", "", "", listOf()),
+    val error: String = "",
 )
 
 // Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
@@ -196,10 +197,16 @@ class HomeViewModel @Inject constructor(
 
     fun getPlaylistById(id: Long) {
         viewModelScope.launch {
-            _playlistState.value =
-                _playlistState.value.copy(
-                    playlist = playlistDao.getPlaylistWithTracks(id).toDomainPlaylist(),
-                )
+            withContext(Dispatchers.IO) {
+                PlaylistRepository(playlistDao = playlistDao).getPlaylistWithTracks(id)
+                    .catch {
+                        _playlistState.value =
+                            _playlistState.value.copy(error = it.message ?: "Error")
+                    }
+                    .collect {
+                        _playlistState.value = _playlistState.value.copy(playlist = it)
+                    }
+            }
         }
     }
 }

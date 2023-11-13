@@ -71,7 +71,7 @@ fun SongListElement(
     if (isModalVisible) {
         ModalAddToList(
             track = track,
-            playlists = playlists,
+            // playlists = playlists,
             onClose = { onCloseModal() },
         )
     }

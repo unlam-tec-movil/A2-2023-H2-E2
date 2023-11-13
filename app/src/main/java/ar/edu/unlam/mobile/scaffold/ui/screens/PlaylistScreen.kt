@@ -196,7 +196,7 @@ fun PlaylistScreen(
                 SongElement(
                     type = TypeSongElement.ADDED,
                     track = track,
-                    playlists = playlists.value.playlists,
+                    // playlists = playlists.value.playlists,
                     onClick = { openModal(track) },
                 )
             }

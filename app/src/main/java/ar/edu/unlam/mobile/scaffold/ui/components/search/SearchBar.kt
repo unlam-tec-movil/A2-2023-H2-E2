@@ -82,7 +82,7 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                         onClick = {},
                         type = TypeSongElement.SEARCH,
                         track = track,
-                        playlists = playlists.playlists,
+                        // playlists = playlists.playlists,
                     )
                 }
             }

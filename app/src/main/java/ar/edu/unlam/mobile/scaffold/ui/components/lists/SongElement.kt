@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
@@ -39,7 +38,7 @@ fun SongElement(
     modifier: Modifier = Modifier,
     type: TypeSongElement = TypeSongElement.OTHER,
     track: Track,
-    playlists: List<Playlist>,
+    // playlists: List<Playlist>,
     onClick: (track: Track) -> Unit,
 ) {
     var isModalVisible by remember { mutableStateOf(false) }
@@ -115,6 +114,9 @@ fun SongElement(
     }
 
     if (isModalVisible && type == TypeSongElement.SEARCH) {
-        ModalAddToList(track = track, playlists = playlists, onClose = { isModalVisible = false })
+        ModalAddToList(
+            track = track, // playlists = playlists,
+            onClose = { isModalVisible = false },
+        )
     }
 }
