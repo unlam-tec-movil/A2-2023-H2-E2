@@ -27,6 +27,5 @@ fun PlaylistWithTracks.toDomainPlaylist() =
         title = playlist.name,
         description = playlist.description,
         image = playlist.image,
-        description = playlist.description,
         tracks = tracks.map { it.toDomainTrack() },
     )
