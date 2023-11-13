@@ -5,4 +5,5 @@ enum class Routes {
     Search,
     CreatePlaylist,
     PlaylistScreen,
+    ListPlaylistScreen,
 }

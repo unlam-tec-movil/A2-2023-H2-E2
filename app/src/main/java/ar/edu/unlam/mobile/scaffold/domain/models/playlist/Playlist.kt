@@ -7,6 +7,7 @@ data class Playlist(
     val id: Long,
     val title: String,
     val image: String,
+    val description: String = "",
     val tracks: List<Track>,
 )
 
@@ -15,5 +16,6 @@ fun PlaylistWithTracks.toDomainPlaylist() =
         id = playlist.playlistId,
         title = playlist.name,
         image = playlist.image,
+        description = playlist.description,
         tracks = tracks.map { it.toDomainTrack() },
     )

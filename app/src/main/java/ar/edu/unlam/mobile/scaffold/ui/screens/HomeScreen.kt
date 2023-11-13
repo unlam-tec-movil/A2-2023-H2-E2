@@ -46,6 +46,11 @@ import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
+val playlists = listOf<Playlist>(
+    Playlist(0L, "Primer playlist", "https://picsum.photos/201", "esta es mi primer playlist", listOf()),
+    Playlist(0L, "Segunda playlist", "https://picsum.photos/200", "esta es mi primer playlist", listOf()),
+    Playlist(0L, "Tercera playlist", "https://picsum.photos/129", "esta es mi primer playlist", listOf()),
+)
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
@@ -53,9 +58,6 @@ fun NavigationView() {
         composable(Routes.Home.name) {
             HomeScreen(
                 navController,
-                onSearchClick = {
-                    navController.navigate(Routes.CreatePlaylist.name)
-                },
                 onFabClick = {
                     navController.navigate(Routes.CreatePlaylist.name)
                 },
@@ -73,13 +75,15 @@ fun NavigationView() {
             val item = it.arguments?.getString("item")
             PlaylistScreen(item = item)
         }
+        composable(Routes.ListPlaylistScreen.name) {
+            ListPlaylistScreen(navController)
+        }
     }
 }
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier,
@@ -89,8 +93,8 @@ fun HomeScreen(
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
         Body(
             navController = navController,
-            playlists = playlistUIState.playlists,
-            onSearchClick = onSearchClick,
+            //playlists = playlistUIState.playlists,
+            playlists = playlists,
             modifier = Modifier.padding(paddingValues),
             trendsUiState = trendsUiState,
         )
@@ -103,7 +107,6 @@ fun Body(
     playlists: List<Playlist>,
     trendsUiState: TrendsUIState,
     modifier: Modifier = Modifier,
-    onSearchClick: () -> Unit = {},
 ) {
     Box {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -117,7 +120,7 @@ fun Body(
             TitlesHome(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 title = "Mis listas",
-                onSearchClick = onSearchClick,
+                onSearchClick = { navController.navigate(Routes.ListPlaylistScreen.name) },
             )
             if (playlists.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(30.dp))
@@ -141,7 +144,7 @@ fun Body(
                     modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 )
                 IconButton(
-                    onClick = {},
+                    onClick = { navController.navigate(Routes.CreatePlaylist.name) },
                     modifier = Modifier
                         .padding(end = 30.dp)
                         .clip(RoundedCornerShape(50.dp))

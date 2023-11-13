@@ -4,7 +4,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -104,7 +106,7 @@ val tracksList = listOf<Track>(
 
 @Composable
 fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
-    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", listOf())) }
+    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", "",listOf())) }
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
@@ -113,7 +115,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
 
     fun getDataPlaylist() {
         // todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracksList)
+        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", "esta es mi primer playlist",tracksList)
     }
 
     getDataPlaylist()
@@ -168,32 +170,46 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                                 270.dp
                             },
                         )
-                        .padding(vertical = 20.dp, horizontal = 12.dp),
+                        .padding(top = 24.dp, bottom = 12.dp, end = 12.dp, start = 12.dp),
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
 
                 )
             }
             item {
-                Text(
-                    text = playlist.value.title,
-                    textAlign = TextAlign.Start,
-                    fontSize = 22.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
+                Column (
                     modifier = Modifier
-                        .padding(top = 10.dp),
-                )
-                Text(
-                    text = playlist.value.tracks.size.toString() + " canciones",
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(top = 4.dp, bottom = 8.dp),
-                )
-                Separator()
+                        .fillMaxWidth()
+                ){
+                    Text(
+                        text = playlist.value.title,
+                        textAlign = TextAlign.Start,
+                        fontSize = 22.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(top = 10.dp),
+                    )
+                    Text(
+                        text = playlist.value.tracks.size.toString() + " canciones",
+                        textAlign = TextAlign.Start,
+                        fontSize = 16.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(vertical = 4.dp),
+                    )
+                    Text(
+                        text = playlist.value.description,
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier
+                            .padding(vertical = 5.dp, horizontal = 4.dp),
+                    )
+                    Separator()
+                }
             }
             items(playlist.value.tracks) { track ->
                 SongElement(type = TypeSongElement.ADDED, track = track, onClick = { openModal(track) })
