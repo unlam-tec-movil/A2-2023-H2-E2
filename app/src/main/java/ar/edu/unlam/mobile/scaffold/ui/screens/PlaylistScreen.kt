@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -103,20 +103,18 @@ val tracksList = listOf<Track>(
 )
 
 @Composable
-fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
-    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
+fun PlaylistScreen(
+    navController: NavHostController? = null,
+    playlistId: String,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
+    var playlist = homeViewModel.tempPlaylistState.collectAsState()
+    val playlists = homeViewModel.appUiState.playlistState.collectAsState()
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
-
-    fun getDataPlaylist() {
-        // todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracks = tracksList)
-    }
-
-    getDataPlaylist()
 
     fun openModal(track: Track) {
         activeSong = track
@@ -150,8 +148,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
         ) {
             item {
                 AsyncImage(
-                    // TODO: cambiar el painterResource por el verdadero
-                    model = playlist.value.image,
+                    model = playlist,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(
@@ -176,7 +173,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
             }
             item {
                 Text(
-                    text = playlist.value.title,
+                    text = playlist.value.playlist.title,
                     textAlign = TextAlign.Start,
                     fontSize = 22.sp,
                     color = Color.White,
@@ -185,7 +182,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                         .padding(top = 10.dp),
                 )
                 Text(
-                    text = playlist.value.tracks.size.toString() + " canciones",
+                    text = playlist.value.playlist.tracks.size.toString() + " canciones",
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp,
                     color = Color.White,
@@ -195,8 +192,13 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
                 )
                 Separator()
             }
-            items(playlist.value.tracks) { track ->
-                SongElement(type = TypeSongElement.ADDED, track = track, onClick = { openModal(track) })
+            items(playlist.value.playlist.tracks) { track ->
+                SongElement(
+                    type = TypeSongElement.ADDED,
+                    track = track,
+                    // playlists = playlists.value.playlists,
+                    onClick = { openModal(track) },
+                )
             }
         }
     }

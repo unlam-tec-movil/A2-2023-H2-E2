@@ -14,6 +14,7 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,10 +36,10 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hiltViewModel()) {
     var queryState by remember { mutableStateOf("") }
     var searchBarIsActive by remember { mutableStateOf(false) }
-
     val elementsColorValue = Color.White
-
     val localManager = LocalSoftwareKeyboardController.current
+    val tracks by homeViewModel.appUiState.trackState.collectAsState()
+    val playlists by homeViewModel.appUiState.playlistState.collectAsState()
 
     SearchBar(
         query = queryState,
@@ -76,11 +77,12 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
             homeViewModel.getTrackBySearchBar(query = queryState)
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                items(homeViewModel.appUiState.trackState.value.tracks) { track ->
+                items(tracks.tracks) { track ->
                     SongElement(
                         onClick = {},
                         type = TypeSongElement.SEARCH,
                         track = track,
+                        // playlists = playlists.playlists,
                     )
                 }
             }

@@ -1,17 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
-import javax.inject.Inject
-
-data class PlaylistUiState(
+/*data class PlaylistUiState(
     val playlist: Playlist = Playlist(
         0,
         "",
@@ -42,3 +31,4 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         }
     }
 }
+*/
