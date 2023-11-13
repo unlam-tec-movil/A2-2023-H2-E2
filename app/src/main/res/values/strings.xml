@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Spotilist</string>
     <string name="my_list_title">Mis listas</string>
     <string name="view_all_title">ver todas</string>
     <string name="placeholder_search">Buscar artistas o canciones</string>

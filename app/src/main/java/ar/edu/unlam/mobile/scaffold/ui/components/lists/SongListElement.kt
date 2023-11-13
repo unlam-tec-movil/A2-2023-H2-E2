@@ -21,16 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
 
 @Composable
 fun SongListElement(
-    playlistId: String,
-    title: String,
-    artist: String,
-    image: String,
+    track: Track,
+    playlists: List<Playlist>,
     mostrarTitulo: Boolean = true,
     fullWidth: Boolean = true,
     modifier: Modifier = Modifier,
@@ -51,7 +50,7 @@ fun SongListElement(
             .then(modifier.clickable { isModalVisible = true }),
     ) {
         AsyncImage(
-            model = image,
+            model = track.image,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
@@ -62,7 +61,7 @@ fun SongListElement(
         )
         if (mostrarTitulo) {
             Text(
-                text = title,
+                text = track.title,
                 style = MaterialTheme.typography.labelLarge,
                 color = Color.White,
             )
@@ -70,6 +69,10 @@ fun SongListElement(
     }
 
     if (isModalVisible) {
-        ModalAddToList(track = Track(playlistId, title, artist, image), onClose = { onCloseModal() })
+        ModalAddToList(
+            track = track,
+            playlists = playlists,
+            onClose = { onCloseModal() },
+        )
     }
 }
