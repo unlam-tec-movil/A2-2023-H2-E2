@@ -24,6 +24,7 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistUIState
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrackUiState
 
 val exampleSongs =
@@ -84,6 +85,7 @@ val exampleSongs =
 @Composable
 fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
     val trackUiState: TrackUiState by homeViewModel.appUiState.trackState.collectAsState()
+    val playlistUIState: PlaylistUIState by homeViewModel.appUiState.playlistState.collectAsState()
 
     Box {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -100,6 +102,7 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
                 items(trackUiState.tracks) { track ->
                     SongElement(
                         track = track,
+                        // playlists = playlistUIState.playlists,
                         onClick = {},
                     )
                 }

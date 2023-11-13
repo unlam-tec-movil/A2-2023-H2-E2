@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
@@ -12,6 +13,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
+data class PlaylistUiState(
 
 data class PlaylistUiState(
     val playlist: Playlist = Playlist(
@@ -76,5 +79,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
                 _allPlaylistUiState.value = AllPlaylistUiState(playlists = it, isLoading = false)
             }
         }
+      }
     }
 }
+

@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -116,6 +116,7 @@ fun PlaylistScreen(
     var activeSong by remember { mutableStateOf<Track?>(null) }
     val context = LocalContext.current
 
+
     fun getDataPlaylist() {
         playlist.value = playlistViewModel.playlistUiState.value.playlist
     }
@@ -155,8 +156,7 @@ fun PlaylistScreen(
         ) {
             item {
                 AsyncImage(
-                    // TODO: cambiar el painterResource por el verdadero
-                    model = playlist.value.image,
+                    model = playlist,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(
@@ -178,7 +178,7 @@ fun PlaylistScreen(
                     contentScale = ContentScale.FillBounds,
                 )
                 Text(
-                    text = playlist.value.title,
+                    text = playlist.value.playlist.title,
                     textAlign = TextAlign.Start,
                     fontSize = 22.sp,
                     color = Color.White,
@@ -186,7 +186,7 @@ fun PlaylistScreen(
                     modifier = Modifier.padding(top = 10.dp),
                 )
                 Text(
-                    text = playlist.value.tracks.size.toString() + " canciones",
+                    text = playlist.value.playlist.tracks.size.toString() + " canciones",
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp,
                     color = Color.White,
@@ -195,6 +195,7 @@ fun PlaylistScreen(
                 )
                 Separator()
             }
+            
             items(playlist.value.tracks) { track ->
                 SongElement(type = TypeSongElement.ADDED,
                     track = track,

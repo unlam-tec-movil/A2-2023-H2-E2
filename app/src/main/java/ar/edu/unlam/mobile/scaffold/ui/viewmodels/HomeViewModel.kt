@@ -50,6 +50,12 @@ data class RecommendationUiState(
     val error: String = "",
 )
 
+// TODO: Borrar despues, hago esto xq franco no tiene lo suyo hecho todavia
+data class PlaylistState(
+    val playlist: Playlist = Playlist(0, "", "", "", listOf()),
+    val error: String = "",
+)
+
 // Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
 data class AppUiState(
    // val playlistState: StateFlow<PlaylistUIState>,
@@ -71,6 +77,9 @@ class HomeViewModel @Inject constructor(
     private val _trackUiState = MutableStateFlow(TrackUiState())
     private val _recommendationUiState = MutableStateFlow(RecommendationUiState())
     private val _simpleTrackUiState = MutableStateFlow(SimpleTrackUiState())
+    private val _playlistState = MutableStateFlow(PlaylistState())
+
+    val tempPlaylistState = _playlistState.asStateFlow()
 
     val appUiState = AppUiState(
         //playlistState = _playlistUiState.asStateFlow(),
