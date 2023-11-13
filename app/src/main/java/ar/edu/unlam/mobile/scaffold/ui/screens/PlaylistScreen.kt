@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,7 +35,7 @@ import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
-import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
 val tracksList = listOf<Track>(
@@ -106,11 +105,10 @@ val tracksList = listOf<Track>(
 fun PlaylistScreen(
     navController: NavHostController? = null,
     playlistId: String,
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
-    var playlist = homeViewModel.tempPlaylistState.collectAsState()
-    val playlists = homeViewModel.appUiState.playlistState.collectAsState()
-    var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
+    val playlist = playlistViewModel.playlistUiState.collectAsState()
+    val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
@@ -123,8 +121,6 @@ fun PlaylistScreen(
 
     fun removeFromPlaylist() {
         // Todo: eliminar cancion de la playlist
-        val text = activeSong?.title + " fue eliminada"
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         isModalVisible = false
     }
 
@@ -168,18 +164,14 @@ fun PlaylistScreen(
                         .padding(vertical = 20.dp, horizontal = 12.dp),
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
-
                 )
-            }
-            item {
                 Text(
                     text = playlist.value.playlist.title,
                     textAlign = TextAlign.Start,
                     fontSize = 22.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(top = 10.dp),
+                    modifier = Modifier.padding(top = 10.dp),
                 )
                 Text(
                     text = playlist.value.playlist.tracks.size.toString() + " canciones",
@@ -187,16 +179,15 @@ fun PlaylistScreen(
                     fontSize = 16.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(top = 4.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
                 )
                 Separator()
             }
+
             items(playlist.value.playlist.tracks) { track ->
                 SongElement(
                     type = TypeSongElement.ADDED,
                     track = track,
-                    // playlists = playlists.value.playlists,
                     onClick = { openModal(track) },
                 )
             }

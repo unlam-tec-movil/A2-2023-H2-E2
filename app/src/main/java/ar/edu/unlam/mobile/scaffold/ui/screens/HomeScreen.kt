@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,6 +45,7 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
 @Composable
@@ -82,18 +84,24 @@ fun HomeScreen(
     onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
     modifier: Modifier,
 ) {
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
-    val playlistUIState by viewModel.appUiState.playlistState.collectAsState()
-    Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
-        Body(
-            navController = navController,
-            playlists = playlistUIState.playlists,
-            onSearchClick = onSearchClick,
-            modifier = Modifier.padding(paddingValues),
-            trendsUiState = trendsUiState,
-        )
+    val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
+
+    if (trendsUiState.loading || playlistUIState.isLoading) {
+        CircularProgressIndicator(strokeCap = StrokeCap.Butt)
+    } else {
+        Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
+            Body(
+                navController = navController,
+                playlists = playlistUIState.playlists,
+                onSearchClick = onSearchClick,
+                modifier = Modifier.padding(paddingValues),
+                trendsUiState = trendsUiState,
+            )
+        }
     }
 }
 
@@ -125,7 +133,7 @@ fun Body(
                     items(playlists) { playlist ->
                         PlaylistListElement(
                             playlist.id.toString(),
-                            playlist.title,
+                            title = playlist.title,
                             playlist.image,
                             navController = navController,
                         )

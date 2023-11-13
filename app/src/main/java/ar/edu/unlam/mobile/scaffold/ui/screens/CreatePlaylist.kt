@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
-import androidx.compose.foundation.Image
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,20 +31,29 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.R
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.theme.Blue73
+import ar.edu.unlam.mobile.scaffold.ui.theme.DisableButtonColorPlaylist
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
+import coil.compose.AsyncImage
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFF111124L, showSystemUi = true)
 @Composable
-fun CreatePlaylist() {
+fun CreatePlaylist(playlistViewModel: PlaylistViewModel = hiltViewModel()) {
+    val srcImageDefault =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbvl7F2ldQV89pon03gwyu0LL-mdrSXf4MaQ&usqp=CAU"
+    val context = LocalContext.current
     Box(contentAlignment = Alignment.TopCenter) {
         Column(
             modifier = Modifier
@@ -59,14 +68,13 @@ fun CreatePlaylist() {
 
             Spacer(modifier = Modifier.height(45.dp))
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_default_album1),
+            AsyncImage(
+                model = srcImageDefault,
                 contentDescription = "Imagen de muestra",
                 modifier = Modifier
                     .height(270.dp)
                     .width(370.dp),
                 contentScale = ContentScale.FillBounds,
-
             )
 
             Column(
@@ -141,12 +149,27 @@ fun CreatePlaylist() {
 
             Spacer(modifier = Modifier.height(35.dp))
 
+            var buttonEnabled by remember { mutableStateOf(false) }
+
+            buttonEnabled = textNameInput != "" && textDescriptionInput != ""
+
             Button(
-                onClick = { },
+                enabled = buttonEnabled,
+                onClick = {
+                    playlistViewModel.addPlaylist(
+                        Playlist(
+                            title = textNameInput,
+                            description = textDescriptionInput,
+                            image = srcImageDefault,
+                        ),
+                    )
+                    Toast.makeText(context, R.string.playlist_created, Toast.LENGTH_SHORT).show()
+                },
                 shape = RoundedCornerShape(6.dp),
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = textFieldColor,
+                    disabledContainerColor = DisableButtonColorPlaylist,
                 ),
             ) {
                 Text(text = "Guardar", fontSize = 27.sp)

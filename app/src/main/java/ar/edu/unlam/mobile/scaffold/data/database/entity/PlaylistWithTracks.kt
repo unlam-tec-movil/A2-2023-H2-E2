@@ -20,6 +20,7 @@ data class PlaylistWithTracks(
             id = playlist.playlistId,
             title = playlist.name,
             image = playlist.image,
+            description = playlist.description ?: "",
             tracks = tracks.map { it.toDomainTrack() },
         )
     }

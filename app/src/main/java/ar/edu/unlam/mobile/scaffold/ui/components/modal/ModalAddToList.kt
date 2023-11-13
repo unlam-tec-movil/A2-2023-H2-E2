@@ -1,11 +1,17 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.modal
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
 @Composable
@@ -30,6 +38,7 @@ fun ModalAddToList(
     // playlists: List<Playlist>,
     onClose: () -> Unit = {},
     modifier: Modifier = Modifier,
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -84,15 +93,16 @@ fun ModalAddToList(
                 modifier = Modifier
                     .padding(vertical = 8.dp),
             )
-            /*LazyColumn(
+            LazyColumn(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                items(playlists) { playlist ->
+                items(playlistViewModel.allPlaylistUiState.value.playlists) { playlist ->
                     ModalPlayListItem(
+                        playlist = playlist,
                         trackId = track.spotifyId,
                         trackTitle = track.title,
                         onClick = { onClose },
@@ -115,7 +125,7 @@ fun ModalAddToList(
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 }
