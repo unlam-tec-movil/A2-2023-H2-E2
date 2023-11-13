@@ -44,7 +44,7 @@ fun PlaylistListElement(
         modifier = modifier
             .padding(end = 10.dp, bottom = 10.dp)
             .wrapContentHeight()
-            .then(modifier.clickable { onPlaylistClick() }),
+            .clickable { onPlaylistClick() },
     ) {
         AsyncImage(
             model = image,

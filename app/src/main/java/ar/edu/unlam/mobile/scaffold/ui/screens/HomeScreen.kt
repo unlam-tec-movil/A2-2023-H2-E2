@@ -71,9 +71,9 @@ fun NavigationView() {
         composable(Routes.CreatePlaylist.name) {
             CreatePlaylist()
         }
-        composable(Routes.PlaylistScreen.name + "/{item}") {
-            val item = it.arguments?.getString("item")
-            PlaylistScreen(item = item)
+        composable(Routes.PlaylistScreen.name + "/{playlistId}") {
+            val playlistId = it.arguments?.getString("playlistId") ?: ""
+            PlaylistScreen(playlistId = playlistId)
         }
         composable(Routes.ListPlaylistScreen.name) {
             ListPlaylistScreen(navController)
@@ -177,7 +177,7 @@ fun Body(
                         .align(Alignment.CenterHorizontally),
                 ) {
                     items(trendsUiState.tracks) { track ->
-                        SongListElement(track.spotifyId, track.title, track.artist, track.image)
+                        SongListElement(track, playlists)
                     }
                 }
             }

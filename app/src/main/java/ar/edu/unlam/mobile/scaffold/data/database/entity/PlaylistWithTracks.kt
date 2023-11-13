@@ -14,4 +14,13 @@ data class PlaylistWithTracks(
         associateBy = Junction(PlaylistTrackCrossRef::class),
     )
     val tracks: List<Track>,
-)
+) {
+    fun toDomainPlaylist(): ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist {
+        return ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist(
+            id = playlist.playlistId,
+            title = playlist.name,
+            image = playlist.image,
+            tracks = tracks.map { it.toDomainTrack() },
+        )
+    }
+}

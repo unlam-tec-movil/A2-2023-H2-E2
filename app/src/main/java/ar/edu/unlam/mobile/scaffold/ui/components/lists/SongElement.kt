@@ -23,35 +23,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
 
-val exampleSong: Track = Track(
-    "Canción de ejemplooooooooooooooooooooooooooooooooooo",
-    "Artista de ejemplopoooooooooooooooooo",
-    "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk",
-)
-
 enum class TypeSongElement {
     SEARCH, ADDED, OTHER
-}
-
-@Preview
-@Composable
-fun SongElementPreview() {
-    SongElement(onClick = {})
 }
 
 @Composable
 fun SongElement(
     modifier: Modifier = Modifier,
     type: TypeSongElement = TypeSongElement.OTHER,
-    track: Track = exampleSong,
+    track: Track,
+    // playlists: List<Playlist>,
     onClick: (track: Track) -> Unit,
 ) {
     var isModalVisible by remember { mutableStateOf(false) }
@@ -127,6 +114,9 @@ fun SongElement(
     }
 
     if (isModalVisible && type == TypeSongElement.SEARCH) {
-        ModalAddToList(track = track, onClose = { isModalVisible = false })
+        ModalAddToList(
+            track = track, // playlists = playlists,
+            onClose = { isModalVisible = false },
+        )
     }
 }
