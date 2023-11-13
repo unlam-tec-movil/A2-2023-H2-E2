@@ -104,7 +104,7 @@ val tracksList = listOf<Track>(
 
 @Composable
 fun PlaylistScreen(navController: NavHostController? = null, item: String? = null, homeViewModel: HomeViewModel = hiltViewModel()) {
-    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", listOf())) }
+    var playlist = remember { mutableStateOf<Playlist>(Playlist(0L, "", "", tracks = listOf())) }
     var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
@@ -113,7 +113,7 @@ fun PlaylistScreen(navController: NavHostController? = null, item: String? = nul
 
     fun getDataPlaylist() {
         // todo: obtener informacion de la playlist
-        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracksList)
+        playlist.value = Playlist(1L, "Playlist Ejemplo", "https://picsum.photos/201", tracks = tracksList)
     }
 
     getDataPlaylist()
