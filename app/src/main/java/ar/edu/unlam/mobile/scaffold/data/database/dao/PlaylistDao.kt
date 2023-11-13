@@ -25,9 +25,10 @@ interface PlaylistDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaylistWithTracks(playlist: PlaylistTrackCrossRef)
+
     @Transaction
     @Query("SELECT * FROM playlist where playlistId=:id")
-        fun getPlaylistsWithTracks(id: Long): Flow<PlaylistWithTracks>
+    fun getPlaylistsWithTracks(id: Long): Flow<PlaylistWithTracks>
 
     @Transaction
     @Query("SELECT * FROM playlist")

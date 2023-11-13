@@ -14,10 +14,9 @@ data class Playlist(
     fun toPlaylistEntity(): ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist {
         return ar.edu.unlam.mobile.scaffold.data.database.entity
             .Playlist(name = this.title, description = this.description, image = this.image)
-
     }
 
-    fun toPlaylistTrackCrossRef(): PlaylistTrackCrossRef{
+    fun toPlaylistTrackCrossRef(): PlaylistTrackCrossRef {
         return PlaylistTrackCrossRef(playlistId = this.id, spotifyId = this.tracks[0].spotifyId)
     }
 }

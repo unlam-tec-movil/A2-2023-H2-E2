@@ -51,7 +51,7 @@ data class RecommendationUiState(
 )
 
 // Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
-data class  AppUiState(
+data class AppUiState(
     val playlistState: StateFlow<PlaylistUIState>,
     val trendsState: StateFlow<TrendsUIState>,
     val trackState: StateFlow<TrackUiState>,
@@ -173,7 +173,7 @@ class HomeViewModel @Inject constructor(
     private fun getPlaylists() {
         viewModelScope.launch() {
             withContext(Dispatchers.IO) {
-            PlaylistRepository(playlistDao = playlistDao).getAllPlaylists()
+                PlaylistRepository(playlistDao = playlistDao).getAllPlaylists()
                     .catch {
                         _playlistUiState.value =
                             _playlistUiState.value.copy(error = it.message ?: "Error")

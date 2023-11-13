@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -14,10 +13,14 @@ import javax.inject.Inject
 
 data class PlaylistUiState(
     val playlist: Playlist = Playlist(
-        0, "", "", "", emptyList()
+        0,
+        "",
+        "",
+        "",
+        emptyList(),
     ),
     val loading: Boolean = true,
-    val error: String = ""
+    val error: String = "",
 )
 
 @HiltViewModel

@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.data.database.entity
 
-import  androidx.room.Embedded
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
@@ -20,7 +20,7 @@ data class PlaylistWithTracks(
             id = playlist.playlistId,
             title = playlist.name,
             image = playlist.image,
-            tracks = tracks.map { it.toDomainTrack() }
+            tracks = tracks.map { it.toDomainTrack() },
         )
     }
 }
