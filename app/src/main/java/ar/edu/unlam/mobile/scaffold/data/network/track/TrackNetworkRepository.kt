@@ -6,7 +6,7 @@ import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Trend
 import kotlinx.coroutines.flow.Flow
 
 interface TrackNetworkRepository {
-    suspend fun getRecommendations(): Flow<Recommendation>
+    suspend fun getRecommendations(genres: String): Flow<Recommendation>
     suspend fun getTrendingTracks(): Flow<Trend>
     suspend fun getAPITrack(id: String): Flow<Track>
 }
