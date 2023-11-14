@@ -4,4 +4,6 @@
     <string name="view_all_title">ver todas</string>
     <string name="placeholder_search">Buscar artistas o canciones</string>
     <string name="create_list_title">Crear nueva lista</string>
+    <string name="update_list_title">Actualizar lista</string>
+    <string name="playlist_created">¡Playlist creada con éxito!</string>
 </resources>

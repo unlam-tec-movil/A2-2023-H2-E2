@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,18 +19,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
 
 @Composable
 fun ListPlaylistScreen (
     navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
+    val playlistUIState by viewModel.appUiState.playlistState.collectAsState()
+
     LazyColumn(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -51,7 +58,7 @@ fun ListPlaylistScreen (
                 )
             }
         }
-        items(playlists) { playlist ->
+        items(playlistUIState.playlists) { playlist ->
             PlaylistElement(playlist, navController)
         }
 

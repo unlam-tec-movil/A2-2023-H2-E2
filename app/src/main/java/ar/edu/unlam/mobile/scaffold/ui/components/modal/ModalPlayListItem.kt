@@ -32,7 +32,7 @@ fun ModalPlayListItem(
 ) {
     val context = LocalContext.current
 
-    fun addToPlaylis() {
+    fun addToPlaylist() {
         // TODO: Agregar a una playlist
         val text = "$trackTitle agregada a ${playlist.title}"
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -45,7 +45,7 @@ fun ModalPlayListItem(
             // .clip(shape = RoundedCornerShape(5.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
             .fillMaxWidth()
-            .then(modifier.clickable { addToPlaylis() }),
+            .clickable { addToPlaylist() },
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(

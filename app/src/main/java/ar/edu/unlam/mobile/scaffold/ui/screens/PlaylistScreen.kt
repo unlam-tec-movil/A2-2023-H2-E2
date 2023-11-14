@@ -4,7 +4,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -32,85 +34,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
-import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
-
-val tracksList = listOf<Track>(
-    Track(
-        "vw8vew82",
-        "Revolution Radio",
-        "Green Day",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Hoy Estoy Raro",
-        "El Cuarteto De Nos",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Paradise",
-        "Coldplay",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Paper Wings",
-        "Rise Against",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "By the Way",
-        "Red Hot Chili Peppers",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Toxicity",
-        "System Of A Down",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Radioactive",
-        "Imagine Dragons",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Numb",
-        "Linkin Park",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "The Hell Song",
-        "Sum 41",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Misery Business",
-        "Paramore",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-)
 
 @Composable
 fun PlaylistScreen(
     navController: NavHostController? = null,
     playlistId: String,
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
-    var playlist = homeViewModel.tempPlaylistState.collectAsState()
-    val playlists = homeViewModel.appUiState.playlistState.collectAsState()
-    var imagenPlegada = remember { mutableStateOf<Boolean>(false) }
+    val playlist = playlistViewModel.playlistUiState.collectAsState()
+    val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeSong by remember { mutableStateOf<Track?>(null) }
@@ -123,12 +62,14 @@ fun PlaylistScreen(
 
     fun removeFromPlaylist() {
         // Todo: eliminar cancion de la playlist
-        val text = activeSong?.title + " fue eliminada"
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         isModalVisible = false
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
+
+        LaunchedEffect(Unit){
+            playlistViewModel.loadPlaylist(playlistId.toString().toLong())
+        }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
                 Log.i("Tag", "El scroll está en progreso")
@@ -148,7 +89,7 @@ fun PlaylistScreen(
         ) {
             item {
                 AsyncImage(
-                    model = playlist,
+                    model = playlist.value.playlist.image,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(
@@ -168,35 +109,47 @@ fun PlaylistScreen(
                         .padding(vertical = 20.dp, horizontal = 12.dp),
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
-
                     )
             }
             item {
-                Text(
-                    text = playlist.value.playlist.title,
-                    textAlign = TextAlign.Start,
-                    fontSize = 22.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
+                Column (
                     modifier = Modifier
-                        .padding(top = 10.dp),
-                )
-                Text(
-                    text = playlist.value.playlist.tracks.size.toString() + " canciones",
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(top = 4.dp, bottom = 8.dp),
-                )
+                        .fillMaxWidth()
+
+
+                ){
+                    Text(
+                        text = playlist.value.playlist.title,
+                        textAlign = TextAlign.Start,
+                        fontSize = 22.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 10.dp),
+                    )
+                    Text(
+                        text = playlist.value.playlist.tracks.size.toString() + " canciones",
+                        textAlign = TextAlign.Start,
+                        fontSize = 16.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
+                    )
+                    Text(
+                        text = playlist.value.playlist.description,
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                    )
+                }
                 Separator()
             }
+
             items(playlist.value.playlist.tracks) { track ->
                 SongElement(
                     type = TypeSongElement.ADDED,
                     track = track,
-                    // playlists = playlists.value.playlists,
                     onClick = { openModal(track) },
                 )
             }

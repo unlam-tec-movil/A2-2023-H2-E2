@@ -19,72 +19,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.domain.models.search.Song
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistUIState
-import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrackUiState
-
-val exampleSongs =
-    listOf(
-        Song(
-            "Revolution Radio",
-            "Green Day",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Hoy Estoy Raro",
-            "El Cuarteto De Nos",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Paradise",
-            "Coldplay",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Paper Wings",
-            "Rise Against",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "By the Way",
-            "Red Hot Chili Peppers",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Toxicity",
-            "System Of A Down",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Radioactive",
-            "Imagine Dragons",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Numb",
-            "Linkin Park",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "The Hell Song",
-            "Sum 41",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-        Song(
-            "Misery Business",
-            "Paramore",
-            "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-        ),
-    )
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrackUIState
 
 @Preview
 @Composable
 fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
-    val trackUiState: TrackUiState by homeViewModel.appUiState.trackState.collectAsState()
+    val trackUiState: TrackUIState by homeViewModel.appUiState.trackState.collectAsState()
     val playlistUIState: PlaylistUIState by homeViewModel.appUiState.playlistState.collectAsState()
 
     Box {

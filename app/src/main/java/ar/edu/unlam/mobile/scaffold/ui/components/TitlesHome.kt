@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -26,12 +28,11 @@ fun TitlesHome(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 10.dp, horizontal = 6.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
+            .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
     ) {
         Title(title = title)
-        Spacer(modifier = Modifier.width(50.dp))
-        ViewAllsOption(onSearchClick, modifier.padding(top = 16.5.dp))
+        ViewAllsOption(onSearchClick)
     }
 }

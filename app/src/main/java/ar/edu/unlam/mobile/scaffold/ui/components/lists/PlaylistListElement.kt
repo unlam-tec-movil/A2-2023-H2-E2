@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -17,8 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffold.ui.screens.Routes
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
 @Composable
@@ -33,6 +36,7 @@ fun PlaylistListElement(
 ) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
+    val viewModel: PlaylistViewModel = hiltViewModel()
 
     fun onPlaylistClick() {
         navController.navigate(

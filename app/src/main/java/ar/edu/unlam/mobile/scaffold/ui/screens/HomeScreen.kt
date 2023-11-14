@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,6 +45,7 @@ import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongListElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
 val playlists = listOf<Playlist>(
@@ -59,7 +61,9 @@ fun NavigationView() {
             HomeScreen(
                 navController,
                 onFabClick = {
-                    navController.navigate(Routes.CreatePlaylist.name)
+                    navController.navigate(
+                        route = Routes.CreatePlaylist.name + "/0",
+                    )
                 },
                 modifier = Modifier,
             )
@@ -68,8 +72,9 @@ fun NavigationView() {
             Search()
         }
 
-        composable(Routes.CreatePlaylist.name) {
-            CreatePlaylist()
+        composable(Routes.CreatePlaylist.name + "/{playlistId}") {
+            val playlistId = it.arguments?.getString("playlistId") ?: ""
+            CreatePlaylist(playlistId = playlistId, navController = navController)
         }
         composable(Routes.PlaylistScreen.name + "/{playlistId}") {
             val playlistId = it.arguments?.getString("playlistId") ?: ""
@@ -86,6 +91,7 @@ fun HomeScreen(
     navController: NavController,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
     modifier: Modifier,
 ) {
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
@@ -93,8 +99,8 @@ fun HomeScreen(
     Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
         Body(
             navController = navController,
-            //playlists = playlistUIState.playlists,
-            playlists = playlists,
+            playlists = playlistUIState.playlists,
+            //playlists = playlists,
             modifier = Modifier.padding(paddingValues),
             trendsUiState = trendsUiState,
         )
@@ -118,17 +124,17 @@ fun Body(
                     .padding(horizontal = 8.dp),
             )
             TitlesHome(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 12.dp),
                 title = "Mis listas",
                 onSearchClick = { navController.navigate(Routes.ListPlaylistScreen.name) },
             )
             if (playlists.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyRow {
-                    items(playlists) { playlist ->
+                    items(playlists.take(7)) { playlist ->
                         PlaylistListElement(
                             playlist.id.toString(),
-                            playlist.title,
+                            title = playlist.title,
                             playlist.image,
                             navController = navController,
                         )
@@ -144,7 +150,11 @@ fun Body(
                     modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 )
                 IconButton(
-                    onClick = { navController.navigate(Routes.CreatePlaylist.name) },
+                    onClick = {
+                        navController.navigate(
+                            route = Routes.CreatePlaylist.name + "/0",
+                        )
+                    },
                     modifier = Modifier
                         .padding(end = 30.dp)
                         .clip(RoundedCornerShape(50.dp))
