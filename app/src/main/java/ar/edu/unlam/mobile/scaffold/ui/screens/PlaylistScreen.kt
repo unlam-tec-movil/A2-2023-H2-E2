@@ -152,7 +152,7 @@ fun PlaylistScreen(
         AlertDialog(
             onDismissRequest = {},
             title = { Text(text = "Eliminar cancion") },
-            text = { Text(text = "Querés eliminar " + activeTrack?.title + " de esta lista") },
+            text = { Text(text = "Querés eliminar " + activeTrack.title + " de esta lista") },
             confirmButton = {
                 Button(
                     onClick = {

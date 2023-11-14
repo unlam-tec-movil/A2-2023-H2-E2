@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffold.data.repository.track
 
 import ar.edu.unlam.mobile.scaffold.data.database.dao.TrackDao
 import ar.edu.unlam.mobile.scaffold.data.network.track.TrackNetworkRepository
+import ar.edu.unlam.mobile.scaffold.domain.models.track.FullTrack
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,6 +19,10 @@ class TrackDefaultRepository @Inject constructor(
     override suspend fun getTrendingTracks(): Flow<List<Track>> {
         return this.networkRepository.getTrendingTracks()
             .map { it.tracks.items.map { it.track.toTrack() } }
+    }
+
+    override suspend fun getAPITrack(id: String): Flow<FullTrack> {
+        return this.networkRepository.getAPITrack(id).map { it.toFullTrack() }
     }
 
     fun insertTrack(trackToInsert: Track) {

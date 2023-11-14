@@ -7,6 +7,7 @@ import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
 import ar.edu.unlam.mobile.scaffold.data.repository.track.TrackDefaultRepository
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.FullTrack
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,20 @@ data class CurrentPlaylistUiState(
         "",
         "",
         emptyList(),
+    ),
+    val isLoading: Boolean = true,
+    val error: String = "",
+)
+
+data class CurrentTrackUiState(
+    val track: FullTrack = FullTrack(
+        "",
+        "",
+        listOf(),
+        "",
+        "",
+        "",
+        0L,
     ),
     val isLoading: Boolean = true,
     val error: String = "",
@@ -47,7 +62,11 @@ class PlaylistViewModel @Inject constructor(
 
     private val _allPlaylistUiState: MutableStateFlow<AllPlaylistUiState> =
         MutableStateFlow(AllPlaylistUiState())
-    val allPlaylistUiState = _allPlaylistUiState
+    val allPlaylistUiState = _allPlaylistUiState.asStateFlow()
+
+    private val _trackUiState: MutableStateFlow<CurrentTrackUiState> =
+        MutableStateFlow(CurrentTrackUiState())
+    val trackUiState = _trackUiState.asStateFlow()
 
     init {
         loadAllPlaylists()
@@ -133,6 +152,18 @@ class PlaylistViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 playlistRepository.removeTrackFromPlaylist(track, playlist)
             }
+        }
+    }
+
+    fun getAPITrack(id: String) {
+        viewModelScope.launch {
+            trackRepository.getAPITrack(id)
+                .catch {
+                    _trackUiState.value = _trackUiState.value.copy(error = it.message.orEmpty())
+                }
+                .collect {
+                    _trackUiState.value = _trackUiState.value.copy(track = it, isLoading = false)
+                }
         }
     }
 }
