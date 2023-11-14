@@ -59,7 +59,7 @@ import ar.edu.unlam.mobile.scaffold.ui.theme.DisableButtonColorPlaylist
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
-var imagenesMuestra:MutableList<String> = mutableListOf<String>(
+var imagenesMuestra: MutableList<String> = mutableListOf<String>(
     "https://picsum.photos/200",
     "https://picsum.photos/111",
     "https://picsum.photos/208",
@@ -135,7 +135,7 @@ fun CreatePlaylist(
         idPlaylist = playlist.value.playlist.id
         if (playlist.value.playlist.image != "") srcImage = playlist.value.playlist.image
         if (playlist.value.playlist.tracks.size > 0) {
-            imagesPlaceholder +=  obtenerImagenesPlaylist(playlist.value.playlist.tracks)
+            imagesPlaceholder += obtenerImagenesPlaylist(playlist.value.playlist.tracks)
         }
     }
 

@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.modal
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
@@ -52,12 +50,13 @@ fun convertirFechaAFormatoDeseado(fecha: String): String {
     val fechaLocal = LocalDate.parse(fecha, formatoEntrada)
     return fechaLocal.format(formatoSalida)
 }
+
 @Composable
-fun ModalTrackDetail (
+fun ModalTrackDetail(
     onClose: () -> Unit,
     trackId: String,
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
-){
+) {
     val fullTrack = playlistViewModel.trackUiState.collectAsState()
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -69,8 +68,8 @@ fun ModalTrackDetail (
     }
 
     Dialog(
-    onDismissRequest = { onClose() },
-    ){
+        onDismissRequest = { onClose() },
+    ) {
         Column(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(16.dp))
@@ -78,7 +77,7 @@ fun ModalTrackDetail (
                 .padding(16.dp)
                 .height(((screenHeightDp * 0.75)).dp)
                 .width((screenWidthDp * 0.7).dp),
-        ){
+        ) {
             AsyncImage(
                 model = fullTrack.value.track.image,
                 contentDescription = "Imagen de cancion",
@@ -126,24 +125,27 @@ fun ModalTrackDetail (
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
-            ){
-                items (fullTrack.value.track.artists) {artist ->
+            ) {
+                items(fullTrack.value.track.artists) { artist ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                     ) {
-                        AsyncImage(model = artist.image, contentDescription = "imagen artista",
+                        AsyncImage(
+                            model = artist.image,
+                            contentDescription = "imagen artista",
                             modifier = Modifier
                                 .height(30.dp)
                                 .width(30.dp),
-                            contentScale = ContentScale.FillBounds,)
+                            contentScale = ContentScale.FillBounds,
+                        )
                         Text(
                             text = artist.name,
                             fontSize = 14.sp,
                             color = Color.White,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier
-                                .padding(vertical = 4.dp, horizontal = 6.dp)
+                                .padding(vertical = 4.dp, horizontal = 6.dp),
                         )
                     }
                 }

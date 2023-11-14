@@ -120,7 +120,7 @@ fun SongElement(
             onClose = { isModalVisible = false },
         )
     }
-    if(isModalDetailVisible){
-        ModalTrackDetail(onClose = {isModalDetailVisible = false}, trackId = track.spotifyId)
+    if (isModalDetailVisible) {
+        ModalTrackDetail(onClose = { isModalDetailVisible = false }, trackId = track.spotifyId)
     }
 }
