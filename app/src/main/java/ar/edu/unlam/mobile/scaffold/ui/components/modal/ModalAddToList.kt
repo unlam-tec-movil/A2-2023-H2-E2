@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 @Composable
 fun ModalAddToList(
     track: Track,
-    // playlists: List<Playlist>,
     onClose: () -> Unit = {},
     modifier: Modifier = Modifier,
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
@@ -97,9 +96,9 @@ fun ModalAddToList(
                 items(playlistViewModel.allPlaylistUiState.value.playlists) { playlist ->
                     ModalPlayListItem(
                         playlist = playlist,
-                        trackId = track.spotifyId,
-                        trackTitle = track.title,
+                        track = track,
                         onClick = { onClose },
+                        playlistViewModel = playlistViewModel,
                     )
                 }
             }

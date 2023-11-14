@@ -16,17 +16,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
+import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.search.SearchBar
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistUIState
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrackUIState
 
-@Preview
 @Composable
 fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
     val trackUiState: TrackUIState by homeViewModel.appUiState.trackState.collectAsState()
@@ -47,7 +46,7 @@ fun Search(homeViewModel: HomeViewModel = hiltViewModel()) {
                 items(trackUiState.tracks) { track ->
                     SongElement(
                         track = track,
-                        // playlists = playlistUIState.playlists,
+                        type = TypeSongElement.SEARCH,
                         onClick = {},
                     )
                 }

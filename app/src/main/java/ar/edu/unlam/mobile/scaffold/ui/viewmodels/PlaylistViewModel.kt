@@ -3,8 +3,11 @@ package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
+import ar.edu.unlam.mobile.scaffold.data.repository.track.TrackDefaultRepository
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,8 +36,10 @@ data class AllPlaylistUiState(
 )
 
 @HiltViewModel
-class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) :
-    ViewModel() {
+class PlaylistViewModel @Inject constructor(
+    private val playlistRepository: PlaylistRepository,
+    private val trackRepository: TrackDefaultRepository,
+) : ViewModel() {
 
     private val _playlistUiState: MutableStateFlow<CurrentPlaylistUiState> =
         MutableStateFlow(CurrentPlaylistUiState())
@@ -65,7 +70,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         }
     }
 
-    fun addPlaylist(playlist: Playlist) {
+    fun insertPlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.insertPlaylist(
@@ -75,10 +80,18 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         }
     }
 
+    fun insertPlaylistWithTracks(playlist: PlaylistTrackCrossRef) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                playlistRepository.insertPlaylistWithTracks(playlist)
+            }
+        }
+    }
+
     fun updatePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.update(
+                playlistRepository.updatePlaylist(
                     playlist,
                 )
             }
@@ -88,7 +101,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
     fun deletePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.delete(
+                playlistRepository.deletePlaylist(
                     playlist,
                 )
             }
@@ -103,6 +116,22 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
             }.collect {
                 _allPlaylistUiState.value =
                     _allPlaylistUiState.value.copy(playlists = it, isLoading = false)
+            }
+        }
+    }
+
+    fun insertTrack(track: Track) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                trackRepository.insertTrack(track)
+            }
+        }
+    }
+
+    fun removeTrack(track: Track, playlist: Playlist) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                playlistRepository.removeTrackFromPlaylist(track, playlist)
             }
         }
     }
