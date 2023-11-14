@@ -59,7 +59,7 @@ import ar.edu.unlam.mobile.scaffold.ui.theme.DisableButtonColorPlaylist
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
-var imagenesMuestra = listOf<String>(
+var imagenesMuestra: MutableList<String> = mutableListOf<String>(
     "https://picsum.photos/200",
     "https://picsum.photos/111",
     "https://picsum.photos/208",
@@ -69,10 +69,11 @@ var imagenesMuestra = listOf<String>(
     "https://picsum.photos/100",
 )
 
-fun obtenerImagenesPlaylist(track: List<Track>): List<String> {
-    var playlistsObtenidas = listOf<String>()
+fun obtenerImagenesPlaylist(track: List<Track>): MutableList<String> {
+    var playlistsObtenidas: MutableList<String> = mutableListOf()
+
     track.map { it ->
-        playlistsObtenidas.plus(it.image)
+        playlistsObtenidas.add(it.image)
     }
     return playlistsObtenidas
 }
@@ -91,7 +92,7 @@ fun CreatePlaylist(
     var srcImage by remember { mutableStateOf("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw0zKknEf_ExsMDMYCkGnkF4bvK-dRrBJb9FdYBJOO0vy5H15IsJSpMBSlVDz7bt6BKCk&usqp=CAU") }
 
     var isModalImagesVisible by remember { mutableStateOf(false) }
-    var imagesPlaceholder by remember { mutableStateOf(imagenesMuestra) }
+    var imagesPlaceholder by remember { mutableStateOf<MutableList<String>>(imagenesMuestra) }
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val screenWidthDp = configuration.screenWidthDp
@@ -134,8 +135,7 @@ fun CreatePlaylist(
         idPlaylist = playlist.value.playlist.id
         if (playlist.value.playlist.image != "") srcImage = playlist.value.playlist.image
         if (playlist.value.playlist.tracks.size > 0) {
-            imagesPlaceholder =
-                imagesPlaceholder + obtenerImagenesPlaylist(playlist.value.playlist.tracks)
+            imagesPlaceholder += obtenerImagenesPlaylist(playlist.value.playlist.tracks)
         }
     }
 
@@ -281,7 +281,7 @@ fun CreatePlaylist(
                         .align(Alignment.CenterHorizontally),
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                 ) {
-                    items(imagenesMuestra) { imagen ->
+                    items(imagesPlaceholder) { imagen ->
                         Box(
                             modifier = Modifier.clickable { changeImagePlaylist(imagen) },
                         ) {

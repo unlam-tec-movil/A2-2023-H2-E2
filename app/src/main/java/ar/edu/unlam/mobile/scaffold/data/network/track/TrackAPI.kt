@@ -8,7 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TrackAPI {
-    @GET("/tracks/{id}")
+    @GET("/v1/tracks/{id}")
     suspend fun getTrack(@Path("id") id: String, @Query("market") market: String): Track
 
     @GET("/v1/recommendations")

@@ -168,12 +168,16 @@ class PlaylistViewModel @Inject constructor(
     }
 
     fun getAPITrack(id: String) {
+        Log.i("full track", "entroooo")
         viewModelScope.launch {
+            Log.i("full track", "en el lauch")
             trackRepository.getAPITrack(id)
                 .catch {
+                    Log.i("full track", it.message.toString())
                     _trackUiState.value = _trackUiState.value.copy(error = it.message.orEmpty())
                 }
                 .collect {
+                    Log.i("full track", it.title)
                     _trackUiState.value = _trackUiState.value.copy(track = it, isLoading = false)
                 }
         }

@@ -22,7 +22,7 @@ data class Artist(
     fun toArtist(): Artist {
         return Artist(
             name = name,
-            image = images[0].url,
+            image = if (images != null) images.get(0).url else "https://cdn-icons-png.flaticon.com/512/149/149071.png",
         )
     }
 }
