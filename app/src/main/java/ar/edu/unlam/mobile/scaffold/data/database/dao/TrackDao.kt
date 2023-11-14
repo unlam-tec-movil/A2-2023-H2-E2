@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ar.edu.unlam.mobile.scaffold.data.database.entity.Track
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TrackDao {
@@ -20,11 +21,8 @@ interface TrackDao {
     fun update(playlist: Track)
 
     @Query("SELECT * FROM track WHERE spotifyId=:id")
-    fun get(id: String): Track
+    fun get(id: String): Flow<Track>
 
     @Query("SELECT * FROM track")
-    fun getAll(): List<Track>
-
-    @Query("SELECT * FROM track LIMIT :limit")
-    fun getAll(limit: Int): List<Track>
+    fun getAll(): Flow<List<Track>>
 }

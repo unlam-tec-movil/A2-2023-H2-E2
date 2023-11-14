@@ -50,30 +50,6 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
-val playlists = listOf<Playlist>(
-    Playlist(
-        0L,
-        "Primer playlist",
-        "https://picsum.photos/201",
-        "esta es mi primer playlist",
-        listOf(),
-    ),
-    Playlist(
-        0L,
-        "Segunda playlist",
-        "https://picsum.photos/200",
-        "esta es mi primer playlist",
-        listOf(),
-    ),
-    Playlist(
-        0L,
-        "Tercera playlist",
-        "https://picsum.photos/129",
-        "esta es mi primer playlist",
-        listOf(),
-    ),
-)
-
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
@@ -86,7 +62,6 @@ fun NavigationView() {
                         route = Routes.CreatePlaylist.name + "/0",
                     )
                 },
-                modifier = Modifier,
             )
         }
         composable(Routes.Search.name) {
@@ -113,7 +88,6 @@ fun HomeScreen(
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
-    modifier: Modifier,
 ) {
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
     val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
@@ -224,7 +198,7 @@ fun Body(
                         .align(Alignment.CenterHorizontally),
                 ) {
                     items(trendsUiState.tracks) { track ->
-                        SongListElement(track, playlists)
+                        SongListElement(track)
                     }
                 }
             }

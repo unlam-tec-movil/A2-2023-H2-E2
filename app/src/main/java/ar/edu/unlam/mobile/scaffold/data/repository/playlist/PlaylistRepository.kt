@@ -1,7 +1,9 @@
 package ar.edu.unlam.mobile.scaffold.data.repository.playlist
 
 import ar.edu.unlam.mobile.scaffold.data.database.dao.PlaylistDao
+import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -18,11 +20,11 @@ class PlaylistRepository @Inject constructor(
         playlistDao.insert(playlistToInsert.toPlaylistEntity())
     }
 
-    fun delete(playlistToDelete: Playlist) {
+    fun deletePlaylist(playlistToDelete: Playlist) {
         playlistDao.delete(playlistToDelete.toPlaylistEntity())
     }
 
-    fun update(playlistToUpdate: Playlist) {
+    fun updatePlaylist(playlistToUpdate: Playlist) {
         playlistDao.update(playlistToUpdate.toPlaylistEntity())
     }
 
@@ -30,7 +32,11 @@ class PlaylistRepository @Inject constructor(
         return playlistDao.getPlaylistsWithTracks(idPlaylist).map { it.toDomainPlaylist() }
     }
 
-    fun getAllPlaylistWithTracks(limit: Int): Flow<List<Playlist>> {
-        return playlistDao.getAllPlaylistsWithTracks(limit).map { it.map { it.toDomainPlaylist() } }
+    fun insertPlaylistWithTracks(playlistToInsert: PlaylistTrackCrossRef) {
+        playlistDao.insertPlaylistWithTracks(playlistToInsert)
+    }
+
+    fun removeTrackFromPlaylist(track: Track, playlist: Playlist) {
+        playlistDao.removeTrackFromPlaylist(track.spotifyId, playlist.id!!)
     }
 }

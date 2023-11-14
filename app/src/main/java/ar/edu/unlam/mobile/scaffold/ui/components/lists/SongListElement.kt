@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
@@ -29,13 +28,11 @@ import coil.compose.AsyncImage
 @Composable
 fun SongListElement(
     track: Track,
-    playlists: List<Playlist>,
     mostrarTitulo: Boolean = true,
     fullWidth: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
     val configuration = LocalConfiguration.current
-    val screenHeightDp = configuration.screenHeightDp
     val screenWidthDp = configuration.screenWidthDp
     var isModalVisible by remember { mutableStateOf(false) }
 
@@ -71,7 +68,6 @@ fun SongListElement(
     if (isModalVisible) {
         ModalAddToList(
             track = track,
-            // playlists = playlists,
             onClose = { onCloseModal() },
         )
     }

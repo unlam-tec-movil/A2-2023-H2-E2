@@ -33,7 +33,10 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
     var queryState by remember { mutableStateOf("") }
     var searchBarIsActive by remember { mutableStateOf(false) }
     val elementsColorValue = Color.White
@@ -81,7 +84,6 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
                         onClick = {},
                         type = TypeSongElement.SEARCH,
                         track = track,
-                        // playlists = playlists.playlists,
                     )
                 }
             }

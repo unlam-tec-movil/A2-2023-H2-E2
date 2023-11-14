@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,13 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -42,7 +41,6 @@ import coil.compose.AsyncImage
 
 @Composable
 fun PlaylistScreen(
-    navController: NavHostController? = null,
     playlistId: String,
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
@@ -50,16 +48,15 @@ fun PlaylistScreen(
     val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
-    var activeSong by remember { mutableStateOf<Track?>(null) }
-    val context = LocalContext.current
+    var activeTrack by remember { mutableStateOf(Track("", "", "", "")) }
 
     fun openModal(track: Track) {
-        activeSong = track
+        activeTrack = track
         isModalVisible = true
     }
 
-    fun removeFromPlaylist() {
-        // Todo: eliminar cancion de la playlist
+    fun removeFromPlaylist(track: Track) {
+        playlistViewModel.removeTrack(track, playlist.value.playlist)
         isModalVisible = false
     }
 
@@ -89,6 +86,7 @@ fun PlaylistScreen(
                     model = playlist.value.playlist.image,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
+                        .animateContentSize()
                         .height(
                             if (imagenPlegada.value) {
                                 120.dp
@@ -104,7 +102,6 @@ fun PlaylistScreen(
                             },
                         )
                         .padding(vertical = 20.dp, horizontal = 12.dp),
-                    // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
                 )
             }
@@ -144,7 +141,7 @@ fun PlaylistScreen(
 
             items(playlist.value.playlist.tracks) { track ->
                 SongElement(
-                    type = TypeSongElement.ADDED,
+                    type = TypeSongElement.ADD,
                     track = track,
                     onClick = { openModal(track) },
                 )
@@ -155,11 +152,11 @@ fun PlaylistScreen(
         AlertDialog(
             onDismissRequest = {},
             title = { Text(text = "Eliminar cancion") },
-            text = { Text(text = "Queres eliminar " + activeSong?.title + " de esta lista") },
+            text = { Text(text = "Querés eliminar " + activeTrack?.title + " de esta lista") },
             confirmButton = {
                 Button(
                     onClick = {
-                        removeFromPlaylist()
+                        removeFromPlaylist(track = activeTrack)
                     },
                     content = {
                         Text(text = "Aceptar", color = Color.White)

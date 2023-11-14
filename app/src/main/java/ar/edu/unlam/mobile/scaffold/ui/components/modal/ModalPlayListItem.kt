@@ -20,24 +20,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
+import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
+import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
+
 @Composable
 fun ModalPlayListItem(
-    playlist: Playlist = Playlist(1, "Mi Playlist Ejemplo", "https://picsum.photos/201", "", listOf()),
-    trackId: String,
-    trackTitle: String,
+    playlist: Playlist = Playlist(
+        1,
+        "Mi Playlist Ejemplo",
+        "https://picsum.photos/201",
+        "",
+        listOf(),
+    ),
+    track: Track,
     onClick: () -> Unit,
+    playlistViewModel: PlaylistViewModel,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
     fun addToPlaylist() {
-        // TODO: Agregar a una playlist
-        val text = "$trackTitle agregada a ${playlist.title}"
+        playlistViewModel.insertTrack(track)
+        val intermediateTableRow = PlaylistTrackCrossRef(playlist.id!!, track.spotifyId)
+        playlistViewModel.insertPlaylistWithTracks(intermediateTableRow)
+        val text = "${track.title} agregada a ${playlist.title}"
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
         onClick()
     }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,

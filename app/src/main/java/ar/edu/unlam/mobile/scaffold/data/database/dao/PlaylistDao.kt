@@ -35,10 +35,6 @@ interface PlaylistDao {
     fun getAllPlaylistsWithTracks(): Flow<List<PlaylistWithTracks>>
 
     @Transaction
-    @Query("SELECT * FROM playlist LIMIT :limit")
-    fun getAllPlaylistsWithTracks(limit: Int): Flow<List<PlaylistWithTracks>>
-
-    // @Transaction
-    // @Query("DELETE FROM playlist WHERE spotifyId =:trackId")
-    // fun removeTrack(trackId: String)
+    @Query("DELETE FROM playlisttrackcrossref WHERE spotifyId =:trackId AND playlistId =:playlistId")
+    fun removeTrackFromPlaylist(trackId: String, playlistId: Long)
 }

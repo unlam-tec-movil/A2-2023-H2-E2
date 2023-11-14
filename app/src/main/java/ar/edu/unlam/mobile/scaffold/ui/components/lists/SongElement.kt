@@ -30,15 +30,14 @@ import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
 
 enum class TypeSongElement {
-    SEARCH, ADDED, OTHER
+    SEARCH, ADD
 }
 
 @Composable
 fun SongElement(
     modifier: Modifier = Modifier,
-    type: TypeSongElement = TypeSongElement.OTHER,
+    type: TypeSongElement,
     track: Track,
-    // playlists: List<Playlist>,
     onClick: (track: Track) -> Unit,
 ) {
     var isModalVisible by remember { mutableStateOf(false) }
@@ -46,7 +45,7 @@ fun SongElement(
     fun onPressButton() {
         if (type == TypeSongElement.SEARCH) {
             isModalVisible = true
-        } else if (type == TypeSongElement.ADDED) {
+        } else if (type == TypeSongElement.ADD) {
             onClick(track)
         }
     }
@@ -98,12 +97,10 @@ fun SongElement(
             Icon(
                 painter = painterResource(
                     id =
-                    if (type == TypeSongElement.ADDED) {
-                        R.drawable.baseline_more_horiz_24
-                    } else if (type == TypeSongElement.SEARCH) {
-                        R.drawable.baseline_add_24
-                    } else {
-                        R.drawable.baseline_add_24
+                    when (type) {
+                        TypeSongElement.ADD -> R.drawable.baseline_delete_24
+                        TypeSongElement.SEARCH -> R.drawable.baseline_add_24
+                        else -> R.drawable.baseline_more_horiz_24
                     },
                 ),
                 contentDescription = null,
@@ -115,7 +112,7 @@ fun SongElement(
 
     if (isModalVisible && type == TypeSongElement.SEARCH) {
         ModalAddToList(
-            track = track, // playlists = playlists,
+            track = track,
             onClose = { isModalVisible = false },
         )
     }
