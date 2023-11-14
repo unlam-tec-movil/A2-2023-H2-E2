@@ -1,9 +1,11 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -95,15 +97,30 @@ fun HomeScreen(
     modifier: Modifier,
 ) {
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
-    val playlistUIState by viewModel.appUiState.playlistState.collectAsState()
-    Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
-        Body(
-            navController = navController,
-            playlists = playlistUIState.playlists,
-            // playlists = playlists,
-            modifier = Modifier.padding(paddingValues),
-            trendsUiState = trendsUiState,
-        )
+    val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
+
+    if (trendsUiState.loading || playlistUIState.isLoading) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(32.dp),
+                color = Color.LightGray,
+                strokeCap = StrokeCap.Butt,
+            )
+        }
+    } else {
+        Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
+            Body(
+                navController = navController,
+                playlists = playlistUIState.playlists,
+                onSearchClick = onSearchClick,
+                modifier = Modifier.padding(paddingValues),
+                trendsUiState = trendsUiState,
+            )
+        }
     }
 }
 
