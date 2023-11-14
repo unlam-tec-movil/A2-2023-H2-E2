@@ -75,7 +75,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         }
     }
 
-    fun updatePlaylist(playlist:Playlist) {
+    fun updatePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.update(
@@ -85,7 +85,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         }
     }
 
-    fun deletePlaylist(playlist:Playlist) {
+    fun deletePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.delete(

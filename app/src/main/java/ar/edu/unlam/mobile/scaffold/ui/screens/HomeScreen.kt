@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -53,6 +52,7 @@ val playlists = listOf<Playlist>(
     Playlist(0L, "Segunda playlist", "https://picsum.photos/200", "esta es mi primer playlist", listOf()),
     Playlist(0L, "Tercera playlist", "https://picsum.photos/129", "esta es mi primer playlist", listOf()),
 )
+
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
@@ -100,7 +100,7 @@ fun HomeScreen(
         Body(
             navController = navController,
             playlists = playlistUIState.playlists,
-            //playlists = playlists,
+            // playlists = playlists,
             modifier = Modifier.padding(paddingValues),
             trendsUiState = trendsUiState,
         )

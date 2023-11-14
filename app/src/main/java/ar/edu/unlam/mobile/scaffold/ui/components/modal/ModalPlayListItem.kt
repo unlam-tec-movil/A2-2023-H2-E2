@@ -24,7 +24,7 @@ import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import coil.compose.AsyncImage
 @Composable
 fun ModalPlayListItem(
-    playlist: Playlist = Playlist(1, "Mi Playlist Ejemplo", "https://picsum.photos/201", "",listOf()),
+    playlist: Playlist = Playlist(1, "Mi Playlist Ejemplo", "https://picsum.photos/201", "", listOf()),
     trackId: String,
     trackTitle: String,
     onClick: () -> Unit,

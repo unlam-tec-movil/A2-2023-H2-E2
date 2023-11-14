@@ -16,23 +16,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistElement
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
-
 @Composable
-fun ListPlaylistScreen (
+fun ListPlaylistScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val playlistUIState by viewModel.appUiState.playlistState.collectAsState()
 
@@ -42,12 +37,12 @@ fun ListPlaylistScreen (
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp),
-    ){
-        item{
-            Column (
+    ) {
+        item {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 8.dp)
+                    .padding(vertical = 16.dp, horizontal = 8.dp),
             ) {
                 Text(
                     text = "Todas mis listas",
@@ -61,6 +56,5 @@ fun ListPlaylistScreen (
         items(playlistUIState.playlists) { playlist ->
             PlaylistElement(playlist, navController)
         }
-
     }
 }

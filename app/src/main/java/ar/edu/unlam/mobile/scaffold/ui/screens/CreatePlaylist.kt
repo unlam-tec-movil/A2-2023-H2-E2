@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -55,8 +54,6 @@ import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
-import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.texts.Title
 import ar.edu.unlam.mobile.scaffold.ui.theme.Blue73
 import ar.edu.unlam.mobile.scaffold.ui.theme.DisableButtonColorPlaylist
@@ -70,14 +67,14 @@ var imagenesMuestra = listOf<String>(
     "https://picsum.photos/201",
     "https://picsum.photos/204",
     "https://picsum.photos/205",
-    "https://picsum.photos/100"
+    "https://picsum.photos/100",
 )
 
-fun obtenerImagenesPlaylist (track: List<Track>): List<String> {
+fun obtenerImagenesPlaylist(track: List<Track>): List<String> {
     var playlistsObtenidas = listOf<String>()
     track.map { it ->
         playlistsObtenidas.plus(it.image)
-}
+    }
     return playlistsObtenidas
 }
 
@@ -86,14 +83,13 @@ fun obtenerImagenesPlaylist (track: List<Track>): List<String> {
 fun CreatePlaylist(
     navController: NavHostController,
     playlistId: String,
-    playlistViewModel: PlaylistViewModel = hiltViewModel()
+    playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val playlist = playlistViewModel.playlistUiState.collectAsState()
     var textNameInput by remember { mutableStateOf("") }
     var textDescriptionInput by remember { mutableStateOf("") }
     var idPlaylist by remember { mutableStateOf<Long?>(null) }
-    var srcImage by remember { mutableStateOf("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw0zKknEf_ExsMDMYCkGnkF4bvK-dRrBJb9FdYBJOO0vy5H15IsJSpMBSlVDz7bt6BKCk&usqp=CAU")}
-
+    var srcImage by remember { mutableStateOf("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw0zKknEf_ExsMDMYCkGnkF4bvK-dRrBJb9FdYBJOO0vy5H15IsJSpMBSlVDz7bt6BKCk&usqp=CAU") }
 
     var isModalImagesVisible by remember { mutableStateOf(false) }
     var imagesPlaceholder by remember { mutableStateOf(imagenesMuestra) }
@@ -102,14 +98,13 @@ fun CreatePlaylist(
     val screenWidthDp = configuration.screenWidthDp
     val context = LocalContext.current
 
-
-    fun changeImagePlaylist (image:String){
+    fun changeImagePlaylist(image: String) {
         srcImage = image
         isModalImagesVisible = false
     }
 
-    fun savePlaylist (){
-        if(playlistId != "0"){
+    fun savePlaylist() {
+        if (playlistId != "0") {
             playlistViewModel.updatePlaylist(
                 Playlist(
                     id = idPlaylist,
@@ -118,7 +113,7 @@ fun CreatePlaylist(
                     image = srcImage,
                 ),
             )
-        }else{
+        } else {
             playlistViewModel.addPlaylist(
                 Playlist(
                     title = textNameInput,
@@ -130,22 +125,21 @@ fun CreatePlaylist(
         navController.popBackStack()
         Toast.makeText(context, R.string.playlist_created, Toast.LENGTH_SHORT).show()
     }
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         playlistViewModel.loadPlaylist(playlistId.toString().toLong())
     }
 
-    LaunchedEffect(playlist.value.playlist){
+    LaunchedEffect(playlist.value.playlist) {
         textNameInput = playlist.value.playlist.title
         textDescriptionInput = playlist.value.playlist.description
         idPlaylist = playlist.value.playlist.id
-        if(playlist.value.playlist.image != "") srcImage = playlist.value.playlist.image
-        if(playlist.value.playlist.tracks.size > 0){
+        if (playlist.value.playlist.image != "") srcImage = playlist.value.playlist.image
+        if (playlist.value.playlist.tracks.size > 0) {
             imagesPlaceholder = imagesPlaceholder + obtenerImagenesPlaylist(playlist.value.playlist.tracks)
         }
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
-
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -154,8 +148,10 @@ fun CreatePlaylist(
         ) {
             Title(
                 modifier = Modifier.padding(top = 18.dp),
-                title = stringResource(id =
-                if (playlistId != "0")  R.string.update_list_title  else R.string.create_list_title ),
+                title = stringResource(
+                    id =
+                    if (playlistId != "0") R.string.update_list_title else R.string.create_list_title,
+                ),
             )
 
             Spacer(modifier = Modifier.height(45.dp))
@@ -190,7 +186,6 @@ fun CreatePlaylist(
             }
 
             Spacer(modifier = Modifier.height(45.dp))
-
 
             val localManager = LocalSoftwareKeyboardController.current
             val textFieldColor = Color.White
@@ -267,7 +262,7 @@ fun CreatePlaylist(
         }
     }
 
-    if(isModalImagesVisible){
+    if (isModalImagesVisible) {
         Dialog(
             onDismissRequest = { isModalImagesVisible = false },
         ) {
@@ -285,24 +280,22 @@ fun CreatePlaylist(
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
                     verticalArrangement = Arrangement.spacedBy(15.dp),
-                )
-                {
-                  items(imagenesMuestra) { imagen ->
-                      Box(
-                          modifier = Modifier.clickable {  changeImagePlaylist(imagen) }
-                      ){
-                          AsyncImage(
-                              model = imagen,
-                              contentDescription = "Imagen de muestra",
-                              modifier = Modifier
-                                  .padding(horizontal = 4.dp)
-                                  .height(150.dp)
-                                  .width(150.dp),
-                              contentScale = ContentScale.FillBounds,
-                          )
-                      }
-
-                  }
+                ) {
+                    items(imagenesMuestra) { imagen ->
+                        Box(
+                            modifier = Modifier.clickable { changeImagePlaylist(imagen) },
+                        ) {
+                            AsyncImage(
+                                model = imagen,
+                                contentDescription = "Imagen de muestra",
+                                modifier = Modifier
+                                    .padding(horizontal = 4.dp)
+                                    .height(150.dp)
+                                    .width(150.dp),
+                                contentScale = ContentScale.FillBounds,
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -66,8 +64,7 @@ fun PlaylistScreen(
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
-
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             playlistViewModel.loadPlaylist(playlistId.toString().toLong())
         }
         LaunchedEffect(listState.isScrollInProgress) {
@@ -109,15 +106,14 @@ fun PlaylistScreen(
                         .padding(vertical = 20.dp, horizontal = 12.dp),
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
-                    )
+                )
             }
             item {
-                Column (
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
 
-
-                ){
+                ) {
                     Text(
                         text = playlist.value.playlist.title,
                         textAlign = TextAlign.Start,

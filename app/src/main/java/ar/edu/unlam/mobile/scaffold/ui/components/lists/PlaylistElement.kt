@@ -17,8 +17,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,15 +36,14 @@ import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.ui.screens.Routes
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
-import androidx.compose.runtime.*
+
 @Composable
-fun PlaylistElement (
+fun PlaylistElement(
     playlist: Playlist,
     navController: NavController,
-    modifier:Modifier = Modifier,
-    viewModel: PlaylistViewModel = hiltViewModel()
-){
-
+    modifier: Modifier = Modifier,
+    viewModel: PlaylistViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
 
@@ -52,8 +53,7 @@ fun PlaylistElement (
         )
     }
 
-    fun confirmDelete (){
-
+    fun confirmDelete() {
     }
 
     Row(
@@ -107,7 +107,7 @@ fun PlaylistElement (
         ) {
             Icon(
                 painter = painterResource(
-                    id = R.drawable.baseline_edit_24
+                    id = R.drawable.baseline_edit_24,
                 ),
                 contentDescription = null,
                 tint = Color.White,
@@ -126,7 +126,7 @@ fun PlaylistElement (
         ) {
             Icon(
                 painter = painterResource(
-                    id = R.drawable.baseline_delete_24
+                    id = R.drawable.baseline_delete_24,
                 ),
                 contentDescription = null,
                 tint = Color.White,
@@ -147,11 +147,18 @@ fun PlaylistElement (
                 // Botón de confirmación
                 Button(onClick = {
                     viewModel.deletePlaylist(playlist)
-                    Toast.makeText( context, "${playlist.title} eliminada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "${playlist.title} eliminada correctamente",
+                        Toast.LENGTH_SHORT,
+                    )
+                        .show()
                     showDialog = false
                 }) {
-                    Text("Aceptar",
-                        color = Color.White)
+                    Text(
+                        "Aceptar",
+                        color = Color.White,
+                    )
                 }
             },
             dismissButton = {
@@ -159,10 +166,12 @@ fun PlaylistElement (
                 Button(onClick = {
                     showDialog = false
                 }) {
-                    Text("Cancelar",
-                        color = Color.White)
+                    Text(
+                        "Cancelar",
+                        color = Color.White,
+                    )
                 }
-            }
+            },
         )
     }
 }
