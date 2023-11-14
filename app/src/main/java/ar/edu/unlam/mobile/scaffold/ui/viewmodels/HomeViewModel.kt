@@ -42,19 +42,12 @@ data class SimpleTrackUIState(
     val error: String = "",
 )
 
-data class RecommendationUiState(
-    val tracks: List<Track> = emptyList(),
-    val loading: Boolean = true,
-    val error: String = "",
-)
-
 // Conjunto de todos los states para achicar la cantidad de argumentos pasados a los composables
 data class AppUiState(
     val playlistState: StateFlow<PlaylistUIState>,
     val trendsState: StateFlow<TrendsUIState>,
     val trackState: StateFlow<TrackUIState>,
     val simpleTrackState: StateFlow<SimpleTrackUIState>,
-    val recommendationState: StateFlow<RecommendationUiState>,
 )
 
 @HiltViewModel
@@ -74,13 +67,11 @@ class HomeViewModel @Inject constructor(
         trendsState = _trendsUiState.asStateFlow(),
         trackState = _trackUiState.asStateFlow(),
         simpleTrackState = _simpleTrackUiState.asStateFlow(),
-        recommendationState = _recommendationUiState.asStateFlow(),
     )
 
     init {
         getPlaylists()
         getTrendingTracks()
-        getRecommendations()
     }
 
     fun getTrackBySearchBar(query: String) {
@@ -104,20 +95,6 @@ class HomeViewModel @Inject constructor(
                 }
                 .collect {
                     _trendsUiState.value = _trendsUiState.value.copy(tracks = it, loading = false)
-                }
-        }
-    }
-
-    private fun getRecommendations() {
-        viewModelScope.launch {
-            trackGetter.getRecommendations()
-                .catch {
-                    _recommendationUiState.value =
-                        _recommendationUiState.value.copy(error = it.message ?: "Error")
-                }
-                .collect {
-                    _recommendationUiState.value =
-                        _recommendationUiState.value.copy(tracks = it, loading = false)
                 }
         }
     }

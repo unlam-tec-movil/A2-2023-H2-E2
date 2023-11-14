@@ -50,6 +50,12 @@ data class AllPlaylistUiState(
     val error: String = "",
 )
 
+data class RecommendationUiState(
+    val tracks: List<Track> = emptyList(),
+    val loading: Boolean = true,
+    val error: String = "",
+)
+
 @HiltViewModel
 class PlaylistViewModel @Inject constructor(
     private val playlistRepository: PlaylistRepository,
@@ -67,6 +73,12 @@ class PlaylistViewModel @Inject constructor(
     private val _trackUiState: MutableStateFlow<CurrentTrackUiState> =
         MutableStateFlow(CurrentTrackUiState())
     val trackUiState = _trackUiState.asStateFlow()
+
+    private val _recommendationUiState: MutableStateFlow<RecommendationUiState> =
+        MutableStateFlow(RecommendationUiState())
+    val recommendationUiState = _recommendationUiState.asStateFlow()
+
+    private val recommendationGenres = "rock,reggaeton,latino,pop,heavy-metal"
 
     init {
         loadAllPlaylists()
@@ -163,6 +175,20 @@ class PlaylistViewModel @Inject constructor(
                 }
                 .collect {
                     _trackUiState.value = _trackUiState.value.copy(track = it, isLoading = false)
+                }
+        }
+    }
+
+    fun getRecommendations() {
+        viewModelScope.launch {
+            trackRepository.getRecommendations(recommendationGenres)
+                .catch {
+                    _recommendationUiState.value =
+                        _recommendationUiState.value.copy(error = it.message ?: "Error")
+                }
+                .collect {
+                    _recommendationUiState.value =
+                        _recommendationUiState.value.copy(tracks = it, loading = false)
                 }
         }
     }
