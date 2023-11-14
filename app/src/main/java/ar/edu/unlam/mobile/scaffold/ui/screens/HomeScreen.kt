@@ -1,9 +1,11 @@
 package ar.edu.unlam.mobile.scaffold.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -91,7 +93,17 @@ fun HomeScreen(
     val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
 
     if (trendsUiState.loading || playlistUIState.isLoading) {
-        CircularProgressIndicator(strokeCap = StrokeCap.Butt)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(32.dp),
+                color = Color.LightGray,
+                strokeCap = StrokeCap.Butt,
+            )
+        }
     } else {
         Scaffold(floatingActionButton = { FabScreen(onFabClick) }) { paddingValues ->
             Body(
