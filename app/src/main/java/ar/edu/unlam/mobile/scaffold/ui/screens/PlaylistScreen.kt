@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffold.R
+import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -47,6 +48,7 @@ fun PlaylistScreen(
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val playlist = playlistViewModel.playlistUiState.collectAsState()
+    val recommendations = playlistViewModel.recommendationUiState.collectAsState()
     val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
@@ -62,9 +64,17 @@ fun PlaylistScreen(
         isModalVisible = false
     }
 
+    fun addToPlaylist(track: Track) {
+        playlistViewModel.insertTrack(track)
+        val intermediateTableRow =
+            PlaylistTrackCrossRef(playlist.value.playlist.id!!, track.spotifyId)
+        playlistViewModel.insertPlaylistWithTracks(intermediateTableRow)
+    }
+
     Box(contentAlignment = Alignment.TopCenter) {
         LaunchedEffect(Unit) {
             playlistViewModel.loadPlaylist(playlistId.toLong())
+            playlistViewModel.getRecommendations()
         }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
@@ -146,6 +156,26 @@ fun PlaylistScreen(
                     type = TypeSongElement.ADD,
                     track = track,
                     onClick = { openModal(track) },
+                )
+            }
+
+            item {
+                Text(
+                    text = "Recomendaciones",
+                    textAlign = TextAlign.Start,
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                )
+                Separator()
+            }
+
+            items(recommendations.value.tracks) { track ->
+                SongElement(
+                    onClick = { addToPlaylist(track) },
+                    type = TypeSongElement.SEARCH,
+                    track = track,
                 )
             }
         }

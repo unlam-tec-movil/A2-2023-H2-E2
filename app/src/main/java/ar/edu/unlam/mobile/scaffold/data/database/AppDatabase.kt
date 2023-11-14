@@ -15,23 +15,4 @@ import ar.edu.unlam.mobile.scaffold.data.database.entity.Track
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getPlaylistDao(): PlaylistDao
     abstract fun getTrackDao(): TrackDao
-
-    /* TODO: Ver si se saca
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getInstance(context: Context): AppDatabase {
-            synchronized(this) {
-                return INSTANCE ?: Room.databaseBuilder(
-                    context = context.applicationContext,
-                    AppDatabase::class.java,
-                    "listify",
-                ).build().also {
-                    INSTANCE = it
-                }
-            }
-        }
-    }
-     */
 }
