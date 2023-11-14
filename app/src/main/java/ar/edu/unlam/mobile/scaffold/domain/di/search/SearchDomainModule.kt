@@ -2,8 +2,6 @@ package ar.edu.unlam.mobile.scaffold.domain.di.search
 
 import ar.edu.unlam.mobile.scaffold.domain.services.search.SearchGetter
 import ar.edu.unlam.mobile.scaffold.domain.services.search.SearchService
-import ar.edu.unlam.mobile.scaffold.domain.services.search.SongsGetter
-import ar.edu.unlam.mobile.scaffold.domain.services.search.SongsService
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +13,4 @@ abstract class SearchDomainModule {
 
     @Binds
     abstract fun bindSearchUseCase(searchService: SearchService): SearchGetter
-
-    @Binds
-    abstract fun bindSongsGetter(searchService: SongsService): SongsGetter
 }

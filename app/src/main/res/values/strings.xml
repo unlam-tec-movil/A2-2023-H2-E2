@@ -6,4 +6,19 @@
     <string name="create_list_title">Crear nueva lista</string>
     <string name="update_list_title">Actualizar lista</string>
     <string name="playlist_created">¡Playlist creada con éxito!</string>
+    <string name="trends">Tendencias</string>
+    <string name="create_playlist">Crear playlist</string>
+    <string name="no_playlist_created">Todavia no tenés playlists creadas</string>
+    <string name="sample_image">Imagen de muestra</string>
+    <string name="name_playlist">Nombre</string>
+    <string name="description_playlist">Descripción</string>
+    <string name="save_playlist">Guardar</string>
+    <string name="save_playlist_btn">Guardar playlist</string>
+    <string name="all_my_playlist">Mis playlists</string>
+    <string name="total_tracks">%s canciones</string>
+    <string name="delete_track">Eliminar canción</string>
+    <string name="cuestion_delete_track">¿Querés eliminar %s de esta lista?</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="explore_title">Explorar</string>
 </resources>

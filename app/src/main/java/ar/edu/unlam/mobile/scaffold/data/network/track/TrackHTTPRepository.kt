@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TrackHTTPRepository @Inject constructor(private val api: TrackAPI) : TrackNetworkRepository {
-    override suspend fun getRecommendations(): Flow<Recommendation> {
+    override suspend fun getRecommendations(genres: String): Flow<Recommendation> {
         return flow {
             emit(
                 api.getRecommendations(
                     5,
                     "AR",
-                    "heavy-metal,rock,pop,techno",
+                    genres,
                     60,
                     100,
                 ),

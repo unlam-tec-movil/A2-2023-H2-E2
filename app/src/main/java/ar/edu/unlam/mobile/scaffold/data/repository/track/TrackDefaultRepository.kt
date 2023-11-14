@@ -12,8 +12,9 @@ class TrackDefaultRepository @Inject constructor(
     private val networkRepository: TrackNetworkRepository,
     private val trackDao: TrackDao,
 ) : TrackRepository {
-    override suspend fun getRecommendations(): Flow<List<Track>> {
-        return this.networkRepository.getRecommendations().map { it.tracks.map { it.toTrack() } }
+    override suspend fun getRecommendations(genres: String): Flow<List<Track>> {
+        return this.networkRepository.getRecommendations(genres)
+            .map { it.tracks.map { it.toTrack() } }
     }
 
     override suspend fun getTrendingTracks(): Flow<List<Track>> {

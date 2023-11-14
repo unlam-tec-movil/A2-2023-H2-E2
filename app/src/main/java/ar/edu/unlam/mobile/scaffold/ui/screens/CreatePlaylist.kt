@@ -158,7 +158,7 @@ fun CreatePlaylist(
 
             AsyncImage(
                 model = srcImage,
-                contentDescription = "Imagen de muestra",
+                contentDescription = stringResource(id = R.string.sample_image),
                 modifier = Modifier
                     .height(290.dp)
                     .width(290.dp),
@@ -201,7 +201,7 @@ fun CreatePlaylist(
                     disabledLabelColor = textFieldColor,
                     focusedLabelColor = textFieldColor,
                 ),
-                label = { Text(text = "Nombre", color = textFieldColor) },
+                label = { Text(text = stringResource(id = R.string.name_playlist), color = textFieldColor) },
                 singleLine = true,
                 maxLines = 1,
                 keyboardActions = KeyboardActions(
@@ -229,7 +229,7 @@ fun CreatePlaylist(
                 keyboardActions = KeyboardActions(
                     onDone = { localManager?.hide() },
                 ),
-                label = { Text(text = "Descripción", color = textFieldColor) },
+                label = { Text(text = stringResource(id = R.string.description_playlist), color = textFieldColor) },
                 modifier = Modifier.fillMaxWidth(),
             )
 
@@ -251,11 +251,11 @@ fun CreatePlaylist(
                     disabledContainerColor = DisableButtonColorPlaylist,
                 ),
             ) {
-                Text(text = "Guardar", fontSize = 27.sp)
+                Text(text = stringResource(id = R.string.save_playlist), fontSize = 27.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_save),
-                    contentDescription = "Guardar lista",
+                    contentDescription = stringResource(id = R.string.save_playlist_btn),
                     modifier = Modifier.size(33.dp),
                 )
             }
@@ -287,7 +287,7 @@ fun CreatePlaylist(
                         ) {
                             AsyncImage(
                                 model = imagen,
-                                contentDescription = "Imagen de muestra",
+                                contentDescription = stringResource(id = R.string.sample_image),
                                 modifier = Modifier
                                     .padding(horizontal = 4.dp)
                                     .height(150.dp)

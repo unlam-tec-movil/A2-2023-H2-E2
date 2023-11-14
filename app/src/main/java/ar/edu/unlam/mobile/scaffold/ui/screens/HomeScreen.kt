@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,9 +64,6 @@ fun NavigationView() {
                     )
                 },
             )
-        }
-        composable(Routes.Search.name) {
-            Search()
         }
 
         composable(Routes.CreatePlaylist.name + "/{playlistId}") {
@@ -136,7 +134,7 @@ fun Body(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 12.dp),
-                title = "Mis listas",
+                title = stringResource(id = R.string.my_list_title),
                 onSearchClick = { navController.navigate(Routes.ListPlaylistScreen.name) },
             )
             if (playlists.isNotEmpty()) {
@@ -153,7 +151,7 @@ fun Body(
                 }
             } else {
                 Text(
-                    text = "Todavia no tenés playlists creadas",
+                    text = stringResource(id = R.string.no_playlist_created),
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
@@ -174,7 +172,7 @@ fun Body(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_icon_add),
-                        contentDescription = "Crear playlist",
+                        contentDescription = stringResource(id = R.string.create_playlist),
                         tint = Color.White,
                         modifier = modifier.size(28.dp),
                     )
@@ -182,7 +180,7 @@ fun Body(
             }
 
             Text(
-                text = "Tendencias",
+                text = stringResource(id = R.string.trends),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,

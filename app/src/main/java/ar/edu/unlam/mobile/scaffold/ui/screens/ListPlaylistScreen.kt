@@ -15,11 +15,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.PlaylistElement
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 
@@ -45,7 +47,7 @@ fun ListPlaylistScreen(
                     .padding(vertical = 16.dp, horizontal = 8.dp),
             ) {
                 Text(
-                    text = "Todas mis listas",
+                    text = stringResource(id = R.string.all_my_playlist),
                     fontSize = 22.sp,
                     style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold,

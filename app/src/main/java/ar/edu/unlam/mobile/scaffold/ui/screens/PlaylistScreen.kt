@@ -27,11 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ar.edu.unlam.mobile.scaffold.R
+import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.SongElement
 import ar.edu.unlam.mobile.scaffold.ui.components.lists.TypeSongElement
@@ -45,6 +48,7 @@ fun PlaylistScreen(
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
 ) {
     val playlist = playlistViewModel.playlistUiState.collectAsState()
+    val recommendations = playlistViewModel.recommendationUiState.collectAsState()
     val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
@@ -60,9 +64,17 @@ fun PlaylistScreen(
         isModalVisible = false
     }
 
+    fun addToPlaylist(track: Track) {
+        playlistViewModel.insertTrack(track)
+        val intermediateTableRow =
+            PlaylistTrackCrossRef(playlist.value.playlist.id!!, track.spotifyId)
+        playlistViewModel.insertPlaylistWithTracks(intermediateTableRow)
+    }
+
     Box(contentAlignment = Alignment.TopCenter) {
         LaunchedEffect(Unit) {
             playlistViewModel.loadPlaylist(playlistId.toLong())
+            playlistViewModel.getRecommendations()
         }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
@@ -84,7 +96,7 @@ fun PlaylistScreen(
             item {
                 AsyncImage(
                     model = playlist.value.playlist.image,
-                    contentDescription = "Imagen de muestra",
+                    contentDescription = stringResource(id = R.string.sample_image),
                     modifier = Modifier
                         .animateContentSize()
                         .height(
@@ -120,7 +132,7 @@ fun PlaylistScreen(
                         modifier = Modifier.padding(top = 10.dp),
                     )
                     Text(
-                        text = playlist.value.playlist.tracks.size.toString() + " canciones",
+                        text = stringResource(id = R.string.total_tracks, playlist.value.playlist.tracks.size.toString()),
                         textAlign = TextAlign.Start,
                         fontSize = 16.sp,
                         color = Color.White,
@@ -146,20 +158,40 @@ fun PlaylistScreen(
                     onClick = { openModal(track) },
                 )
             }
+
+            item {
+                Text(
+                    text = "Recomendaciones",
+                    textAlign = TextAlign.Start,
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                )
+                Separator()
+            }
+
+            items(recommendations.value.tracks) { track ->
+                SongElement(
+                    onClick = { addToPlaylist(track) },
+                    type = TypeSongElement.SEARCH,
+                    track = track,
+                )
+            }
         }
     }
     if (isModalVisible) {
         AlertDialog(
             onDismissRequest = {},
-            title = { Text(text = "Eliminar cancion") },
-            text = { Text(text = "Querés eliminar " + activeTrack.title + " de esta lista") },
+            title = { Text(text = stringResource(id = R.string.delete_track)) },
+            text = { Text(text = stringResource(id = R.string.cuestion_delete_track, activeTrack.title)) },
             confirmButton = {
                 Button(
                     onClick = {
                         removeFromPlaylist(track = activeTrack)
                     },
                     content = {
-                        Text(text = "Aceptar", color = Color.White)
+                        Text(text = stringResource(id = R.string.accept), color = Color.White)
                     },
                 )
             },
@@ -169,7 +201,7 @@ fun PlaylistScreen(
                         isModalVisible = false
                     },
                     content = {
-                        Text(text = "Cancelar", color = Color.White)
+                        Text(text = stringResource(id = R.string.cancel), color = Color.White)
                     },
                 )
             },
