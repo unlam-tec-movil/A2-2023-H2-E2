@@ -39,7 +39,6 @@ fun SearchBar(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hilt
     val elementsColorValue = Color.White
     val localManager = LocalSoftwareKeyboardController.current
     val tracks by homeViewModel.appUiState.trackState.collectAsState()
-    val playlists by homeViewModel.appUiState.playlistState.collectAsState()
 
     SearchBar(
         query = queryState,

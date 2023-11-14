@@ -50,6 +50,30 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.HomeViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
+val playlists = listOf<Playlist>(
+    Playlist(
+        0L,
+        "Primer playlist",
+        "https://picsum.photos/201",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
+    Playlist(
+        0L,
+        "Segunda playlist",
+        "https://picsum.photos/200",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
+    Playlist(
+        0L,
+        "Tercera playlist",
+        "https://picsum.photos/129",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
+)
+
 @Composable
 fun NavigationView() {
     val navController = rememberNavController()
@@ -57,11 +81,10 @@ fun NavigationView() {
         composable(Routes.Home.name) {
             HomeScreen(
                 navController,
-                onSearchClick = {
-                    navController.navigate(Routes.CreatePlaylist.name)
-                },
                 onFabClick = {
-                    navController.navigate(Routes.CreatePlaylist.name)
+                    navController.navigate(
+                        route = Routes.CreatePlaylist.name + "/0",
+                    )
                 },
                 modifier = Modifier,
             )
@@ -70,12 +93,16 @@ fun NavigationView() {
             Search()
         }
 
-        composable(Routes.CreatePlaylist.name) {
-            CreatePlaylist()
+        composable(Routes.CreatePlaylist.name + "/{playlistId}") {
+            val playlistId = it.arguments?.getString("playlistId") ?: ""
+            CreatePlaylist(playlistId = playlistId, navController = navController)
         }
         composable(Routes.PlaylistScreen.name + "/{playlistId}") {
             val playlistId = it.arguments?.getString("playlistId") ?: ""
             PlaylistScreen(playlistId = playlistId)
+        }
+        composable(Routes.ListPlaylistScreen.name) {
+            ListPlaylistScreen(navController)
         }
     }
 }
@@ -83,7 +110,6 @@ fun NavigationView() {
 @Composable
 fun HomeScreen(
     navController: NavController,
-    onSearchClick: () -> Unit,
     onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
@@ -109,7 +135,6 @@ fun HomeScreen(
             Body(
                 navController = navController,
                 playlists = playlistUIState.playlists,
-                onSearchClick = onSearchClick,
                 modifier = Modifier.padding(paddingValues),
                 trendsUiState = trendsUiState,
             )
@@ -123,7 +148,6 @@ fun Body(
     playlists: List<Playlist>,
     trendsUiState: TrendsUIState,
     modifier: Modifier = Modifier,
-    onSearchClick: () -> Unit = {},
 ) {
     Box {
         Column(modifier = Modifier.padding(14.dp)) {
@@ -135,14 +159,16 @@ fun Body(
                     .padding(horizontal = 8.dp),
             )
             TitlesHome(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 12.dp),
                 title = "Mis listas",
-                onSearchClick = onSearchClick,
+                onSearchClick = { navController.navigate(Routes.ListPlaylistScreen.name) },
             )
             if (playlists.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyRow {
-                    items(playlists) { playlist ->
+                    items(playlists.take(7)) { playlist ->
                         PlaylistListElement(
                             playlist.id.toString(),
                             title = playlist.title,
@@ -161,7 +187,11 @@ fun Body(
                     modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 )
                 IconButton(
-                    onClick = { navController.navigate(Routes.CreatePlaylist.name) },
+                    onClick = {
+                        navController.navigate(
+                            route = Routes.CreatePlaylist.name + "/0",
+                        )
+                    },
                     modifier = Modifier
                         .padding(end = 30.dp)
                         .clip(RoundedCornerShape(50.dp))

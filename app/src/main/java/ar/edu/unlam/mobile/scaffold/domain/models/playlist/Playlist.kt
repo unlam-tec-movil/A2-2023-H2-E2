@@ -12,7 +12,7 @@ data class Playlist(
 ) {
     fun toPlaylistEntity(): ar.edu.unlam.mobile.scaffold.data.database.entity.Playlist {
         return ar.edu.unlam.mobile.scaffold.data.database.entity
-            .Playlist(name = this.title, description = this.description, image = this.image)
+            .Playlist(playlistId = this.id ?: 0, name = this.title, description = this.description, image = this.image)
     }
 }
 

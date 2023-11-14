@@ -3,7 +3,9 @@ package ar.edu.unlam.mobile.scaffold.ui.screens
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -38,69 +40,6 @@ import ar.edu.unlam.mobile.scaffold.ui.components.others.Separator
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
 
-val tracksList = listOf<Track>(
-    Track(
-        "vw8vew82",
-        "Revolution Radio",
-        "Green Day",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Hoy Estoy Raro",
-        "El Cuarteto De Nos",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Paradise",
-        "Coldplay",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Paper Wings",
-        "Rise Against",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "By the Way",
-        "Red Hot Chili Peppers",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Toxicity",
-        "System Of A Down",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Radioactive",
-        "Imagine Dragons",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Numb",
-        "Linkin Park",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "The Hell Song",
-        "Sum 41",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-    Track(
-        "vw8vew82",
-        "Misery Business",
-        "Paramore",
-        "https://upload.wikimedia.org/wikipedia/en/9/9b/Hot_Rats_%28Frank_Zappa_album_-_cover_art%29.jpg",
-    ),
-)
-
 @Composable
 fun PlaylistScreen(
     navController: NavHostController? = null,
@@ -125,6 +64,9 @@ fun PlaylistScreen(
     }
 
     Box(contentAlignment = Alignment.TopCenter) {
+        LaunchedEffect(Unit) {
+            playlistViewModel.loadPlaylist(playlistId.toString().toLong())
+        }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
                 Log.i("Tag", "El scroll está en progreso")
@@ -144,7 +86,7 @@ fun PlaylistScreen(
         ) {
             item {
                 AsyncImage(
-                    model = playlist,
+                    model = playlist.value.playlist.image,
                     contentDescription = "Imagen de muestra",
                     modifier = Modifier
                         .height(
@@ -165,22 +107,38 @@ fun PlaylistScreen(
                     // .animateContentSize { initialValue, targetValue ->  }
                     contentScale = ContentScale.FillBounds,
                 )
-                Text(
-                    text = playlist.value.playlist.title,
-                    textAlign = TextAlign.Start,
-                    fontSize = 22.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 10.dp),
-                )
-                Text(
-                    text = playlist.value.playlist.tracks.size.toString() + " canciones",
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
-                )
+            }
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+
+                ) {
+                    Text(
+                        text = playlist.value.playlist.title,
+                        textAlign = TextAlign.Start,
+                        fontSize = 22.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 10.dp),
+                    )
+                    Text(
+                        text = playlist.value.playlist.tracks.size.toString() + " canciones",
+                        textAlign = TextAlign.Start,
+                        fontSize = 16.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
+                    )
+                    Text(
+                        text = playlist.value.playlist.description,
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                    )
+                }
                 Separator()
             }
 

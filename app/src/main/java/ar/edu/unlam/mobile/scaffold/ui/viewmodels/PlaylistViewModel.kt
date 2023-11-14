@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
@@ -48,6 +49,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
     }
 
     fun loadPlaylist(idPlaylist: Long) {
+        Log.i("load", "load playlist")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.getPlaylistWithTracks(idPlaylist)
@@ -67,6 +69,26 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistRepository.insertPlaylist(
+                    playlist,
+                )
+            }
+        }
+    }
+
+    fun updatePlaylist(playlist: Playlist) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                playlistRepository.update(
+                    playlist,
+                )
+            }
+        }
+    }
+
+    fun deletePlaylist(playlist: Playlist) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                playlistRepository.delete(
                     playlist,
                 )
             }
