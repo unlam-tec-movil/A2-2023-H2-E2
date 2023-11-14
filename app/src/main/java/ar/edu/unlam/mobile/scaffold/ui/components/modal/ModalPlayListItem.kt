@@ -48,7 +48,6 @@ fun ModalPlayListItem(
         playlistViewModel.insertPlaylistWithTracks(intermediateTableRow)
         val text = "${track.title} agregada a ${playlist.title}"
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-        onClick()
     }
 
     Row(
@@ -58,7 +57,10 @@ fun ModalPlayListItem(
             // .clip(shape = RoundedCornerShape(5.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
             .fillMaxWidth()
-            .clickable { addToPlaylist() },
+            .clickable {
+                addToPlaylist()
+                onClick()
+            },
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
