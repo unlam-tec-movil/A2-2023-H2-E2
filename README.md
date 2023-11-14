@@ -1,3 +1,5 @@
+# Equipo 2
+
 # Mobile Scaffolding
 
 Este repositorio se presenta como una referencia para organizar un proyecto de Android. La elección de packages está
