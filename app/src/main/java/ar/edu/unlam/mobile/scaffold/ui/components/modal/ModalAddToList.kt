@@ -97,7 +97,7 @@ fun ModalAddToList(
                     ModalPlayListItem(
                         playlist = playlist,
                         track = track,
-                        onClick = { onClose },
+                        onClick = { onClose() },
                         playlistViewModel = playlistViewModel,
                     )
                 }
