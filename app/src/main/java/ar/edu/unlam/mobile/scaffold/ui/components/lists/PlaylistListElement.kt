@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,6 +25,7 @@ import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.ui.screens.Routes
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 @Composable
 fun PlaylistListElement(
@@ -52,7 +54,11 @@ fun PlaylistListElement(
             .clickable { onPlaylistClick() },
     ) {
         AsyncImage(
-            model = image,
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data(image)
+                .crossfade(true)
+                .build(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier

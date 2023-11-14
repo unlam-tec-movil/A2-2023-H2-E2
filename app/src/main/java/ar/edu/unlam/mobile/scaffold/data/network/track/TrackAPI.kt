@@ -1,13 +1,15 @@
 package ar.edu.unlam.mobile.scaffold.data.network.track
 
 import ar.edu.unlam.mobile.scaffold.data.apimodels.recommendations.Recommendation
+import ar.edu.unlam.mobile.scaffold.data.apimodels.track.Track
 import ar.edu.unlam.mobile.scaffold.data.apimodels.trends.Trend
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TrackAPI {
     @GET("/tracks/{id}")
-    suspend fun getTrack(): TrackAPIModel
+    suspend fun getTrack(@Path("id") id: String, @Query("market") market: String): Track
 
     @GET("/v1/recommendations")
     suspend fun getRecommendations(

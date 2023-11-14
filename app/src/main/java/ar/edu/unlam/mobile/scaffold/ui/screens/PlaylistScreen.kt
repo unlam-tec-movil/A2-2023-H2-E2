@@ -62,7 +62,7 @@ fun PlaylistScreen(
 
     Box(contentAlignment = Alignment.TopCenter) {
         LaunchedEffect(Unit) {
-            playlistViewModel.loadPlaylist(playlistId.toString().toLong())
+            playlistViewModel.loadPlaylist(playlistId.toLong())
         }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
@@ -152,7 +152,7 @@ fun PlaylistScreen(
         AlertDialog(
             onDismissRequest = {},
             title = { Text(text = "Eliminar cancion") },
-            text = { Text(text = "Querés eliminar " + activeTrack?.title + " de esta lista") },
+            text = { Text(text = "Querés eliminar " + activeTrack.title + " de esta lista") },
             confirmButton = {
                 Button(
                     onClick = {

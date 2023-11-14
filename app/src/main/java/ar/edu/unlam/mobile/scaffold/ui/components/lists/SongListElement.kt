@@ -20,10 +20,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 @Composable
 fun SongListElement(
@@ -47,7 +49,11 @@ fun SongListElement(
             .then(modifier.clickable { isModalVisible = true }),
     ) {
         AsyncImage(
-            model = track.image,
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data(track.image)
+                .crossfade(true)
+                .build(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
