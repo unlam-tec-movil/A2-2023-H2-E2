@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,9 +51,27 @@ import ar.edu.unlam.mobile.scaffold.ui.viewmodels.PlaylistViewModel
 import ar.edu.unlam.mobile.scaffold.ui.viewmodels.TrendsUIState
 
 val playlists = listOf<Playlist>(
-    Playlist(0L, "Primer playlist", "https://picsum.photos/201", "esta es mi primer playlist", listOf()),
-    Playlist(0L, "Segunda playlist", "https://picsum.photos/200", "esta es mi primer playlist", listOf()),
-    Playlist(0L, "Tercera playlist", "https://picsum.photos/129", "esta es mi primer playlist", listOf()),
+    Playlist(
+        0L,
+        "Primer playlist",
+        "https://picsum.photos/201",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
+    Playlist(
+        0L,
+        "Segunda playlist",
+        "https://picsum.photos/200",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
+    Playlist(
+        0L,
+        "Tercera playlist",
+        "https://picsum.photos/129",
+        "esta es mi primer playlist",
+        listOf(),
+    ),
 )
 
 @Composable
@@ -116,7 +135,6 @@ fun HomeScreen(
             Body(
                 navController = navController,
                 playlists = playlistUIState.playlists,
-                onSearchClick = onSearchClick,
                 modifier = Modifier.padding(paddingValues),
                 trendsUiState = trendsUiState,
             )
@@ -141,7 +159,9 @@ fun Body(
                     .padding(horizontal = 8.dp),
             )
             TitlesHome(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 12.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 12.dp),
                 title = "Mis listas",
                 onSearchClick = { navController.navigate(Routes.ListPlaylistScreen.name) },
             )
