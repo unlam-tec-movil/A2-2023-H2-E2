@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffold.ui.components.lists
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffold.R
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
 import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalAddToList
+import ar.edu.unlam.mobile.scaffold.ui.components.modal.ModalTrackDetail
 import coil.compose.AsyncImage
 
 enum class TypeSongElement {
@@ -41,6 +43,7 @@ fun SongElement(
     onClick: (track: Track) -> Unit,
 ) {
     var isModalVisible by remember { mutableStateOf(false) }
+    var isModalDetailVisible by remember { mutableStateOf(false) }
 
     fun onPressButton() {
         if (type == TypeSongElement.SEARCH) {
@@ -56,7 +59,8 @@ fun SongElement(
         modifier = modifier
             .clip(shape = RoundedCornerShape(6.dp))
             .background(MaterialTheme.colorScheme.onPrimaryContainer)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .then(modifier.clickable { isModalDetailVisible = true }),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
@@ -89,10 +93,10 @@ fun SongElement(
         IconButton(
             onClick = { onPressButton() },
             modifier = Modifier
-                .padding(end = 30.dp)
+                .padding(end = 10.dp)
                 .clip(RoundedCornerShape(50.dp))
                 .background(MaterialTheme.colorScheme.primary)
-                .size(35.dp),
+                .size(30.dp),
         ) {
             Icon(
                 painter = painterResource(
@@ -105,7 +109,7 @@ fun SongElement(
                 ),
                 contentDescription = null,
                 tint = Color.White,
-                modifier = modifier.size(25.dp),
+                modifier = modifier.size(20.dp),
             )
         }
     }
@@ -115,5 +119,8 @@ fun SongElement(
             track = track,
             onClose = { isModalVisible = false },
         )
+    }
+    if(isModalDetailVisible){
+        ModalTrackDetail(onClose = {isModalDetailVisible = false}, trackId = track.spotifyId)
     }
 }
