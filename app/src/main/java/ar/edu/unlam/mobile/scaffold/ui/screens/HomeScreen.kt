@@ -92,7 +92,7 @@ fun HomeScreen(
     val trendsUiState by viewModel.appUiState.trendsState.collectAsState()
     val playlistUIState by playlistViewModel.allPlaylistUiState.collectAsState()
 
-    if (trendsUiState.loading || playlistUIState.isLoading) {
+    if (playlistUIState.isLoading) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -189,7 +189,17 @@ fun Body(
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
             )
             if (trendsUiState.loading) {
-                CircularProgressIndicator()
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(32.dp),
+                        color = Color.LightGray,
+                        strokeCap = StrokeCap.Butt,
+                    )
+                }
             } else {
                 LazyVerticalGrid(
                     GridCells.Fixed(2),

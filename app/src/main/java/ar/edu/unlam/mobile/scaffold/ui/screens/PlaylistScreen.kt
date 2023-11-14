@@ -62,7 +62,7 @@ fun PlaylistScreen(
 
     Box(contentAlignment = Alignment.TopCenter) {
         LaunchedEffect(Unit) {
-            playlistViewModel.loadPlaylist(playlistId.toString().toLong())
+            playlistViewModel.loadPlaylist(playlistId.toLong())
         }
         LaunchedEffect(listState.isScrollInProgress) {
             if (listState.isScrollInProgress) {
