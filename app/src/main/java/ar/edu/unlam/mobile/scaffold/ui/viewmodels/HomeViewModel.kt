@@ -3,9 +3,9 @@ package ar.edu.unlam.mobile.scaffold.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
+import ar.edu.unlam.mobile.scaffold.domain.services.playlist.PlaylistGetter
 import ar.edu.unlam.mobile.scaffold.domain.services.search.SearchGetter
 import ar.edu.unlam.mobile.scaffold.domain.services.track.TrackGetter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,7 +54,7 @@ data class AppUiState(
 class HomeViewModel @Inject constructor(
     private val searchGetter: SearchGetter,
     private val trackGetter: TrackGetter,
-    private val playlistRepository: PlaylistRepository,
+    private val playlistService: PlaylistGetter,
 ) : ViewModel() {
     private val _playlistUiState = MutableStateFlow(PlaylistUIState())
     private val _trendsUiState = MutableStateFlow(TrendsUIState())
@@ -102,7 +102,7 @@ class HomeViewModel @Inject constructor(
     private fun getPlaylists() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.getAllPlaylists()
+                playlistService.getAllPlaylists()
                     .catch {
                         _playlistUiState.value =
                             _playlistUiState.value.copy(error = it.message ?: "Error")

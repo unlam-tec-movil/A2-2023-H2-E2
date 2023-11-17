@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffold.data.database.entity.PlaylistTrackCrossRef
-import ar.edu.unlam.mobile.scaffold.data.repository.playlist.PlaylistRepository
 import ar.edu.unlam.mobile.scaffold.data.repository.track.TrackDefaultRepository
 import ar.edu.unlam.mobile.scaffold.domain.models.playlist.Playlist
 import ar.edu.unlam.mobile.scaffold.domain.models.track.FullTrack
 import ar.edu.unlam.mobile.scaffold.domain.models.track.Track
+import ar.edu.unlam.mobile.scaffold.domain.services.playlist.PlaylistGetter
+import ar.edu.unlam.mobile.scaffold.domain.services.playlist.PlaylistSetter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +59,8 @@ data class RecommendationUiState(
 
 @HiltViewModel
 class PlaylistViewModel @Inject constructor(
-    private val playlistRepository: PlaylistRepository,
+    private val playlistGetter: PlaylistGetter,
+    private val playlistSetter: PlaylistSetter,
     private val trackRepository: TrackDefaultRepository,
 ) : ViewModel() {
 
@@ -88,7 +90,7 @@ class PlaylistViewModel @Inject constructor(
         Log.i("load", "load playlist")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.getPlaylistWithTracks(idPlaylist)
+                playlistGetter.getPlaylistWithTracks(idPlaylist)
                     .catch {
                         _playlistUiState.value =
                             _playlistUiState.value.copy(error = it.message.orEmpty())
@@ -104,7 +106,7 @@ class PlaylistViewModel @Inject constructor(
     fun insertPlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.insertPlaylist(
+                playlistSetter.insertPlaylist(
                     playlist,
                 )
             }
@@ -114,7 +116,7 @@ class PlaylistViewModel @Inject constructor(
     fun insertPlaylistWithTracks(playlist: PlaylistTrackCrossRef) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.insertPlaylistWithTracks(playlist)
+                playlistSetter.insertPlaylistWithTracks(playlist)
             }
         }
     }
@@ -122,7 +124,7 @@ class PlaylistViewModel @Inject constructor(
     fun updatePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.updatePlaylist(
+                playlistSetter.updatePlaylist(
                     playlist,
                 )
             }
@@ -132,7 +134,7 @@ class PlaylistViewModel @Inject constructor(
     fun deletePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.deletePlaylist(
+                playlistSetter.deletePlaylist(
                     playlist,
                 )
             }
@@ -141,7 +143,7 @@ class PlaylistViewModel @Inject constructor(
 
     private fun loadAllPlaylists() {
         viewModelScope.launch {
-            playlistRepository.getAllPlaylists().catch {
+            playlistGetter.getAllPlaylists().catch {
                 _allPlaylistUiState.value =
                     _allPlaylistUiState.value.copy(error = it.message.orEmpty())
             }.collect {
@@ -162,7 +164,7 @@ class PlaylistViewModel @Inject constructor(
     fun removeTrack(track: Track, playlist: Playlist) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playlistRepository.removeTrackFromPlaylist(track, playlist)
+                playlistSetter.removeTrackFromPlaylist(track, playlist)
             }
         }
     }
