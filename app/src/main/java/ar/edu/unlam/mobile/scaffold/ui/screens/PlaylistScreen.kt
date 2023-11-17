@@ -5,16 +5,20 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +54,7 @@ fun PlaylistScreen(
 ) {
     val playlist = playlistViewModel.playlistUiState.collectAsState()
     val recommendations = playlistViewModel.recommendationUiState.collectAsState()
-    val imagenPlegada = remember { mutableStateOf<Boolean>(false) }
+    val imagenPlegada = remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     var isModalVisible by remember { mutableStateOf(false) }
     var activeTrack by remember { mutableStateOf(Track("", "", "", "")) }
@@ -119,9 +124,7 @@ fun PlaylistScreen(
             }
             item {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = playlist.value.playlist.title,
@@ -132,7 +135,10 @@ fun PlaylistScreen(
                         modifier = Modifier.padding(top = 10.dp),
                     )
                     Text(
-                        text = stringResource(id = R.string.total_tracks, playlist.value.playlist.tracks.size.toString()),
+                        text = stringResource(
+                            id = R.string.total_tracks,
+                            playlist.value.playlist.tracks.size.toString(),
+                        ),
                         textAlign = TextAlign.Start,
                         fontSize = 16.sp,
                         color = Color.White,
@@ -160,14 +166,28 @@ fun PlaylistScreen(
             }
 
             item {
-                Text(
-                    text = "Recomendaciones",
-                    textAlign = TextAlign.Start,
-                    fontSize = 14.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Recomendaciones",
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+                    )
+
+                    IconButton(onClick = { playlistViewModel.getRecommendations() }) {
+                        Icon(
+                            modifier = Modifier.size(size = 30.dp),
+                            painter = painterResource(id = R.drawable.ic_refresh),
+                            contentDescription = stringResource(R.string.refresh_recommendations),
+                            tint = Color.White,
+                        )
+                    }
+                }
                 Separator()
             }
 
@@ -180,11 +200,19 @@ fun PlaylistScreen(
             }
         }
     }
+
     if (isModalVisible) {
         AlertDialog(
             onDismissRequest = {},
             title = { Text(text = stringResource(id = R.string.delete_track)) },
-            text = { Text(text = stringResource(id = R.string.cuestion_delete_track, activeTrack.title)) },
+            text = {
+                Text(
+                    text = stringResource(
+                        id = R.string.cuestion_delete_track,
+                        activeTrack.title,
+                    ),
+                )
+            },
             confirmButton = {
                 Button(
                     onClick = {

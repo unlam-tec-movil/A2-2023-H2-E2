@@ -10,33 +10,34 @@ import javax.inject.Inject
 
 class PlaylistRepository @Inject constructor(
     private val playlistDao: PlaylistDao,
-) {
-    fun getAllPlaylists(): Flow<List<Playlist>> {
+) : PlaylistRepositoryInterface {
+    override fun getAllPlaylists(): Flow<List<Playlist>> {
         val response = playlistDao.getAllPlaylistsWithTracks()
-        return response.map { it.map { it.toDomainPlaylist() } }
+        return response.map { playlist -> playlist.map { currentPlaylist -> currentPlaylist.toDomainPlaylist() } }
     }
 
-    fun insertPlaylist(playlistToInsert: Playlist) {
+    override fun insertPlaylist(playlistToInsert: Playlist) {
         playlistDao.insert(playlistToInsert.toPlaylistEntity())
     }
 
-    fun deletePlaylist(playlistToDelete: Playlist) {
+    override fun deletePlaylist(playlistToDelete: Playlist) {
         playlistDao.delete(playlistToDelete.toPlaylistEntity())
     }
 
-    fun updatePlaylist(playlistToUpdate: Playlist) {
+    override fun updatePlaylist(playlistToUpdate: Playlist) {
         playlistDao.update(playlistToUpdate.toPlaylistEntity())
     }
 
-    fun getPlaylistWithTracks(idPlaylist: Long): Flow<Playlist> {
-        return playlistDao.getPlaylistsWithTracks(idPlaylist).map { it.toDomainPlaylist() }
+    override fun getPlaylistWithTracks(idPlaylist: Long): Flow<Playlist> {
+        return playlistDao.getPlaylistsWithTracks(idPlaylist)
+            .map { playlistWithTracks -> playlistWithTracks.toDomainPlaylist() }
     }
 
-    fun insertPlaylistWithTracks(playlistToInsert: PlaylistTrackCrossRef) {
+    override fun insertPlaylistWithTracks(playlistToInsert: PlaylistTrackCrossRef) {
         playlistDao.insertPlaylistWithTracks(playlistToInsert)
     }
 
-    fun removeTrackFromPlaylist(track: Track, playlist: Playlist) {
+    override fun removeTrackFromPlaylist(track: Track, playlist: Playlist) {
         playlistDao.removeTrackFromPlaylist(track.spotifyId, playlist.id!!)
     }
 }
